@@ -31,7 +31,36 @@ function setTimer(){timer.textContent=String(Math.floor(seconds/60)).padStart(2,
 function stopRecording(){if(!recorder||recorder.state!=='recording')return;recorder.stop();clearInterval(timerInterval);recordBtn.disabled=false;stopBtn.disabled=true}
 recordBtn.onclick=async()=>{try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];recordedBlob=null;recorder=new MediaRecorder(stream);recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{stream.getTracks().forEach(t=>t.stop());recordedBlob=new Blob(chunks,{type:recorder.mimeType||'audio/webm'});preview.src=URL.createObjectURL(recordedBlob);preview.style.display='block';submitBtn.disabled=false;status.textContent='Recording stopped. Listen to it, or record again.'};recorder.start();seconds=300;setTimer();recordBtn.disabled=true;stopBtn.disabled=false;submitBtn.disabled=true;status.textContent='🎙️ You are recording for Radio 4 Public Health';timerInterval=setInterval(()=>{seconds--;setTimer();if(seconds<=0)stopRecording()},1000)}catch(e){status.textContent='Microphone access is required. Please allow microphone permission and try again.'}};
 stopBtn.onclick=stopRecording;
-submitBtn.onclick=()=>{if(!recordedBlob)return;status.textContent='Recording submitted successfully. Your Talk will be OnAir soon.';submitBtn.disabled=true};
+const UPLOAD_URL='https://script.google.com/macros/s/AKfycbw7a45LcBMQghWuLMkwncq8X4_n6tIpycQrYW7vV_ZElErLEApAr5nxr3m4nUb1tUkx/exec';
+submitBtn.onclick=async()=>{
+ if(!recordedBlob)return;
+ submitBtn.disabled=true;
+ status.textContent='Uploading your recording...';
+ try{
+  const reader=new FileReader();
+  reader.onloadend=async()=>{
+   try{
+    const base64=reader.result.split(',')[1];
+    const payload={
+     doctorId:doctorId,
+     fileName:doctorId+'_'+new Date().toISOString().replace(/[:.]/g,'-')+'.webm',
+     mimeType:recordedBlob.type||'audio/webm',
+     audio:base64
+    };
+    await fetch(UPLOAD_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+    status.textContent='Recording submitted successfully. Your Talk will be OnAir soon.';
+    setTimeout(()=>{window.location.reload();},10000);
+   }catch(err){
+    status.textContent='Upload could not be completed. Please try again.';
+    submitBtn.disabled=false;
+   }
+  };
+  reader.readAsDataURL(recordedBlob);
+ }catch(err){
+  status.textContent='Upload could not be completed. Please try again.';
+  submitBtn.disabled=false;
+ }
+};
 setTimer();
 </script>
 <script id="mic-flash-script">
@@ -55,102 +84,6 @@ setTimer();
 </script>
 
 
-<script id="submission-auto-reset">
-(function () {
-  const message = Array.from(document.querySelectorAll('*')).find(
-    el => el.children.length === 0 &&
-          el.textContent.trim() === 'Recording submitted successfully. Your Talk will be OnAir soon.'
-  );
-  if (!message) return;
 
-  // Watch for the success message becoming visible.
-  let resetTimer = null;
-  const observer = new MutationObserver(() => {
-    const visible = getComputedStyle(message).display !== 'none' &&
-                    getComputedStyle(message).visibility !== 'hidden' &&
-                    message.textContent.includes('Recording submitted successfully');
-
-    if (visible && !resetTimer) {
-      resetTimer = setTimeout(() => {
-        // Reset common recording/audio elements.
-        document.querySelectorAll('audio').forEach(a => {
-          try { a.pause(); a.currentTime = 0; } catch(e) {}
-          a.removeAttribute('src');
-          try { a.load(); } catch(e) {}
-        });
-
-        document.querySelectorAll('input[type="file"]').forEach(i => {
-          try { i.value = ''; } catch(e) {}
-        });
-
-        // Clear recording blobs / preview URLs commonly used by the page.
-        if (window.recordedChunks) window.recordedChunks = [];
-        if (window.audioChunks) window.audioChunks = [];
-        if (window.audioBlob) window.audioBlob = null;
-        if (window.recordingBlob) window.recordingBlob = null;
-        if (window.audioURL) window.audioURL = null;
-
-        // Reset buttons to their initial state.
-        document.querySelectorAll('button').forEach(b => {
-          const t = b.textContent.trim().toLowerCase();
-          if (t.includes('stop')) b.disabled = true;
-          if (t.includes('record') && !t.includes('stop') && !t.includes('re-record')) b.disabled = false;
-        });
-
-        // Hide/reset common preview containers.
-        document.querySelectorAll('[id*="preview"], [class*="preview"]').forEach(el => {
-          if (el.tagName !== 'AUDIO') el.style.display = 'none';
-        });
-
-        // Hide success message.
-        message.style.display = 'none';
-        resetTimer = null;
-      }, 10000);
-    }
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true });
-})();
-</script>
-
-
-<script>
-(function () {
-  var resetScheduled = false;
-  var successText = "Recording submitted successfully. Your Talk will be OnAir soon.";
-
-  function scheduleReset() {
-    if (resetScheduled) return;
-    resetScheduled = true;
-    setTimeout(function () {
-      window.location.reload();
-    }, 10000);
-  }
-
-  function checkSuccess() {
-    if (resetScheduled) return;
-    var nodes = document.querySelectorAll("body *");
-    for (var i = 0; i < nodes.length; i++) {
-      var el = nodes[i];
-      if (el.children.length === 0 &&
-          el.textContent &&
-          el.textContent.trim() === successText) {
-        scheduleReset();
-        return;
-      }
-    }
-  }
-
-  window.addEventListener("load", function () {
-    checkSuccess();
-    var observer = new MutationObserver(checkSuccess);
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true
-    });
-  });
-})();
-</script>
 
 </body></html>
