@@ -524,7 +524,10 @@ input::placeholder,textarea::placeholder{color:#667b91!important}
       <div class="timerLabel">TIME REMAINING</div><div id="timer" class="timer">05:00</div>
       <div class="controls"><button class="control" id="recordBtn">🎙 RECORD</button><button class="control" id="pauseBtn" disabled>Ⅱ PAUSE</button><button class="control" id="stopBtn" disabled>⏹ STOP</button></div>
     </div>
-    <div id="scriptPanel" class="script-panel" hidden><div class="script-title">YOUR APPROVED SCRIPT</div><div id="scriptText" class="script-text"></div></div>
+    <div id="scriptPanel" class="script-panel" hidden>
+      <div class="script-toolbar"><div class="script-title">YOUR APPROVED SCRIPT</div><div class="font-tools" role="group" aria-label="Adjust script text size"><button type="button" id="fontDecrease" aria-label="Decrease script font size">A−</button><span id="fontSizeLabel" aria-live="polite">22 px</span><button type="button" id="fontIncrease" aria-label="Increase script font size">A+</button><button type="button" id="fontReset" aria-label="Reset script font size">Reset</button></div></div>
+      <div id="scriptText" class="script-text"></div>
+    </div>
     <audio id="preview" controls style="display:none"></audio>
     <div class="controls"><button class="control" id="submitBtn" disabled>✓ SUBMIT RECORDING</button></div>
     <div class="note">Please listen to your recording before submitting.</div>
@@ -589,7 +592,13 @@ document.getElementById('toPage3').onclick=()=>{consentAcceptedAt=new Date().toI
 document.getElementById('backToPage2').onclick=()=>showPage(2);
 document.querySelectorAll('input[name="talkType"]').forEach(r=>r.addEventListener('change',()=>{talkType=r.value;document.getElementById('approvedFields').hidden=talkType!=='approved';document.getElementById('ownFields').hidden=talkType!=='own';document.getElementById('toPage4').disabled=r.value==='approved'?!document.getElementById('approvedTopic').value:false}));
 document.getElementById('approvedTopic').addEventListener('change',()=>{document.getElementById('toPage4').disabled=!document.getElementById('approvedTopic').value});
-document.getElementById('toPage4').onclick=()=>{if(!talkType)return;const panel=document.getElementById('scriptPanel');if(talkType==='approved'){const key=document.getElementById('approvedTopic').value;if(!key||!DEMO_SCRIPTS[key])return;selectedScript=DEMO_SCRIPTS[key].text;selectedTopic=DEMO_SCRIPTS[key].title;selectedLanguage='English';document.getElementById('scriptText').textContent=selectedScript;document.querySelector('#scriptPanel .script-title').textContent='DEMO SCRIPT — FOR LAYOUT TESTING';panel.hidden=false;}else{selectedTopic=topicInput.value.trim();if(!selectedTopic){topicInput.focus();return}selectedLanguage=document.getElementById('talkLanguage').value;selectedScript='';panel.hidden=true;}document.getElementById('topicHeading').textContent=selectedTopic;document.getElementById('doctorName').textContent=doctorNameField.value.trim();panel.scrollTop=0;showPage(4)};
+let scriptFontSize=22;
+function setScriptFontSize(size){scriptFontSize=Math.max(18,Math.min(32,size));const el=document.getElementById('scriptText');el.style.setProperty('--script-font-size',scriptFontSize+'px');document.getElementById('fontSizeLabel').textContent=scriptFontSize+' px';document.getElementById('fontDecrease').disabled=scriptFontSize<=18;document.getElementById('fontIncrease').disabled=scriptFontSize>=32;}
+function renderScriptText(raw){const el=document.getElementById('scriptText');el.replaceChildren();String(raw||'').split(/\n\s*\n/).map(p=>p.trim()).filter(Boolean).forEach(line=>{const p=document.createElement('p');p.textContent=line.replace(/\n/g,' ');el.appendChild(p);});setScriptFontSize(scriptFontSize);}
+document.getElementById('fontDecrease').addEventListener('click',()=>setScriptFontSize(scriptFontSize-2));
+document.getElementById('fontIncrease').addEventListener('click',()=>setScriptFontSize(scriptFontSize+2));
+document.getElementById('fontReset').addEventListener('click',()=>setScriptFontSize(22));
+document.getElementById('toPage4').onclick=()=>{if(!talkType)return;const panel=document.getElementById('scriptPanel');if(talkType==='approved'){const key=document.getElementById('approvedTopic').value;if(!key||!DEMO_SCRIPTS[key])return;selectedScript=DEMO_SCRIPTS[key].text;selectedTopic=DEMO_SCRIPTS[key].title;selectedLanguage='English';renderScriptText(selectedScript);document.querySelector('#scriptPanel .script-title').textContent='DEMO SCRIPT — FOR LAYOUT TESTING';panel.hidden=false;}else{selectedTopic=topicInput.value.trim();if(!selectedTopic){topicInput.focus();return}selectedLanguage=document.getElementById('talkLanguage').value;selectedScript='';panel.hidden=true;}document.getElementById('topicHeading').textContent=selectedTopic;document.getElementById('doctorName').textContent=doctorNameField.value.trim();panel.scrollTop=0;showPage(4)};
 document.getElementById('backToPage3').onclick=()=>{if(recorder&&recorder.state==='recording')return;showPage(3)};
 const recordBtn=document.getElementById('recordBtn'),pauseBtn=document.getElementById('pauseBtn'),stopBtn=document.getElementById('stopBtn'),submitBtn=document.getElementById('submitBtn'),preview=document.getElementById('preview'),status=document.getElementById('status'),timer=document.getElementById('timer');
 let recorder=null,chunks=[],recordedBlob=null,timerInterval=null,scriptScrollInterval=null,meterInterval=null,seconds=300,recordingStream=null,paused=false,audioContext=null,analyser=null,micSource=null;
@@ -625,3 +634,18 @@ setTimer();
 </script>
 </body>
 </html>
+
+<style>
+/* Script reading comfort: paragraph rhythm and adjustable type size */
+#page4 .script-panel{padding:12px 16px 18px;}
+#page4 .script-toolbar{position:sticky;top:-12px;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:inherit;padding:2px 0 10px;margin-bottom:8px;}
+#page4 .script-toolbar .script-title{margin:0;}
+#page4 .font-tools{display:flex;align-items:center;gap:6px;}
+#page4 .font-tools button{border:1px solid #45698f;background:#173b63;color:#fff;border-radius:8px;min-width:38px;min-height:34px;padding:5px 9px;font-weight:800;font-size:15px;cursor:pointer;}
+#page4 .font-tools button:focus-visible{outline:3px solid #36d6c5;outline-offset:2px;}
+#page4 #fontSizeLabel{color:inherit;font-size:12px;font-weight:700;white-space:nowrap;}
+#page4 .script-text{--script-font-size:22px;font-size:var(--script-font-size)!important;line-height:1.65!important;white-space:normal!important;}
+#page4 .script-text p{margin:0 0 1.15em;line-height:inherit;}
+#page4 .script-text p:last-child{margin-bottom:.25em;}
+@media(max-width:420px){#page4 .script-toolbar{gap:7px}#page4 .font-tools button{min-width:35px;min-height:32px;padding:4px 7px}}
+</style>
