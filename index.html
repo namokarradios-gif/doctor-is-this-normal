@@ -32,9 +32,9 @@ h1{margin:1px 0;font-size:clamp(16px,2.6vh,22px);line-height:1.12;flex:0 0 auto}
 .fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 10px}
 .field{margin:0;min-width:0}
 label{display:block;font-size:clamp(10px,1.6vh,12px);font-weight:700;color:#101828;margin-bottom:3px}
-input,textarea{width:100%;min-width:0;padding:clamp(7px,1.2vh,9px) 9px;border:1px solid #c5d3e2;border-radius:7px;font-size:16px;color:#10294f;background:#fff;height:clamp(34px,5.2vh,40px)}
+input,textarea,select{width:100%;min-width:0;padding:clamp(7px,1.2vh,9px) 9px;border:1px solid #c5d3e2;border-radius:7px;font-size:16px;color:#10294f;background:#fff;height:clamp(34px,5.2vh,40px)}
 input[readonly]{background:#f0f4f8}
-input:focus,textarea:focus{outline:2px solid #8fc4f5;border-color:#1476d4}
+input:focus,textarea:focus,select:focus{outline:2px solid #8fc4f5;border-color:#1476d4}
 .required{color:#d32626}
 .status-pill{display:inline-flex;align-items:center;min-height:34px;padding:5px 10px;border-radius:7px;background:#168c2e;color:#fff;font-size:12px;font-weight:700}
 .helper{font-size:10px;color:#65758a;margin-top:5px;line-height:1.2}
@@ -172,6 +172,92 @@ audio{width:100%;height:34px;margin:5px 0}
 .listen-radio-btn{display:block;text-align:center;text-decoration:none;max-width:360px;margin:clamp(12px,2vh,18px) auto 0;background:#17a33b!important;color:#fff!important;border-radius:9px;box-shadow:0 3px 0 #0d7e2b}
 .listen-radio-caption{text-align:center;font-size:15px;line-height:1.45;color:#17365d;margin:9px auto 0;max-width:360px;font-weight:700}.listen-radio-caption span{display:block}.listen-radio-caption span:last-child{font-size:13px;font-weight:500;color:#526174}
 
+
+/* Updated five-step workflow and spacious recording studio */
+.progress{gap:3px}.step{font-size:clamp(8px,1.35vh,10px);gap:3px}.step .num{width:clamp(20px,3vh,25px);height:clamp(20px,3vh,25px)}
+#page1,#page2,#page3{justify-content:flex-start!important;overflow-y:auto;padding:8px 3px}
+#page1 .page1-fields{display:flex;flex-direction:column;gap:10px;width:100%;max-width:540px;margin:0 auto}
+#page1 .page1-fields input,#page1 .page1-fields select{height:42px;font-size:15px}
+#page1 .page1-fields label{font-size:12px}
+.consent-text{background:#f4f7fb;border:1px solid #d5e0eb;border-radius:10px;padding:16px;color:#182a43;font-size:15px;line-height:1.55}
+.choice-grid{display:grid;gap:12px;margin:8px 0 14px}
+.choice-card{display:flex;align-items:flex-start;gap:10px;border:1px solid #cbd8e6;border-radius:12px;padding:14px;background:#f8fbff;cursor:pointer}
+.choice-card input{width:20px;height:20px;flex:0 0 20px;margin:1px 0 0}
+.choice-card strong,.choice-card small{display:block}.choice-card strong{font-size:15px;color:#12366b}.choice-card small{font-size:12px;color:#52677f;line-height:1.4;margin-top:4px}
+.talk-fields{padding:12px;background:#f4f8fc;border-radius:10px;margin:8px 0}.talk-fields label{font-size:13px}.talk-fields input,.talk-fields select{height:42px}
+#page4{justify-content:flex-start!important;gap:5px;overflow:hidden;padding:0 1px}
+.recording-top{flex:0 0 auto;text-align:center}
+#page4 .topic-heading{font-size:clamp(18px,2.8vh,23px)}
+#page4 .doctor{font-size:clamp(15px,2.3vh,19px)}
+.script-panel{flex:1;min-height:100px;overflow-y:auto;border:1px solid #cbd8e6;border-radius:10px;background:#fbfdff;padding:14px 16px;text-align:left;scroll-behavior:auto;overscroll-behavior:contain}
+.script-title{font-size:12px;font-weight:900;color:#176fc1;letter-spacing:.04em;margin-bottom:10px}
+.script-text{font-size:21px;line-height:1.65;color:#172b45;white-space:pre-wrap;overflow-wrap:anywhere}
+#page4 .controls{flex:0 0 auto}#page4 button.control{min-width:90px;padding:10px 12px}
+#pauseBtn{background:#1476d4}#page4 .btn{margin-top:3px}
+#page5{overflow-y:auto;justify-content:center!important;gap:5px}
+@media(max-width:420px){.step{font-size:8px}.step .num{width:20px;height:20px}#page1 .page1-fields{gap:8px}.script-text{font-size:21px;line-height:1.6}}
+
+
+/* Brighter, more energetic recording studio */
+#page4{background:linear-gradient(145deg,#eaf6ff 0%,#d8efff 48%,#e7fbff 100%);border:1px solid #9bd4f5;border-radius:16px;padding:10px;box-shadow:inset 0 1px 0 #fff;gap:7px}
+#page4 .recording-top{background:linear-gradient(120deg,#ffffff 0%,#eef8ff 100%);border:1px solid #b8def7;border-radius:13px;padding:8px 10px;box-shadow:0 3px 10px #1674b51a}
+#page4 .topic-heading{color:#075ca8;font-size:clamp(19px,3vh,25px)}
+#page4 .doctor{color:#174477}
+#page4 .onair{display:inline-block;background:#fff0f1;border:1px solid #ffc6cb;border-radius:20px;padding:5px 13px;color:#d92837;margin:5px auto}
+#page4 .status{background:#e4f5ff;border:1px solid #b7e2fb;border-radius:8px;color:#075b91;margin:4px 0;min-height:30px}
+#page4 .timer{color:#075ca8;text-shadow:0 1px 0 #fff}
+#page4 #recordingMic{color:#ef3340}
+#page4 .script-panel{background:linear-gradient(180deg,#ffffff 0%,#f4fbff 100%);border:2px solid #75bfea;box-shadow:0 4px 14px #0b75b51a}
+#page4 .script-title{display:inline-block;background:#d8efff;color:#075b9e;padding:6px 10px;border-radius:7px}
+#page4 .script-text{color:#173653}
+#page4 #recordBtn{background:linear-gradient(135deg,#ffbd36,#f39b16);color:#fff;box-shadow:0 3px 0 #d47a0b}
+#page4 #pauseBtn{background:linear-gradient(135deg,#2499ee,#0873cf);box-shadow:0 3px 0 #0758a1}
+#page4 #stopBtn{background:linear-gradient(135deg,#fa6571,#dc3545);box-shadow:0 3px 0 #b51e30}
+#page4 #submitBtn{background:linear-gradient(135deg,#28c76f,#11994b);box-shadow:0 3px 0 #08783a}
+#page4 .note{color:#315c7d;font-weight:600}
+#page4 #backToPage3{background:#47718f!important}
+
+
+
+/* Recording screen: compact studio controls, maximum script-reading area */
+@supports selector(body:has(#page4.active)) {
+  body:has(#page4.active) .logo-wrap,
+  body:has(#page4.active) > h1,
+  body:has(#page4.active) > .subtitle,
+  body:has(#page4.active) > .powered,
+  body:has(#page4.active) > .header-rule { display:none !important; }
+}
+body:has(#page4.active) { padding:4px 6px; }
+body:has(#page4.active) .container { width:min(100%,900px); }
+body:has(#page4.active) .panel { padding:4px 6px; border-radius:10px; }
+body:has(#page4.active) .progress { margin:0 0 4px; gap:3px; }
+body:has(#page4.active) .step { font-size:clamp(8px,1.25vh,10px); gap:3px; }
+body:has(#page4.active) .step .num { width:clamp(18px,2.6vh,22px); height:clamp(18px,2.6vh,22px); font-size:11px; }
+#page4 { gap:5px !important; padding:5px !important; min-height:0; }
+#page4 .recording-top { flex:0 0 auto; padding:5px 8px !important; gap:2px; }
+#page4 .topic-heading { font-size:clamp(16px,2.3vh,21px) !important; line-height:1.12; margin:0 0 2px; }
+#page4 .doctor, #page4 #recordingMic { display:none !important; }
+#page4 .onair { font-size:11px; padding:3px 9px; margin:2px auto !important; }
+#page4 .status { min-height:22px !important; padding:3px 5px; margin:2px 0 !important; font-size:11px; line-height:1.2; }
+#page4 .timerLabel { font-size:10px; margin-top:2px; }
+#page4 .timer { font-size:clamp(23px,4vh,31px); line-height:1; margin:1px 0 4px; }
+#page4 .controls { gap:6px; margin:2px 0 !important; }
+#page4 button.control { min-width:0 !important; padding:7px 10px !important; font-size:12px; }
+#page4 .script-panel { flex:1 1 auto !important; min-height:0 !important; max-height:none; padding:8px 11px !important; }
+#page4 .script-title { font-size:10px; padding:3px 7px !important; margin-bottom:5px; }
+#page4 .script-text { font-size:clamp(18px,2.8vh,22px) !important; line-height:1.48 !important; }
+#page4 #preview { flex:0 0 auto; width:100%; height:34px; max-height:34px; }
+#page4 .note { font-size:10px; margin:1px 0 !important; line-height:1.1; }
+#page4 #backToPage3 { display:none !important; }
+#page4 #submitBtn { padding:8px 14px !important; }
+@media (max-height:600px) {
+  #page4 .recording-top { padding:3px 6px !important; }
+  #page4 .onair { display:none !important; }
+  #page4 .timer { font-size:22px; }
+  #page4 .script-text { font-size:18px !important; line-height:1.4 !important; }
+  #page4 .note { display:none; }
+}
+
 </style>
 </head>
 <body>
@@ -192,175 +278,113 @@ audio{width:100%;height:34px;margin:5px 0}
 <hr class="header-rule">
 
 <div class="panel">
-  <div class="progress" aria-label="Four step process">
-    <div class="step active" id="progress1"><span class="num">1</span><span>Doctor Details</span></div>
-    <div class="step-line"></div>
-    <div class="step" id="progress2"><span class="num">2</span><span>Topic &amp; Consent</span></div>
-    <div class="step-line"></div>
-    <div class="step" id="progress3"><span class="num">3</span><span>Recording</span></div>
-    <div class="step-line"></div>
-    <div class="step" id="progress4"><span class="num">4</span><span>Confirmation</span></div>
+  <div class="progress" aria-label="Five step process">
+    <div class="step active" id="progress1"><span class="num">1</span><span>Doctor Details</span></div><div class="step-line"></div>
+    <div class="step" id="progress2"><span class="num">2</span><span>Consent</span></div><div class="step-line"></div>
+    <div class="step" id="progress3"><span class="num">3</span><span>Select Talk</span></div><div class="step-line"></div>
+    <div class="step" id="progress4"><span class="num">4</span><span>Recording</span></div><div class="step-line"></div>
+    <div class="step" id="progress5"><span class="num">5</span><span>Confirmation</span></div>
   </div>
 
   <section class="page active" id="page1">
-    <div class="doctor-profile">
-      <div class="profile-doctor-name" id="doctorNameDisplay">Doctor Name</div>
-      <input id="doctorNameField" type="hidden">
-      <div class="profile-meta">
-        <span class="profile-qualification-label">Qualification</span>
-        <span class="profile-qualification-value" id="qualificationDisplay">To be confirmed</span>
-        <span class="profile-separator">•</span>
-        <span class="profile-status-label">Registration</span>
-        <span id="registrationStatus" class="profile-status">Awaiting verification</span>
-      </div>
-    </div>
+    <div class="info"><div class="info-icon">👨‍⚕️</div><div><h2>Doctor Details</h2><p>Please enter your professional details.</p></div></div>
     <div class="page1-fields">
-      <div class="field">
-        <label for="registrationNumber">Medical Registration Number <span class="required">*</span></label>
-        <input id="registrationNumber" required placeholder="Enter registration number">
-      </div>
-      <div class="field">
-        <label for="emailAddress">Email Address <span class="required">*</span></label>
-        <input id="emailAddress" type="email" required placeholder="Enter email address">
-      </div>
+      <div class="field"><label for="doctorNameField">Name of Registered Medical Practitioner <span class="required">*</span></label><input id="doctorNameField" required placeholder="Enter full name"></div>
+      <div class="field"><label for="qualificationField">Qualification <span class="required">*</span></label><input id="qualificationField" required placeholder="e.g. MBBS, MD"></div>
+      <div class="field"><label for="registrationStatusField">Registration Status <span class="required">*</span></label><select id="registrationStatusField" required><option value="">Select status</option><option>Active</option><option>Not Active</option></select></div>
+      <div class="field"><label for="registrationNumber">SMC/NMR Registration Number <span class="required">*</span></label><input id="registrationNumber" required placeholder="Enter registration number"></div>
+      <div class="field"><label for="emailAddress">Email Address (to receive Participation Certificate) <span class="required">*</span></label><input id="emailAddress" type="email" required placeholder="Enter email address"></div>
     </div>
-    <button class="btn" id="toPage2">Continue&nbsp; →</button>
+    <button class="btn" id="toPage2">Continue →</button>
   </section>
 
   <section class="page" id="page2">
-    <div class="info"><div class="info-icon">📄</div><div><h2>Topic &amp; Consent</h2><p>Enter your talk topic and provide consent for recording and publication.</p></div></div>
-    <div class="field"><label for="topicName">Topic Name <span class="required">*</span></label><textarea id="topicName" rows="2" maxlength="120" placeholder="Enter the title of your talk"></textarea></div>
-    <div class="consent"><span>I confirm that this recording is my own professional contribution for patient education and public health awareness. I consent to its recording, processing, publication and broadcast by Radio 4 Diabetes India, powered by Radio 4 Public Health. By pressing “Accept &amp; Continue”, I provide my consent.</span></div>
-    <button class="btn" id="toPage3">Accept &amp; Continue&nbsp; →</button>
-    <button class="btn" id="backToPage1" style="background:#64748b;margin-top:10px">← Back</button>
+    <div class="info"><div class="info-icon">📄</div><div><h2>Professional Contribution &amp; Consent</h2><p>Please read and accept to continue.</p></div></div>
+    <div class="consent-text">I confirm that this is my independent professional contribution towards diabetes education and public health awareness.<br><br>I voluntarily consent to Radio 4 Diabetes India recording, processing, storing, publishing and broadcasting my talk for educational purposes.<br><br>I confirm that my contribution respects patient confidentiality and professional ethics.</div>
+    <button class="btn" id="toPage3">Accept &amp; Continue →</button>
+    <button class="btn" id="backToPage1" style="background:#64748b">← Back</button>
   </section>
 
   <section class="page" id="page3">
-    <div class="topic-heading" id="topicHeading">Talk Topic</div>
-    <div class="doctor" id="doctorName">Doctor</div>
-    <div class="onair">🔴 LIVE RADIO STUDIO RECORDING</div>
-    <div id="recordingMic" aria-hidden="true">🎙️</div>
-    <div id="status" class="status">🎙 Microphone ready. Click RECORD to begin.</div>
-    <div class="timerLabel">TIME REMAINING</div>
-    <div id="timer" class="timer">05:00</div>
-    <div class="controls"><button class="control" id="recordBtn">🎙 RECORD</button><button class="control" id="stopBtn" disabled>⏹ STOP</button></div>
-    <audio id="preview" controls style="display:none"></audio>
-    <div class="controls"><button class="control" id="submitBtn" disabled>✓ SUBMIT RECORDING</button></div>
-    <div class="note">Please listen to your recording before submitting.</div>
-    <button class="btn" id="backToPage2" style="background:#64748b;margin-top:10px">← Back to Topic</button>
+    <div class="info"><div class="info-icon">🎙️</div><div><h2>Select Your Talk</h2><p>Choose a pre-approved health talk or record your own topic.</p></div></div>
+    <div class="choice-grid">
+      <label class="choice-card"><input type="radio" name="talkType" value="approved"><span><strong>Pre-Approved Health Talks</strong><small>Select a prepared English script from the approved library.</small></span></label>
+      <label class="choice-card"><input type="radio" name="talkType" value="own"><span><strong>My Own Health Talk</strong><small>Choose your topic and speak in English or a regional language.</small></span></label>
+    </div>
+    <div id="approvedFields" class="talk-fields" hidden>
+      <label for="approvedTopic">Select Pre-Approved Topic</label>
+      <select id="approvedTopic"><option value="">Select a sample health talk</option><option value="understanding-diabetes">Understanding Type 2 Diabetes (Demo Script)</option></select>
+      <p class="helper">Demo script for testing the recording screen and automatic scrolling. Replace with your approved script library later.</p>
+    </div>
+    <div id="ownFields" class="talk-fields" hidden>
+      <label for="topicName">Your Talk Topic <span class="required">*</span></label>
+      <input id="topicName" maxlength="120" placeholder="Enter your talk topic">
+      <label for="talkLanguage" style="margin-top:10px">Language</label>
+      <select id="talkLanguage"><option>English</option><option>Hindi</option><option>Marathi</option><option>Gujarati</option><option>Bengali</option><option>Tamil</option><option>Telugu</option><option>Kannada</option><option>Malayalam</option><option>Punjabi</option><option>Other regional language</option></select>
+    </div>
+    <button class="btn" id="toPage4" disabled>Continue to Recording →</button>
+    <button class="btn" id="backToPage2" style="background:#64748b">← Back</button>
   </section>
 
   <section class="page" id="page4">
+    <div class="recording-top">
+      <div class="topic-heading" id="topicHeading">Your Health Talk</div>
+      <div class="doctor" id="doctorName">Doctor</div>
+      <div class="onair">🔴 LIVE RADIO STUDIO RECORDING</div>
+      <div id="recordingMic" aria-hidden="true">🎙️</div>
+      <div id="status" class="status">Microphone ready. Click RECORD to begin.</div>
+      <div class="timerLabel">TIME REMAINING</div><div id="timer" class="timer">05:00</div>
+      <div class="controls"><button class="control" id="recordBtn">🎙 RECORD</button><button class="control" id="pauseBtn" disabled>Ⅱ PAUSE</button><button class="control" id="stopBtn" disabled>⏹ STOP</button></div>
+    </div>
+    <div id="scriptPanel" class="script-panel" hidden><div class="script-title">YOUR APPROVED SCRIPT</div><div id="scriptText" class="script-text"></div></div>
+    <audio id="preview" controls style="display:none"></audio>
+    <div class="controls"><button class="control" id="submitBtn" disabled>✓ SUBMIT RECORDING</button></div>
+    <div class="note">Please listen to your recording before submitting.</div>
+    <button class="btn" id="backToPage3" style="background:#64748b">← Back to Talk Selection</button>
+  </section>
+
+  <section class="page" id="page5">
     <div class="success-mark" aria-hidden="true">✓</div>
     <div class="success-subtitle">RECORDING SUBMITTED SUCCESSFULLY</div>
     <div class="live-soon-headline">WILL GO LIVE ON AIR SOON!</div>
-    <div class="success-message">
-      <span>Your recording has been submitted to</span>
-      <strong class="submitted-brand">Radio 4 Diabetes India</strong>
-    </div>
-    <div class="email-card">
-      <div class="email-icon" aria-hidden="true">✉</div>
-      <div class="email-heading">Look out for an email from Radio 4</div>
-      <div class="email-message">
-        You will receive your <strong>Participation Certificate</strong> and your
-        <strong>OnDemand OnAir Radio Link</strong> at the email address provided.
-      </div>
-      <div class="email-address" id="confirmationEmail"></div>
-    </div>
-    <a class="btn listen-radio-btn" id="listenRadio4" href="https://diabetesindia.radio4.in/" target="_blank" rel="noopener noreferrer">Listen to</a>
-    <div class="listen-radio-caption"><span>Radio 4 Diabetes India</span><span>Apple Music Radio Station</span></div>
+    <div class="success-message"><span>Your recording has been submitted to</span><strong class="submitted-brand">Radio 4 Diabetes India</strong></div>
+    <div class="email-card"><div class="email-icon" aria-hidden="true">✉</div><div class="email-heading">Look out for an email from Radio 4</div><div class="email-message">Your <strong>Participation Certificate</strong> and <strong>OnDemand Radio Link</strong> will be sent to:</div><div class="email-address" id="confirmationEmail"></div></div>
+    <a class="btn listen-radio-btn" id="listenRadio4" href="https://diabetesindia.radio4.in/" target="_blank" rel="noopener noreferrer">Listen to Radio 4 Diabetes India</a>
+    <div class="listen-radio-caption"><span>Apple Music Radio Station</span></div>
   </section>
 </div>
 </div>
 
 <script>
-function closeSplash(){
-  const splash=document.getElementById('splashScreen');
-  const studio=document.getElementById('studioContainer');
-  if(!splash||splash.dataset.closed==='yes')return;
-  splash.dataset.closed='yes';
-  splash.style.display='none';
-  studio.style.visibility='visible';
-  if(window.__splashTimer)clearTimeout(window.__splashTimer);
-}
-document.getElementById('skipSplash').addEventListener('click',closeSplash);
+function closeSplash(){const splash=document.getElementById('splashScreen');const studio=document.getElementById('studioContainer');if(!splash||splash.dataset.closed==='yes')return;splash.dataset.closed='yes';splash.style.display='none';studio.style.visibility='visible';if(window.__splashTimer)clearTimeout(window.__splashTimer)}
 window.__splashTimer=setTimeout(closeSplash,3000);
-
-const DOCTORS={DR001:'Dr Sanjay Kalra',DR002:'Dr Anirudhha Dharmadhikari',DR003:'Dr Rashi Agarwal',DR004:'Dr Arun Kalyanasundaram',DR005:'Dr Altamash Shaikh',DR006:'Dr Anup Mahajani',DR007:'Dr Akanksha Pathria Balvaria',DR008:'Dr Yogesh Solanki',DR009:'Dr Diimple Siinha',DR010:'Dr Subhasis Roy Chowdhury',DR011:'Dr Brij Mohan Arora',DR012:'Dr Pramod Gandhi',DR013:'Dr Ashalata Srinivasan',DR014:'Dr Pathik Barvaliya',DR015:'Dr Awadhesh Kumar Sharma',DR016:'Dr A K Upadhyay',DR017:'Dr Umeshwar Pandey',DR018:'Dr Rajesh Pandey',DR019:'Dr Pankaj Kumar Singh',DR020:'Dr Kanhaiya Agrawal',DR021:'Dr K P Chandra',DR022:'Dr Dhanya Nair',DR023:'Dr Sonali Bhojane'};
-const params=new URLSearchParams(location.search);
-const doctorId=(params.get('id')||'DR001').toUpperCase();
-const doctorName=DOCTORS[doctorId]||('Doctor '+doctorId);
-document.getElementById('doctorNameField').value=doctorName;
-document.getElementById('doctorName').textContent=doctorName;
-const topicInput=document.getElementById('topicName');
-let consentAcceptedAt=null;
-const CONSENT_TEXT='I confirm that this recording is my own professional contribution for patient education and public health awareness. I consent to its recording, processing, publication and broadcast by Radio 4 Diabetes India, powered by Radio 4 Public Health.';
-function showPage(n){
-  for(let i=1;i<=4;i++){
-    document.getElementById('page'+i).classList.toggle('active',i===n);
-    const p=document.getElementById('progress'+i);
-    p.classList.toggle('active',i===n);
-    p.classList.toggle('done',i<n);
-    p.querySelector('.num').textContent=i<n?'✓':String(i);
-  }
-}
-document.getElementById('toPage2').onclick=()=>{
-  const reg=document.getElementById('registrationNumber');
-  const email=document.getElementById('emailAddress');
-  if(!reg.value.trim()){reg.focus();return}
-  if(!email.value.trim()||!email.checkValidity()){email.focus();return}
-  showPage(2);
+const params=new URLSearchParams(location.search);const doctorId=(params.get('id')||'').toUpperCase();
+const doctorNameField=document.getElementById('doctorNameField');const qualificationField=document.getElementById('qualificationField');
+const topicInput=document.getElementById('topicName');let consentAcceptedAt=null;
+const CONSENT_TEXT='I confirm that this is my independent professional contribution towards diabetes education and public health awareness. I voluntarily consent to Radio 4 Diabetes India recording, processing, storing, publishing and broadcasting my talk for educational purposes. I confirm that my contribution respects patient confidentiality and professional ethics.';
+let talkType='',selectedTopic='',selectedLanguage='English',selectedScript='';
+const DEMO_SCRIPTS={
+ 'understanding-diabetes': {title:'Understanding Type 2 Diabetes', text:`Understanding Type 2 Diabetes\n\nHello, and welcome to this health education talk from Radio 4 Diabetes India. Today, we will discuss what type 2 diabetes means and why regular care matters.\n\nDiabetes is a long-term condition in which the level of glucose, or sugar, in the blood can become higher than normal. In type 2 diabetes, the body may not use insulin effectively, and over time it may also produce less insulin than it needs. Insulin is a hormone that helps glucose move from the blood into the body’s cells, where it is used for energy.\n\nSome people with type 2 diabetes notice symptoms such as increased thirst, frequent urination, tiredness, blurred vision or slow healing of wounds. However, many people may have no obvious symptoms. That is one reason why appropriate testing and follow-up with a qualified healthcare professional are important.\n\nDiabetes care is not based on one single action. It usually involves a combination of healthy eating, regular physical activity, taking medicines as prescribed when needed, and monitoring blood glucose as advised by the treating clinician.\n\nFor everyday meals, try to follow a balanced pattern. Include vegetables, suitable sources of protein, and high-fibre foods. Be mindful of portion sizes and the amount of refined carbohydrates and sugary drinks you consume. Individual food needs can differ, so a registered dietitian or treating doctor can help tailor advice to your circumstances.\n\nPhysical activity is also valuable. Many adults can benefit from regular movement, such as brisk walking, according to their health and ability. If you have other medical conditions or have been inactive for a long time, discuss a safe activity plan with your healthcare professional before making major changes.\n\nIf you have been prescribed medication, take it as directed. Do not stop, start or change a medicine on your own. Keep follow-up appointments and discuss your blood glucose results with your treating clinician. Tests such as HbA1c may be used by your clinician to understand average blood glucose over time.\n\nRemember, diabetes is manageable, and care should be individualised. Small, consistent steps and regular medical guidance can make a meaningful difference.\n\nThis message is for general health education and does not replace personal medical advice. Please consult your healthcare professional for guidance suited to you.\n\nThank you for listening to Radio 4 Diabetes India, bringing diabetes education and public health awareness to communities across India.`}
 };
+function showPage(n){for(let i=1;i<=5;i++){document.getElementById('page'+i).classList.toggle('active',i===n);const p=document.getElementById('progress'+i);p.classList.toggle('active',i===n);p.classList.toggle('done',i<n);p.querySelector('.num').textContent=i<n?'✓':String(i)}}
+document.getElementById('toPage2').onclick=()=>{const fields=['doctorNameField','qualificationField','registrationStatusField','registrationNumber','emailAddress'];for(const id of fields){const el=document.getElementById(id);if(!el.value.trim()||(id==='emailAddress'&&!el.checkValidity())){el.focus();return}}document.getElementById('doctorName').textContent=doctorNameField.value.trim();showPage(2)};
 document.getElementById('backToPage1').onclick=()=>showPage(1);
-document.getElementById('toPage3').onclick=()=>{
-  if(!topicInput.value.trim()){topicInput.focus();return}
-  consentAcceptedAt=new Date().toISOString();
-  document.getElementById('topicHeading').textContent=topicInput.value.trim();
-  showPage(3);
-};
+document.getElementById('toPage3').onclick=()=>{consentAcceptedAt=new Date().toISOString();showPage(3)};
 document.getElementById('backToPage2').onclick=()=>showPage(2);
-
-const recordBtn=document.getElementById('recordBtn'),stopBtn=document.getElementById('stopBtn'),submitBtn=document.getElementById('submitBtn'),preview=document.getElementById('preview'),status=document.getElementById('status'),timer=document.getElementById('timer');
-let recorder=null,chunks=[],recordedBlob=null,timerInterval=null,seconds=300;
+document.querySelectorAll('input[name="talkType"]').forEach(r=>r.addEventListener('change',()=>{talkType=r.value;document.getElementById('approvedFields').hidden=talkType!=='approved';document.getElementById('ownFields').hidden=talkType!=='own';document.getElementById('toPage4').disabled=false}));
+document.getElementById('approvedTopic').addEventListener('change',()=>{document.getElementById('toPage4').disabled=!document.getElementById('approvedTopic').value});
+document.getElementById('toPage4').onclick=()=>{if(!talkType)return;const panel=document.getElementById('scriptPanel');if(talkType==='approved'){const key=document.getElementById('approvedTopic').value;if(!key||!DEMO_SCRIPTS[key])return;selectedScript=DEMO_SCRIPTS[key].text;selectedTopic=DEMO_SCRIPTS[key].title;selectedLanguage='English';document.getElementById('scriptText').textContent=selectedScript;document.querySelector('#scriptPanel .script-title').textContent='DEMO SCRIPT — FOR LAYOUT TESTING';panel.hidden=false;}else{selectedTopic=topicInput.value.trim();if(!selectedTopic){topicInput.focus();return}selectedLanguage=document.getElementById('talkLanguage').value;selectedScript='';panel.hidden=true;}document.getElementById('topicHeading').textContent=selectedTopic;document.getElementById('doctorName').textContent=doctorNameField.value.trim();panel.scrollTop=0;showPage(4)};
+document.getElementById('backToPage3').onclick=()=>{if(recorder&&recorder.state==='recording')return;showPage(3)};
+const recordBtn=document.getElementById('recordBtn'),pauseBtn=document.getElementById('pauseBtn'),stopBtn=document.getElementById('stopBtn'),submitBtn=document.getElementById('submitBtn'),preview=document.getElementById('preview'),status=document.getElementById('status'),timer=document.getElementById('timer');
+let recorder=null,chunks=[],recordedBlob=null,timerInterval=null,scriptScrollInterval=null,seconds=300,recordingStream=null,paused=false;
 function setTimer(){timer.textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0')}
-function stopRecording(){if(!recorder||recorder.state!=='recording')return;recorder.stop();clearInterval(timerInterval);recordBtn.disabled=false;stopBtn.disabled=true}
-recordBtn.onclick=async()=>{try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];recordedBlob=null;recorder=new MediaRecorder(stream);recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{stream.getTracks().forEach(t=>t.stop());recordedBlob=new Blob(chunks,{type:recorder.mimeType||'audio/webm'});preview.src=URL.createObjectURL(recordedBlob);preview.style.display='block';submitBtn.disabled=false;status.textContent='Recording stopped. Listen to it, or record again.'};recorder.start();seconds=300;setTimer();recordBtn.disabled=true;stopBtn.disabled=false;submitBtn.disabled=true;status.textContent='🎙️ You are recording for Radio 4 Public Health';timerInterval=setInterval(()=>{seconds--;setTimer();if(seconds<=0)stopRecording()},1000)}catch(e){status.textContent='Microphone access is required. Please allow microphone permission and try again.'}};
+function stopRecording(){if(!recorder||recorder.state==='inactive')return;recorder.stop();clearInterval(timerInterval);clearInterval(scriptScrollInterval);recordBtn.disabled=false;pauseBtn.disabled=true;stopBtn.disabled=true;paused=false}
+recordBtn.onclick=async()=>{try{recordingStream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];recordedBlob=null;preview.style.display='none';submitBtn.disabled=true;recorder=new MediaRecorder(recordingStream);recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{recordingStream.getTracks().forEach(t=>t.stop());recordedBlob=new Blob(chunks,{type:recorder.mimeType||'audio/webm'});preview.src=URL.createObjectURL(recordedBlob);preview.style.display='block';submitBtn.disabled=false;status.textContent='Recording stopped. Listen before submitting.'};recorder.start();seconds=300;setTimer();recordBtn.disabled=true;pauseBtn.disabled=false;stopBtn.disabled=false;status.textContent='You are recording your talk.';timerInterval=setInterval(()=>{if(!paused){seconds--;setTimer();if(seconds<=0)stopRecording()}},1000);scriptScrollInterval=setInterval(()=>{const panel=document.getElementById('scriptPanel');if(!paused&&!panel.hidden)panel.scrollTop+=0.8},100)}catch(e){status.textContent='Microphone access is required. Please allow microphone permission and try again.'}};
+pauseBtn.onclick=()=>{if(!recorder)return;if(recorder.state==='recording'){recorder.pause();paused=true;pauseBtn.textContent='▶ RESUME';status.textContent='Recording paused.'}else if(recorder.state==='paused'){recorder.resume();paused=false;pauseBtn.textContent='Ⅱ PAUSE';status.textContent='Recording resumed.'}};
 stopBtn.onclick=stopRecording;
-
 const UPLOAD_URL='https://script.google.com/macros/s/AKfycbw7a45LcBMQghWuLMkwncq8X4_n6tIpycQrYW7vV_ZElErLEApAr5nxr3m4nUb1tUkx/exec';
-function safeFilePart(s){return String(s||'').normalize('NFKD').replace(/[^A-Za-z0-9_-]+/g,'_').replace(/^_+|_+$/g,'').slice(0,60)||'talk'}
-submitBtn.onclick=async()=>{
- if(!recordedBlob)return;
- submitBtn.disabled=true;
- status.textContent='Uploading your recording...';
- try{
-  const reader=new FileReader();
-  reader.onloadend=async()=>{
-   try{
-    const base64=reader.result.split(',')[1];
-    const topic=safeFilePart(topicInput.value);
-    const stamp=new Date().toISOString().replace(/[:.]/g,'-');
-    const payload={
-     doctorId:doctorId,
-     doctorName:doctorName,
-     registrationNumber:document.getElementById('registrationNumber').value.trim(),
-     emailAddress:document.getElementById('emailAddress').value.trim(),
-     topicName:topicInput.value.trim(),
-     consentAccepted:true,
-     consentAcceptedAt:consentAcceptedAt,
-     consentText:CONSENT_TEXT,
-     fileName:doctorId+'_'+topic+'_'+stamp+'.webm',
-     mimeType:recordedBlob.type||'audio/webm',
-     audio:base64
-    };
-    await fetch(UPLOAD_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
-    document.getElementById('confirmationEmail').textContent=document.getElementById('emailAddress').value.trim();
-    showPage(4);
-   }catch(err){status.textContent='Upload could not be completed. Please try again.';submitBtn.disabled=false}
-  };
-  reader.readAsDataURL(recordedBlob);
- }catch(err){status.textContent='Upload could not be completed. Please try again.';submitBtn.disabled=false}
-};
+function safeFilePart(s){return String(s||'').normalize('NFKD').replace(/[^A-Za-z0-9 -]+/g,'').replace(/\s+/g,' ').trim().slice(0,80)||'Health Talk'}
+submitBtn.onclick=async()=>{if(!recordedBlob)return;submitBtn.disabled=true;status.textContent='Uploading your recording...';try{const reader=new FileReader();reader.onloadend=async()=>{try{const base64=reader.result.split(',')[1];const stamp=new Date().toISOString().replace(/[:.]/g,'-');const docName=doctorNameField.value.trim();const topic=selectedTopic||topicInput.value.trim();const payload={doctorId:doctorId,doctorName:docName,qualification:qualificationField.value.trim(),registrationStatus:document.getElementById('registrationStatusField').value,registrationNumber:document.getElementById('registrationNumber').value.trim(),emailAddress:document.getElementById('emailAddress').value.trim(),topicName:topic,talkType:talkType,talkLanguage:selectedLanguage,consentAccepted:true,consentAcceptedAt:consentAcceptedAt,consentText:CONSENT_TEXT,fileName:(doctorId||'DOCTOR')+'_'+safeFilePart(topic).replace(/\s+/g,'_')+'_'+stamp+'.webm',mimeType:recordedBlob.type||'audio/webm',audio:base64};await fetch(UPLOAD_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});document.getElementById('confirmationEmail').textContent=document.getElementById('emailAddress').value.trim();showPage(5)}catch(err){status.textContent='Upload could not be completed. Please try again.';submitBtn.disabled=false}};reader.readAsDataURL(recordedBlob)}catch(err){status.textContent='Upload could not be completed. Please try again.';submitBtn.disabled=false}};
 setTimer();
 </script>
 <script>
