@@ -258,6 +258,130 @@ body:has(#page4.active) .step .num { width:clamp(18px,2.6vh,22px); height:clamp(
   #page4 .note { display:none; }
 }
 
+
+
+/* Final mobile studio visual polish: teal canvas, vivid controls, dark audio player */
+#page4{
+  background:linear-gradient(150deg,#c8f1ed 0%,#a9e5df 52%,#d5f6f1 100%) !important;
+  border:1px solid #54c6ba !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8) !important;
+}
+#page4 .recording-top{
+  background:linear-gradient(145deg,#faffff 0%,#e4fffb 100%) !important;
+  border:1px solid #79d6cb !important;
+  box-shadow:0 4px 12px rgba(0,105,95,.14) !important;
+}
+#page4 .onair{background:#fff0f1 !important;color:#d71935 !important;border:1px solid #ff9eaa !important;font-weight:900}
+#page4 .status{background:#d8f5ff !important;border:1px solid #74cbed !important;color:#064b70 !important;font-weight:800}
+#page4 .timer{color:#005f9e !important;font-weight:950}
+#page4 button.control{border:0 !important;border-radius:11px !important;font-weight:900 !important;filter:saturate(1.18);transition:transform .12s ease,filter .12s ease}
+#page4 button.control:not(:disabled):active{transform:translateY(2px);filter:brightness(.92)}
+#page4 #recordBtn{background:linear-gradient(135deg,#ffcf33,#ff8a00) !important;color:#fff !important;box-shadow:0 4px 0 #c96700 !important}
+#page4 #pauseBtn{background:linear-gradient(135deg,#28b8ff,#0874d1) !important;color:#fff !important;box-shadow:0 4px 0 #07549a !important}
+#page4 #stopBtn{background:linear-gradient(135deg,#ff687d,#e51d45) !important;color:#fff !important;box-shadow:0 4px 0 #a90f2d !important}
+#page4 #submitBtn{background:linear-gradient(135deg,#20d879,#07994f) !important;color:#fff !important;box-shadow:0 4px 0 #08743d !important}
+#page4 button.control:disabled{opacity:.62;filter:saturate(.75)}
+#page4 #preview{
+  display:block;
+  width:100% !important;
+  height:46px !important;
+  max-height:46px !important;
+  min-height:46px !important;
+  box-sizing:border-box;
+  padding:4px 8px;
+  border-radius:10px;
+  background:#050b14 !important;
+  border:2px solid #142b40;
+  color-scheme:dark;
+  accent-color:#24d7b4;
+}
+#page4 .note{color:#145b59 !important;font-weight:800 !important}
+#page4 #backToPage3{background:#176b78 !important;color:white !important}
+@media(max-width:600px){
+  #page4{padding:7px !important;gap:7px !important}
+  #page4 .recording-top{padding:7px 8px !important}
+  #page4 .topic-heading{font-size:clamp(17px,2.4vh,21px) !important}
+  #page4 .controls{gap:8px !important}
+  #page4 button.control{min-height:42px;padding:9px 12px !important;font-size:12px !important}
+  #page4 #preview{height:48px !important;max-height:48px !important}
+}
+
+
+
+/* Final approved visual: all-navy recording studio with a white audio player */
+#page4{
+  background:linear-gradient(155deg,#06152e 0%,#091d3d 55%,#06152e 100%) !important;
+  border:1px solid #24466f !important;
+  box-shadow:inset 0 1px 0 rgba(130,190,255,.12) !important;
+  color:#ffffff !important;
+}
+#page4 .recording-top{
+  background:linear-gradient(145deg,#0c2345 0%,#102d53 100%) !important;
+  border:1px solid #31577f !important;
+  box-shadow:0 5px 16px rgba(0,0,0,.24) !important;
+}
+#page4 .topic-heading{color:#ffffff !important}
+#page4 .doctor{color:#c5d8f0 !important}
+#page4 .onair{background:#3a1424 !important;color:#ff7188 !important;border:1px solid #a83250 !important}
+#page4 .status{background:#102f52 !important;border:1px solid #28608e !important;color:#d9f1ff !important}
+#page4 .timer{color:#ffffff !important;text-shadow:0 0 14px rgba(69,170,255,.25) !important}
+#page4 .timerLabel{color:#b8cce5 !important}
+#page4 .script-panel{
+  background:linear-gradient(160deg,#10294b 0%,#0b2140 100%) !important;
+  border:1px solid #37618c !important;
+  box-shadow:inset 0 1px 8px rgba(0,0,0,.18) !important;
+  color:#ffffff !important;
+}
+#page4 .script-title{background:#173d66 !important;color:#9edcff !important}
+#page4 .script-text{color:#ffffff !important}
+#page4 #recordBtn{background:linear-gradient(135deg,#ffc83d,#ff8500) !important;color:#fff !important;box-shadow:0 4px 0 #b95c00 !important}
+#page4 #pauseBtn{background:linear-gradient(135deg,#32baff,#0874dc) !important;color:#fff !important;box-shadow:0 4px 0 #064f9c !important}
+#page4 #stopBtn{background:linear-gradient(135deg,#ff7184,#e51c43) !important;color:#fff !important;box-shadow:0 4px 0 #9e1230 !important}
+#page4 #submitBtn{background:linear-gradient(135deg,#35e58a,#08a653) !important;color:#fff !important;box-shadow:0 4px 0 #08733e !important}
+#page4 button.control:disabled{opacity:.48 !important;filter:saturate(.65) !important}
+#page4 .note{color:#b9d0e9 !important}
+#page4 #backToPage3{background:#24496e !important;color:#fff !important}
+#page4 #preview{
+  background:#ffffff !important;
+  color-scheme:light !important;
+  accent-color:#087bd5 !important;
+  border:2px solid #d6e5f4 !important;
+  border-radius:10px !important;
+  box-shadow:0 2px 10px rgba(0,0,0,.22) !important;
+}
+
+
+/* Unified deep-navy design system across every workflow page */
+:root{color-scheme:dark}
+html,body{background:#06152e!important;color:#fff!important}
+body{background:linear-gradient(145deg,#06152e 0%,#0a1d3b 52%,#06152e 100%)!important;color:#fff!important}
+.panel{background:#0c2345!important;color:#fff!important;border:1px solid #24466f!important;box-shadow:0 8px 24px rgba(0,0,0,.28)!important}
+.page{color:#fff!important}
+.page h1,.page h2,.page h3,.page p,.page label,.page .field-label{color:#fff}
+#page1,#page2,#page3,#page5{background:transparent!important;color:#fff!important}
+#page1 .page1-fields label,.field label,.field>label{color:#d9e9ff!important}
+.info{background:#102f52!important;color:#e8f4ff!important;border:1px solid #31577f!important}
+.info *{color:#e8f4ff!important}
+.consent-text,.consent{background:#10294b!important;border:1px solid #31577f!important;color:#f2f7ff!important}
+.consent-text *,.consent *{color:#f2f7ff!important}
+.choice-card{background:#10294b!important;border:1px solid #37618c!important;color:#fff!important}
+.choice-card strong{color:#fff!important}.choice-card small{color:#c4d8ef!important}
+.talk-fields{background:#10294b!important;border:1px solid #31577f!important;color:#fff!important}
+.talk-fields label{color:#e6f1ff!important}
+input,textarea,select{background:#fff!important;color:#10294f!important;border:1px solid #9db8d5!important}
+input::placeholder,textarea::placeholder{color:#667b91!important}
+.status-pill{background:#087f48!important;color:#fff!important}
+.progress,.step{color:#c9dcf3!important}
+.step.active{color:#fff!important}.step-line{background:#31577f!important}
+.step .num{background:#31577f!important;color:#fff!important}
+.step.done .num{background:#16a34a!important}
+#page5 .email-card{background:#10294b!important;border:1px solid #37618c!important;color:#fff!important}
+#page5 .email-card *{color:#fff!important}
+#page5 .success-message,#page5 .success-message *{color:#fff!important}
+.listen-radio-caption{color:#e4efff!important}.listen-radio-caption span:last-child{color:#b9cde5!important}
+#page4{background:linear-gradient(155deg,#06152e 0%,#091d3d 55%,#06152e 100%)!important}
+#preview{background:#fff!important;color-scheme:light!important}
+
 </style>
 </head>
 <body>
