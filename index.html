@@ -351,6 +351,24 @@ body:has(#page4.active) .step .num { width:clamp(18px,2.6vh,22px); height:clamp(
 }
 
 
+/* Live recording feedback: visible only when recording is active */
+#page4 .live-indicator{display:flex;align-items:center;justify-content:center;gap:9px;margin:5px auto 2px;padding:7px 12px;border-radius:999px;background:#172d4b;border:1px solid #35577e;color:#c9d9ec;font-weight:800;font-size:12px;letter-spacing:.08em;width:max-content;max-width:100%}
+#page4 .live-dot{width:10px;height:10px;border-radius:50%;background:#9aa9bb;display:inline-block}
+#page4 .live-indicator.recording{background:#401827;border-color:#f0445e;color:#ff7185;animation:livePulse 1.1s ease-in-out infinite}
+#page4 .live-indicator.recording .live-dot{background:#ff334f;box-shadow:0 0 0 0 rgba(255,51,79,.75);animation:dotPulse 1.1s infinite}
+#page4 .live-indicator.paused{background:#493515;border-color:#e9a52c;color:#ffd477}
+#page4 .live-indicator.paused .live-dot{background:#ffb52e}
+#page4 .live-indicator.complete{background:#103c2c;border-color:#21b875;color:#7af0b4}
+#page4 .live-indicator.complete .live-dot{background:#21d486}
+#page4 #recordingMic{display:none!important;font-size:28px!important;margin:3px auto!important;color:#ff5268!important}
+#page4 #recordingMic.active{display:block!important;animation:micFlash .8s infinite!important}
+#page4 .audio-meter{height:25px;display:flex;align-items:center;justify-content:center;gap:4px;margin:2px auto 4px;opacity:.22}
+#page4 .audio-meter.active{opacity:1}
+#page4 .meter-bar{display:block;width:5px;height:5px;border-radius:5px;background:#36d6c5;transition:height .08s ease}
+@keyframes livePulse{50%{filter:brightness(1.3)}}
+@keyframes dotPulse{70%{box-shadow:0 0 0 8px rgba(255,51,79,0)}}
+@media(max-width:600px){#page4 .live-indicator{font-size:11px;padding:6px 10px;margin:3px auto}#page4 .audio-meter{height:20px}}
+
 /* Unified deep-navy design system across every workflow page */
 :root{color-scheme:dark}
 html,body{background:#06152e!important;color:#fff!important}
@@ -381,6 +399,25 @@ input::placeholder,textarea::placeholder{color:#667b91!important}
 .listen-radio-caption{color:#e4efff!important}.listen-radio-caption span:last-child{color:#b9cde5!important}
 #page4{background:linear-gradient(155deg,#06152e 0%,#091d3d 55%,#06152e 100%)!important}
 #preview{background:#fff!important;color-scheme:light!important}
+
+
+/* Full-screen searchable pre-approved topic library */
+.topic-library-open{width:100%;height:48px;border:1px solid #6b8db5;border-radius:10px;background:#17385f;color:#fff;font-size:16px;font-weight:800;text-align:left;padding:0 14px;cursor:pointer}
+.selected-topic-label{color:#d8e9ff;font-size:12px;margin-top:7px;min-height:16px}
+.topic-library-modal{position:fixed;inset:0;z-index:9999;background:#06152e;color:#fff;display:flex;flex-direction:column;padding:env(safe-area-inset-top,8px) 12px env(safe-area-inset-bottom,8px);text-align:left}
+.topic-library-modal[hidden]{display:none!important}
+.topic-library-header{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 0 12px;border-bottom:1px solid #29496d;flex:0 0 auto}
+.topic-library-header h2{font-size:18px;line-height:1.15;margin:0;color:#fff}
+.topic-library-header p{font-size:12px;color:#a9c8e8;margin:4px 0 0}
+.topic-library-back{border:1px solid #52769e;background:#102a4b;color:#fff;border-radius:8px;padding:9px 10px;font-weight:700}
+.topic-count{font-size:11px;color:#b9d7f6;white-space:nowrap}
+.topic-search{flex:0 0 auto;margin:12px 0;padding:13px 12px!important;height:46px!important;border-radius:9px!important;background:#fff!important;color:#10294f!important;font-size:16px!important}
+.topic-library-list{flex:1;min-height:0;overflow-y:auto;border:1px solid #29496d;border-radius:10px;background:#0d2342;padding:5px;overscroll-behavior:contain}
+.topic-option{display:flex;align-items:center;gap:10px;width:100%;padding:13px 11px;border:0;border-bottom:1px solid #284565;background:transparent;color:#fff;text-align:left;font-size:14px;line-height:1.3;cursor:pointer}
+.topic-option:last-child{border-bottom:0}.topic-option.selected{background:#174a78;outline:2px solid #53b7ff;border-radius:7px}.topic-option .topic-index{color:#8fbce8;font-size:11px;min-width:24px}.topic-empty{padding:24px 12px;text-align:center;color:#b9cce1;font-size:14px}
+.topic-library-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0 4px;flex:0 0 auto;color:#a9c8e8;font-size:11px}
+.topic-library-footer button{border:0;border-radius:9px;background:#16a34a;color:#fff;font-size:14px;font-weight:800;padding:12px 15px}
+.topic-library-footer button:disabled{opacity:.4}
 
 </style>
 </head>
@@ -436,9 +473,11 @@ input::placeholder,textarea::placeholder{color:#667b91!important}
       <label class="choice-card"><input type="radio" name="talkType" value="own"><span><strong>My Own Health Talk</strong><small>Choose your topic and speak in English or a regional language.</small></span></label>
     </div>
     <div id="approvedFields" class="talk-fields" hidden>
-      <label for="approvedTopic">Select Pre-Approved Topic</label>
-      <select id="approvedTopic"><option value="">Select a sample health talk</option><option value="understanding-diabetes">Understanding Type 2 Diabetes (Demo Script)</option></select>
-      <p class="helper">Demo script for testing the recording screen and automatic scrolling. Replace with your approved script library later.</p>
+      <label for="approvedTopic">Pre-Approved Health Talk Library</label>
+      <button type="button" class="topic-library-open" id="openTopicLibrary">Browse Topics ▾</button>
+      <select id="approvedTopic" hidden><option value="">Select a topic</option><option value="understanding-diabetes">Understanding Type 2 Diabetes (Demo Script)</option></select>
+      <div class="selected-topic-label" id="selectedTopicLabel">No topic selected</div>
+      <p class="helper">Open the full-screen topic library to browse and search the available talks.</p>
     </div>
     <div id="ownFields" class="talk-fields" hidden>
       <label for="topicName">Your Talk Topic <span class="required">*</span></label>
@@ -456,6 +495,8 @@ input::placeholder,textarea::placeholder{color:#667b91!important}
       <div class="doctor" id="doctorName">Doctor</div>
       <div class="onair">🔴 LIVE RADIO STUDIO RECORDING</div>
       <div id="recordingMic" aria-hidden="true">🎙️</div>
+      <div id="liveRecordingIndicator" class="live-indicator" aria-live="polite"><span class="live-dot"></span><span id="liveRecordingText">MICROPHONE READY</span></div>
+      <div id="audioLevelMeter" class="audio-meter" aria-label="Live microphone input level"><span class="meter-bar" id="meterBar1"></span><span class="meter-bar" id="meterBar2"></span><span class="meter-bar" id="meterBar3"></span><span class="meter-bar" id="meterBar4"></span><span class="meter-bar" id="meterBar5"></span><span class="meter-bar" id="meterBar6"></span><span class="meter-bar" id="meterBar7"></span><span class="meter-bar" id="meterBar8"></span><span class="meter-bar" id="meterBar9"></span><span class="meter-bar" id="meterBar10"></span><span class="meter-bar" id="meterBar11"></span><span class="meter-bar" id="meterBar12"></span></div>
       <div id="status" class="status">Microphone ready. Click RECORD to begin.</div>
       <div class="timerLabel">TIME REMAINING</div><div id="timer" class="timer">05:00</div>
       <div class="controls"><button class="control" id="recordBtn">🎙 RECORD</button><button class="control" id="pauseBtn" disabled>Ⅱ PAUSE</button><button class="control" id="stopBtn" disabled>⏹ STOP</button></div>
@@ -479,6 +520,16 @@ input::placeholder,textarea::placeholder{color:#667b91!important}
 </div>
 </div>
 
+<div class="topic-library-modal" id="topicLibraryModal" hidden role="dialog" aria-modal="true" aria-labelledby="topicLibraryTitle">
+  <div class="topic-library-header">
+    <button type="button" class="topic-library-back" id="closeTopicLibrary">← Back</button>
+    <div><h2 id="topicLibraryTitle">Pre-Approved Health Talks</h2><p>Browse and select a talk topic</p></div>
+    <div class="topic-count" id="topicCount">1 topic</div>
+  </div>
+  <input type="search" id="topicSearch" class="topic-search" placeholder="Search 100+ health topics…" autocomplete="off">
+  <div class="topic-library-list" id="topicLibraryList" role="listbox" aria-label="Available health talk topics"></div>
+  <div class="topic-library-footer"><span id="topicLibraryHint">Select a topic to continue</span><button type="button" id="confirmTopicSelection" disabled>Use This Topic →</button></div>
+</div>
 <script>
 function closeSplash(){const splash=document.getElementById('splashScreen');const studio=document.getElementById('studioContainer');if(!splash||splash.dataset.closed==='yes')return;splash.dataset.closed='yes';splash.style.display='none';studio.style.visibility='visible';if(window.__splashTimer)clearTimeout(window.__splashTimer)}
 window.__splashTimer=setTimeout(closeSplash,3000);
@@ -490,21 +541,43 @@ let talkType='',selectedTopic='',selectedLanguage='English',selectedScript='';
 const DEMO_SCRIPTS={
  'understanding-diabetes': {title:'Understanding Type 2 Diabetes', text:`Understanding Type 2 Diabetes\n\nHello, and welcome to this health education talk from Radio 4 Diabetes India. Today, we will discuss what type 2 diabetes means and why regular care matters.\n\nDiabetes is a long-term condition in which the level of glucose, or sugar, in the blood can become higher than normal. In type 2 diabetes, the body may not use insulin effectively, and over time it may also produce less insulin than it needs. Insulin is a hormone that helps glucose move from the blood into the body’s cells, where it is used for energy.\n\nSome people with type 2 diabetes notice symptoms such as increased thirst, frequent urination, tiredness, blurred vision or slow healing of wounds. However, many people may have no obvious symptoms. That is one reason why appropriate testing and follow-up with a qualified healthcare professional are important.\n\nDiabetes care is not based on one single action. It usually involves a combination of healthy eating, regular physical activity, taking medicines as prescribed when needed, and monitoring blood glucose as advised by the treating clinician.\n\nFor everyday meals, try to follow a balanced pattern. Include vegetables, suitable sources of protein, and high-fibre foods. Be mindful of portion sizes and the amount of refined carbohydrates and sugary drinks you consume. Individual food needs can differ, so a registered dietitian or treating doctor can help tailor advice to your circumstances.\n\nPhysical activity is also valuable. Many adults can benefit from regular movement, such as brisk walking, according to their health and ability. If you have other medical conditions or have been inactive for a long time, discuss a safe activity plan with your healthcare professional before making major changes.\n\nIf you have been prescribed medication, take it as directed. Do not stop, start or change a medicine on your own. Keep follow-up appointments and discuss your blood glucose results with your treating clinician. Tests such as HbA1c may be used by your clinician to understand average blood glucose over time.\n\nRemember, diabetes is manageable, and care should be individualised. Small, consistent steps and regular medical guidance can make a meaningful difference.\n\nThis message is for general health education and does not replace personal medical advice. Please consult your healthcare professional for guidance suited to you.\n\nThank you for listening to Radio 4 Diabetes India, bringing diabetes education and public health awareness to communities across India.`}
 };
+// Full-screen topic browser: it automatically lists every option in the approved-topic library.
+const topicModal=document.getElementById('topicLibraryModal');
+const topicSelect=document.getElementById('approvedTopic');
+const topicList=document.getElementById('topicLibraryList');
+const topicSearch=document.getElementById('topicSearch');
+let pendingTopicValue='';
+function renderTopicLibrary(){
+ const query=topicSearch.value.trim().toLowerCase();
+ const options=[...topicSelect.options].filter(o=>o.value && o.text.toLowerCase().includes(query));
+ document.getElementById('topicCount').textContent=options.length+' '+(options.length===1?'topic':'topics');
+ topicList.innerHTML='';
+ if(!options.length){topicList.innerHTML='<div class="topic-empty">No matching topics. Try another search.</div>';return;}
+ options.forEach((o,i)=>{const b=document.createElement('button');b.type='button';b.className='topic-option'+(pendingTopicValue===o.value?' selected':'');b.setAttribute('role','option');b.setAttribute('aria-selected',pendingTopicValue===o.value?'true':'false');const n=document.createElement('span');n.className='topic-index';n.textContent=String(i+1).padStart(2,'0');const t=document.createElement('span');t.textContent=o.text;b.append(n,t);b.onclick=()=>{pendingTopicValue=o.value;renderTopicLibrary();document.getElementById('confirmTopicSelection').disabled=false;document.getElementById('topicLibraryHint').textContent='Selected: '+o.text;};topicList.appendChild(b);});
+}
+document.getElementById('openTopicLibrary').onclick=()=>{pendingTopicValue=topicSelect.value;topicSearch.value='';renderTopicLibrary();document.getElementById('confirmTopicSelection').disabled=!pendingTopicValue;document.getElementById('topicLibraryHint').textContent=pendingTopicValue?'Topic selected':'Select a topic to continue';topicModal.hidden=false;topicSearch.focus();};
+document.getElementById('closeTopicLibrary').onclick=()=>{topicModal.hidden=true;};
+topicSearch.addEventListener('input',renderTopicLibrary);
+document.getElementById('confirmTopicSelection').onclick=()=>{if(!pendingTopicValue)return;topicSelect.value=pendingTopicValue;document.getElementById('selectedTopicLabel').textContent='Selected: '+topicSelect.options[topicSelect.selectedIndex].text;document.getElementById('openTopicLibrary').textContent='Change Selected Topic ▾';document.getElementById('toPage4').disabled=false;topicModal.hidden=true;};
 function showPage(n){for(let i=1;i<=5;i++){document.getElementById('page'+i).classList.toggle('active',i===n);const p=document.getElementById('progress'+i);p.classList.toggle('active',i===n);p.classList.toggle('done',i<n);p.querySelector('.num').textContent=i<n?'✓':String(i)}}
 document.getElementById('toPage2').onclick=()=>{const fields=['doctorNameField','qualificationField','registrationStatusField','registrationNumber','emailAddress'];for(const id of fields){const el=document.getElementById(id);if(!el.value.trim()||(id==='emailAddress'&&!el.checkValidity())){el.focus();return}}document.getElementById('doctorName').textContent=doctorNameField.value.trim();showPage(2)};
 document.getElementById('backToPage1').onclick=()=>showPage(1);
 document.getElementById('toPage3').onclick=()=>{consentAcceptedAt=new Date().toISOString();showPage(3)};
 document.getElementById('backToPage2').onclick=()=>showPage(2);
-document.querySelectorAll('input[name="talkType"]').forEach(r=>r.addEventListener('change',()=>{talkType=r.value;document.getElementById('approvedFields').hidden=talkType!=='approved';document.getElementById('ownFields').hidden=talkType!=='own';document.getElementById('toPage4').disabled=false}));
+document.querySelectorAll('input[name="talkType"]').forEach(r=>r.addEventListener('change',()=>{talkType=r.value;document.getElementById('approvedFields').hidden=talkType!=='approved';document.getElementById('ownFields').hidden=talkType!=='own';document.getElementById('toPage4').disabled=r.value==='approved'?!document.getElementById('approvedTopic').value:false}));
 document.getElementById('approvedTopic').addEventListener('change',()=>{document.getElementById('toPage4').disabled=!document.getElementById('approvedTopic').value});
 document.getElementById('toPage4').onclick=()=>{if(!talkType)return;const panel=document.getElementById('scriptPanel');if(talkType==='approved'){const key=document.getElementById('approvedTopic').value;if(!key||!DEMO_SCRIPTS[key])return;selectedScript=DEMO_SCRIPTS[key].text;selectedTopic=DEMO_SCRIPTS[key].title;selectedLanguage='English';document.getElementById('scriptText').textContent=selectedScript;document.querySelector('#scriptPanel .script-title').textContent='DEMO SCRIPT — FOR LAYOUT TESTING';panel.hidden=false;}else{selectedTopic=topicInput.value.trim();if(!selectedTopic){topicInput.focus();return}selectedLanguage=document.getElementById('talkLanguage').value;selectedScript='';panel.hidden=true;}document.getElementById('topicHeading').textContent=selectedTopic;document.getElementById('doctorName').textContent=doctorNameField.value.trim();panel.scrollTop=0;showPage(4)};
 document.getElementById('backToPage3').onclick=()=>{if(recorder&&recorder.state==='recording')return;showPage(3)};
 const recordBtn=document.getElementById('recordBtn'),pauseBtn=document.getElementById('pauseBtn'),stopBtn=document.getElementById('stopBtn'),submitBtn=document.getElementById('submitBtn'),preview=document.getElementById('preview'),status=document.getElementById('status'),timer=document.getElementById('timer');
-let recorder=null,chunks=[],recordedBlob=null,timerInterval=null,scriptScrollInterval=null,seconds=300,recordingStream=null,paused=false;
+let recorder=null,chunks=[],recordedBlob=null,timerInterval=null,scriptScrollInterval=null,meterInterval=null,seconds=300,recordingStream=null,paused=false,audioContext=null,analyser=null,micSource=null;
+const liveIndicator=document.getElementById('liveRecordingIndicator'),liveText=document.getElementById('liveRecordingText'),micIcon=document.getElementById('recordingMic'),meter=document.getElementById('audioLevelMeter');
+function setLiveState(state,label){liveIndicator.className='live-indicator '+state;liveText.textContent=label;micIcon.classList.toggle('active',state==='recording');meter.classList.toggle('active',state==='recording')}
 function setTimer(){timer.textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0')}
-function stopRecording(){if(!recorder||recorder.state==='inactive')return;recorder.stop();clearInterval(timerInterval);clearInterval(scriptScrollInterval);recordBtn.disabled=false;pauseBtn.disabled=true;stopBtn.disabled=true;paused=false}
-recordBtn.onclick=async()=>{try{recordingStream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];recordedBlob=null;preview.style.display='none';submitBtn.disabled=true;recorder=new MediaRecorder(recordingStream);recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{recordingStream.getTracks().forEach(t=>t.stop());recordedBlob=new Blob(chunks,{type:recorder.mimeType||'audio/webm'});preview.src=URL.createObjectURL(recordedBlob);preview.style.display='block';submitBtn.disabled=false;status.textContent='Recording stopped. Listen before submitting.'};recorder.start();seconds=300;setTimer();recordBtn.disabled=true;pauseBtn.disabled=false;stopBtn.disabled=false;status.textContent='You are recording your talk.';timerInterval=setInterval(()=>{if(!paused){seconds--;setTimer();if(seconds<=0)stopRecording()}},1000);scriptScrollInterval=setInterval(()=>{const panel=document.getElementById('scriptPanel');if(!paused&&!panel.hidden)panel.scrollTop+=0.8},100)}catch(e){status.textContent='Microphone access is required. Please allow microphone permission and try again.'}};
-pauseBtn.onclick=()=>{if(!recorder)return;if(recorder.state==='recording'){recorder.pause();paused=true;pauseBtn.textContent='▶ RESUME';status.textContent='Recording paused.'}else if(recorder.state==='paused'){recorder.resume();paused=false;pauseBtn.textContent='Ⅱ PAUSE';status.textContent='Recording resumed.'}};
+function stopMeter(){clearInterval(meterInterval);meterInterval=null;for(let i=1;i<=12;i++)document.getElementById('meterBar'+i).style.height='5px';meter.classList.remove('active')}
+function startMeter(){try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;audioContext=new AC();analyser=audioContext.createAnalyser();analyser.fftSize=64;micSource=audioContext.createMediaStreamSource(recordingStream);micSource.connect(analyser);const data=new Uint8Array(analyser.frequencyBinCount);meterInterval=setInterval(()=>{if(!analyser||paused)return;analyser.getByteFrequencyData(data);for(let i=1;i<=12;i++){const v=data[Math.min(i-1,data.length-1)]||0;document.getElementById('meterBar'+i).style.height=(5+Math.round(v/255*20))+'px'}},80)}catch(e){/* Recording remains available if visual meter is unsupported. */}}
+function stopRecording(){if(!recorder||recorder.state==='inactive')return;recorder.stop();clearInterval(timerInterval);clearInterval(scriptScrollInterval);stopMeter();recordBtn.disabled=false;pauseBtn.disabled=true;stopBtn.disabled=true;paused=false;setLiveState('complete','RECORDING COMPLETE')}
+recordBtn.onclick=async()=>{try{recordingStream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];recordedBlob=null;preview.style.display='none';submitBtn.disabled=true;recorder=new MediaRecorder(recordingStream);recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{recordingStream.getTracks().forEach(t=>t.stop());if(audioContext&&audioContext.state!=='closed')audioContext.close();audioContext=null;analyser=null;recordedBlob=new Blob(chunks,{type:recorder.mimeType||'audio/webm'});preview.src=URL.createObjectURL(recordedBlob);preview.style.display='block';submitBtn.disabled=false;status.textContent='Recording stopped. Listen before submitting.';setLiveState('complete','RECORDING COMPLETE')};recorder.start();seconds=300;setTimer();recordBtn.disabled=true;pauseBtn.disabled=false;stopBtn.disabled=false;status.textContent='Your microphone is active. Please speak clearly.';setLiveState('recording','RECORDING IN PROGRESS');startMeter();timerInterval=setInterval(()=>{if(!paused){seconds--;setTimer();if(seconds<=0)stopRecording()}},1000);scriptScrollInterval=setInterval(()=>{const panel=document.getElementById('scriptPanel');if(!paused&&!panel.hidden)panel.scrollTop+=0.8},100)}catch(e){setLiveState('','MICROPHONE NOT STARTED');status.textContent='Microphone access is required. Please allow microphone permission and try again.'}};
+pauseBtn.onclick=()=>{if(!recorder)return;if(recorder.state==='recording'){recorder.pause();paused=true;pauseBtn.textContent='▶ RESUME';status.textContent='Recording is paused. Your talk is not being recorded right now.';setLiveState('paused','RECORDING PAUSED')}else if(recorder.state==='paused'){recorder.resume();paused=false;pauseBtn.textContent='Ⅱ PAUSE';status.textContent='Recording resumed. Please continue speaking.';setLiveState('recording','RECORDING IN PROGRESS')}};
 stopBtn.onclick=stopRecording;
 const UPLOAD_URL='https://script.google.com/macros/s/AKfycbw7a45LcBMQghWuLMkwncq8X4_n6tIpycQrYW7vV_ZElErLEApAr5nxr3m4nUb1tUkx/exec';
 function safeFilePart(s){return String(s||'').normalize('NFKD').replace(/[^A-Za-z0-9 -]+/g,'').replace(/\s+/g,' ').trim().slice(0,80)||'Health Talk'}
