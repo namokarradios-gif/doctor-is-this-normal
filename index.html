@@ -582,6 +582,102 @@ body.recording-view .step .num{width:clamp(20px,2.8vh,25px)!important;height:cla
     #changeTalkChoice{margin-top:10px;width:100%;font-size:13px;padding:8px}
 
 .teleprompter-tag{display:inline-block;margin-left:6px;color:#8fc8ff;font-size:.82em;font-weight:800;letter-spacing:.04em;white-space:nowrap}
+
+/* Mobile review layout: compact recording console so Re-record and Submit stay visible. */
+@media(max-width:600px){
+  #page4.has-preview{
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    gap:4px!important;
+  }
+  #page4.has-preview .recording-top{
+    flex:0 0 auto!important;
+    padding:2px 5px!important;
+    gap:1px!important;
+  }
+  #page4.has-preview .topic-heading{
+    font-size:14px!important;
+    line-height:1.15!important;
+  }
+  #page4.has-preview #liveRecordingIndicator{
+    min-height:16px!important;
+    padding:1px 7px!important;
+    font-size:9px!important;
+    margin:0!important;
+  }
+  #page4.has-preview #audioLevelMeterLeft,
+  #page4.has-preview #audioLevelMeterRight{
+    height:18px!important;
+    min-height:18px!important;
+  }
+  #page4.has-preview #recordingMic{
+    font-size:21px!important;
+  }
+  #page4.has-preview .status{
+    min-height:14px!important;
+    padding:1px 4px!important;
+    font-size:9px!important;
+    margin:0!important;
+  }
+  #page4.has-preview .timerLabel{font-size:9px!important}
+  #page4.has-preview .timer{
+    font-size:18px!important;
+    line-height:1!important;
+    margin:0!important;
+  }
+  #page4.has-preview .recording-top button.control{
+    min-height:28px!important;
+    padding:4px 9px!important;
+    font-size:11px!important;
+  }
+  #page4.has-preview #preview{
+    height:38px!important;
+    min-height:38px!important;
+    margin:0!important;
+  }
+  #page4.has-preview #recordingReviewPanel{
+    flex:0 0 auto!important;
+    padding:8px 10px!important;
+    overflow:visible!important;
+  }
+  #page4.has-preview .review-icon{
+    width:27px!important;
+    height:27px!important;
+    font-size:18px!important;
+    margin:0 auto 3px!important;
+  }
+  #page4.has-preview #recordingReviewPanel h2{
+    font-size:15px!important;
+    margin:2px 0 4px!important;
+  }
+  #page4.has-preview #recordingReviewPanel p{
+    font-size:11px!important;
+    line-height:1.3!important;
+    margin:4px 0!important;
+  }
+  #page4.has-preview #recordingReviewPanel .review-rerecord{
+    min-height:32px!important;
+    padding:6px 12px!important;
+    margin-top:6px!important;
+  }
+  #page4.has-preview #submitBtn{
+    min-height:34px!important;
+    padding:6px 12px!important;
+  }
+  #page4.has-preview .note{font-size:9px!important}
+  #page4.has-preview #backToPage3{
+    min-height:30px!important;
+    padding:5px 9px!important;
+    margin:1px auto!important;
+  }
+}
+@media(max-height:700px) and (max-width:600px){
+  #page4.has-preview{gap:3px!important}
+  #page4.has-preview .recording-top{padding:1px 4px!important}
+  #page4.has-preview #recordingReviewPanel{padding:6px 8px!important}
+  #page4.has-preview #recordingReviewPanel p{font-size:10px!important;line-height:1.2!important}
+}
+
 </style>
 </head>
 <body>
@@ -773,7 +869,7 @@ const scrollPauseBtn=document.getElementById('pauseScriptScroll'),scrollResumeBt
 function setScriptScrollPaused(value){scriptScrollPaused=value;if(scrollPauseBtn)scrollPauseBtn.hidden=value;if(scrollResumeBtn)scrollResumeBtn.hidden=!value}
 scrollPauseBtn?.addEventListener('click',()=>setScriptScrollPaused(true));scrollResumeBtn?.addEventListener('click',()=>setScriptScrollPaused(false));
 const scriptTextForTouch=document.getElementById('scriptText');scriptTextForTouch?.addEventListener('pointerdown',()=>{if(recorder&&recorder.state==='recording')setScriptScrollPaused(true)});
-recordBtn.onclick=async()=>{try{const session=++recordingSession;recordingStream=await navigator.mediaDevices.getUserMedia({audio:true});const thisStream=recordingStream;chunks=[];recordedBlob=null;preview.style.display='none';preview.removeAttribute('src');preview.load();document.getElementById('page4').classList.remove('has-preview');document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';setScriptScrollPaused(false);submitBtn.disabled=true;recorder=new MediaRecorder(thisStream);const thisRecorder=recorder;recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{thisStream.getTracks().forEach(t=>t.stop());if(session!==recordingSession)return;if(audioContext&&audioContext.state!=='closed')audioContext.close();audioContext=null;analyser=null;recordedBlob=new Blob(chunks,{type:thisRecorder.mimeType||'audio/webm'});preview.src=URL.createObjectURL(recordedBlob);preview.style.display='block';document.getElementById('page4').classList.add('has-preview');document.getElementById('scriptPanel').hidden=true;document.getElementById('recordingReviewPanel').hidden=false;submitBtn.disabled=false;status.textContent='Recording stopped. Please review your audio before submitting.';setLiveState('complete','RECORDING COMPLETE')};recorder.start();scriptScrollStartsAt=Date.now()+4000;seconds=300;setTimer();recordBtn.disabled=true;pauseBtn.disabled=false;pauseBtn.textContent='Ⅱ PAUSE';stopBtn.disabled=false;status.textContent='Your microphone is active. Please speak clearly.';setLiveState('recording','RECORDING IN PROGRESS');startMeter();timerInterval=setInterval(()=>{if(!paused){seconds--;setTimer();if(seconds<=0)stopRecording()}},1000);/* 1px per 125ms = 8px/sec; integer steps avoid sub-pixel rounding stalls. */scriptScrollInterval=setInterval(()=>{const script=document.getElementById('scriptText');if(Date.now()>=scriptScrollStartsAt&&!paused&&!scriptScrollPaused&&!document.getElementById('scriptPanel').hidden&&script&&script.scrollHeight>script.clientHeight+2){script.scrollTop=Math.min(script.scrollTop+1,script.scrollHeight-script.clientHeight)}},125)}catch(e){setLiveState('','MICROPHONE NOT STARTED');status.textContent='Microphone access is required. Please allow microphone permission and try again.'}};
+recordBtn.onclick=async()=>{try{const session=++recordingSession;recordingStream=await navigator.mediaDevices.getUserMedia({audio:true});const thisStream=recordingStream;chunks=[];recordedBlob=null;preview.style.display='none';preview.removeAttribute('src');preview.load();document.getElementById('page4').classList.remove('has-preview');document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';const scriptAtStart=document.getElementById('scriptText');if(talkType==='approved'&&scriptAtStart){scriptAtStart.scrollTop=0;}setScriptScrollPaused(false);submitBtn.disabled=true;recorder=new MediaRecorder(thisStream);const thisRecorder=recorder;recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{thisStream.getTracks().forEach(t=>t.stop());if(session!==recordingSession)return;if(audioContext&&audioContext.state!=='closed')audioContext.close();audioContext=null;analyser=null;recordedBlob=new Blob(chunks,{type:thisRecorder.mimeType||'audio/webm'});preview.src=URL.createObjectURL(recordedBlob);preview.style.display='block';document.getElementById('page4').classList.add('has-preview');document.getElementById('scriptPanel').hidden=true;document.getElementById('recordingReviewPanel').hidden=false;submitBtn.disabled=false;status.textContent='Recording stopped. Please review your audio before submitting.';setLiveState('complete','RECORDING COMPLETE')};recorder.start();scriptScrollStartsAt=Date.now()+4000;seconds=300;setTimer();recordBtn.disabled=true;pauseBtn.disabled=false;pauseBtn.textContent='Ⅱ PAUSE';stopBtn.disabled=false;status.textContent='Your microphone is active. Please speak clearly.';setLiveState('recording','RECORDING IN PROGRESS');startMeter();timerInterval=setInterval(()=>{if(!paused){seconds--;setTimer();if(seconds<=0)stopRecording()}},1000);/* 1px per 125ms = 8px/sec; integer steps avoid sub-pixel rounding stalls. */scriptScrollInterval=setInterval(()=>{const script=document.getElementById('scriptText');if(Date.now()>=scriptScrollStartsAt&&!paused&&!scriptScrollPaused&&!document.getElementById('scriptPanel').hidden&&script&&script.scrollHeight>script.clientHeight+2){script.scrollTop=Math.min(script.scrollTop+1,script.scrollHeight-script.clientHeight)}},125)}catch(e){setLiveState('','MICROPHONE NOT STARTED');status.textContent='Microphone access is required. Please allow microphone permission and try again.'}};
 pauseBtn.onclick=()=>{if(!recorder)return;if(recorder.state==='recording'){recorder.pause();paused=true;pauseBtn.textContent='▶ RESUME';status.textContent='Recording is paused. Your talk is not being recorded right now.';setLiveState('paused','RECORDING PAUSED')}else if(recorder.state==='paused'){recorder.resume();paused=false;pauseBtn.textContent='Ⅱ PAUSE';status.textContent='Recording resumed. Please continue speaking.';setLiveState('recording','RECORDING IN PROGRESS')}};
 stopBtn.onclick=stopRecording;
 document.getElementById('rerecordBtn').onclick=()=>{recordingSession++;if(recorder&&recorder.state!=='inactive'){try{recorder.stop()}catch(e){}}clearInterval(timerInterval);clearInterval(scriptScrollInterval);stopMeter();if(recordingStream)recordingStream.getTracks().forEach(t=>t.stop());if(preview.src){URL.revokeObjectURL(preview.src);preview.removeAttribute('src');preview.load()}preview.style.display='none';document.getElementById('page4').classList.remove('has-preview');document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';setScriptScrollPaused(false);recordedBlob=null;chunks=[];seconds=300;setTimer();submitBtn.disabled=true;recordBtn.disabled=false;pauseBtn.disabled=true;stopBtn.disabled=true;pauseBtn.textContent='Ⅱ PAUSE';status.textContent='Ready to record again. Click RECORD to begin.';setLiveState('','MICROPHONE READY')};
