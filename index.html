@@ -2489,5 +2489,303 @@ button.btn,
 }
 </style>
 
+
+<style id="v39-double-radio4-brand-and-bigger-review-buttons">
+/* Double the supplied Radio 4 Diabetes India / Apple Music artwork. */
+#page4.mode-own:not(.has-preview) #recordingRadio4Logo,
+#page4.mode-approved:not(.has-preview) #recordingRadio4Logo{
+  width:184px!important;
+  height:184px!important;
+  bottom:58px!important;
+  padding:0!important;
+  object-fit:contain!important;
+}
+
+/* Raise topic and doctor labels to create a clean gap above the larger artwork. */
+#page4.mode-own:not(.has-preview) #topicHeading,
+#page4.mode-approved:not(.has-preview) #topicHeading{
+  bottom:316px!important;
+  font-size:clamp(22px,3vh,28px)!important;
+  line-height:1.18!important;
+}
+#page4.mode-own:not(.has-preview) #doctorName,
+#page4.mode-approved:not(.has-preview) #doctorName{
+  bottom:284px!important;
+  font-size:clamp(17px,2.2vh,21px)!important;
+  line-height:1.2!important;
+}
+
+/* Make both review-stage actions easy to read and tap. */
+#page4.has-preview #rerecordBtn{
+  width:100%!important;
+  min-height:60px!important;
+  padding:14px 18px!important;
+  font-size:19px!important;
+  line-height:1.25!important;
+  font-weight:900!important;
+  white-space:normal!important;
+}
+#page4.has-preview #submitBtn{
+  width:100%!important;
+  min-height:64px!important;
+  padding:15px 18px!important;
+  font-size:19px!important;
+  line-height:1.25!important;
+  font-weight:900!important;
+  white-space:normal!important;
+}
+@media(max-width:600px){
+  #page4.mode-own:not(.has-preview) #recordingRadio4Logo,
+  #page4.mode-approved:not(.has-preview) #recordingRadio4Logo{
+    width:168px!important;
+    height:168px!important;
+    bottom:56px!important;
+  }
+  #page4.mode-own:not(.has-preview) #topicHeading,
+  #page4.mode-approved:not(.has-preview) #topicHeading{
+    bottom:292px!important;
+    font-size:clamp(20px,2.8vh,25px)!important;
+  }
+  #page4.mode-own:not(.has-preview) #doctorName,
+  #page4.mode-approved:not(.has-preview) #doctorName{
+    bottom:264px!important;
+    font-size:clamp(16px,2vh,19px)!important;
+  }
+  #page4.has-preview #rerecordBtn{
+    min-height:56px!important;
+    font-size:17px!important;
+    padding:12px 14px!important;
+  }
+  #page4.has-preview #submitBtn{
+    min-height:60px!important;
+    font-size:17px!important;
+    padding:13px 14px!important;
+  }
+}
+</style>
+
+
+<style id="v40-fit-recording-page-stack">
+/* Fit the topic and doctor labels into the clear space below the recorder controls
+   and immediately above the Radio 4 artwork. */
+#page4.mode-own:not(.has-preview) #topicHeading,
+#page4.mode-approved:not(.has-preview) #topicHeading{
+  bottom:270px!important;
+  font-size:clamp(21px,2.6vh,25px)!important;
+  line-height:1.12!important;
+}
+#page4.mode-own:not(.has-preview) #doctorName,
+#page4.mode-approved:not(.has-preview) #doctorName{
+  bottom:243px!important;
+  font-size:clamp(16px,1.9vh,19px)!important;
+  line-height:1.15!important;
+}
+
+/* Keep the enlarged artwork and Back control fully inside the recording panel. */
+#page4.mode-own:not(.has-preview) #recordingRadio4Logo,
+#page4.mode-approved:not(.has-preview) #recordingRadio4Logo{
+  width:184px!important;
+  height:184px!important;
+  bottom:58px!important;
+}
+#page4.mode-own:not(.has-preview) #backOwnTalk,
+#page4.mode-approved:not(.has-preview) #backOwnTalk{
+  bottom:2px!important;
+}
+
+/* Compact, balanced arrangement on shorter screens. */
+@media(max-height:700px){
+  #page4.mode-own:not(.has-preview) #recordingRadio4Logo,
+  #page4.mode-approved:not(.has-preview) #recordingRadio4Logo{
+    width:150px!important;
+    height:150px!important;
+    bottom:58px!important;
+  }
+  #page4.mode-own:not(.has-preview) #topicHeading,
+  #page4.mode-approved:not(.has-preview) #topicHeading{
+    bottom:218px!important;
+    font-size:clamp(19px,2.4vh,23px)!important;
+  }
+  #page4.mode-own:not(.has-preview) #doctorName,
+  #page4.mode-approved:not(.has-preview) #doctorName{
+    bottom:194px!important;
+    font-size:clamp(15px,1.8vh,18px)!important;
+  }
+  #page4.mode-own:not(.has-preview) #backOwnTalk,
+  #page4.mode-approved:not(.has-preview) #backOwnTalk{
+    bottom:2px!important;
+  }
+}
+@media(max-width:600px){
+  #page4.mode-own:not(.has-preview) #recordingRadio4Logo,
+  #page4.mode-approved:not(.has-preview) #recordingRadio4Logo{
+    width:142px!important;
+    height:142px!important;
+    bottom:56px!important;
+  }
+  #page4.mode-own:not(.has-preview) #topicHeading,
+  #page4.mode-approved:not(.has-preview) #topicHeading{
+    bottom:208px!important;
+    font-size:clamp(18px,2.4vh,22px)!important;
+  }
+  #page4.mode-own:not(.has-preview) #doctorName,
+  #page4.mode-approved:not(.has-preview) #doctorName{
+    bottom:185px!important;
+    font-size:clamp(14px,1.8vh,17px)!important;
+  }
+}
+</style>
+
+
+<style id="v41-fix-doctor-name-logo-overlap">
+/* Short-screen spacing: separate topic, doctor name, and logo clearly. */
+@media(max-height:700px){
+  #page4.mode-own:not(.has-preview) #topicHeading,
+  #page4.mode-approved:not(.has-preview) #topicHeading{
+    bottom:243px!important;
+    color:#ffffff!important;
+    text-shadow:0 1px 3px rgba(0,0,0,.45)!important;
+  }
+  #page4.mode-own:not(.has-preview) #doctorName,
+  #page4.mode-approved:not(.has-preview) #doctorName{
+    bottom:216px!important;
+    color:#ffffff!important;
+    text-shadow:0 1px 3px rgba(0,0,0,.55)!important;
+  }
+}
+@media(max-width:600px){
+  #page4.mode-own:not(.has-preview) #topicHeading,
+  #page4.mode-approved:not(.has-preview) #topicHeading{
+    bottom:226px!important;
+  }
+  #page4.mode-own:not(.has-preview) #doctorName,
+  #page4.mode-approved:not(.has-preview) #doctorName{
+    bottom:201px!important;
+  }
+}
+</style>
+
+
+<style id="v42-wide-single-line-review-buttons">
+/* Wide rectangular review buttons: keep each label on one line. */
+#page4.has-preview #rerecordBtn{
+  width:230px!important;
+  min-width:230px!important;
+  max-width:calc(100% - 32px)!important;
+  min-height:58px!important;
+  height:58px!important;
+  padding:12px 20px!important;
+  border-radius:10px!important;
+  font-size:17px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex-wrap:nowrap!important;
+}
+#page4.has-preview #submitBtn{
+  width:280px!important;
+  min-width:280px!important;
+  max-width:calc(100% - 32px)!important;
+  min-height:60px!important;
+  height:60px!important;
+  padding:12px 22px!important;
+  border-radius:10px!important;
+  font-size:17px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex-wrap:nowrap!important;
+}
+@media(max-width:600px){
+  #page4.has-preview #rerecordBtn{
+    width:220px!important;
+    min-width:220px!important;
+    font-size:16px!important;
+  }
+  #page4.has-preview #submitBtn{
+    width:260px!important;
+    min-width:260px!important;
+    font-size:16px!important;
+  }
+}
+</style>
+
+
+<style id="v43-override-final-review-button-sizing">
+/* High-specificity overrides for the later shared-button rules in the stylesheet. */
+#page4.has-preview #recordingReviewPanel button#rerecordBtn.control.review-rerecord{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  flex:0 0 250px!important;
+  width:250px!important;
+  min-width:250px!important;
+  max-width:250px!important;
+  height:60px!important;
+  min-height:60px!important;
+  max-height:60px!important;
+  padding:0 18px!important;
+  margin:10px auto!important;
+  border-radius:10px!important;
+  font-size:17px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+  text-align:center!important;
+}
+#page4.has-preview .controls:has(> button#submitBtn.control) button#submitBtn.control{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  flex:0 0 300px!important;
+  width:300px!important;
+  min-width:300px!important;
+  max-width:300px!important;
+  height:62px!important;
+  min-height:62px!important;
+  max-height:62px!important;
+  padding:0 20px!important;
+  margin:8px auto!important;
+  border-radius:10px!important;
+  font-size:17px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+  text-align:center!important;
+}
+@media(max-width:600px){
+  #page4.has-preview #recordingReviewPanel button#rerecordBtn.control.review-rerecord{
+    flex-basis:230px!important;
+    width:230px!important;
+    min-width:230px!important;
+    max-width:230px!important;
+    height:56px!important;
+    min-height:56px!important;
+    max-height:56px!important;
+    font-size:16px!important;
+  }
+  #page4.has-preview .controls:has(> button#submitBtn.control) button#submitBtn.control{
+    flex-basis:270px!important;
+    width:270px!important;
+    min-width:270px!important;
+    max-width:270px!important;
+    height:58px!important;
+    min-height:58px!important;
+    max-height:58px!important;
+    font-size:16px!important;
+  }
+}
+</style>
+
 </body>
 </html>
