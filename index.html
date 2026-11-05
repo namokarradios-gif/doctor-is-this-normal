@@ -101,6 +101,7 @@ audio{width:100%;height:34px;margin:5px 0}
 .email-heading{font-size:clamp(14px,2.2vh,18px);font-weight:900;color:#12366b;margin-bottom:5px}
 .email-message{font-size:clamp(12px,1.8vh,14px);line-height:1.4;color:#253d5d}
 .email-address{font-size:clamp(11px,1.7vh,13px);font-weight:800;color:#1476d4;margin-top:7px;overflow-wrap:anywhere}
+.field-hint{display:block;margin-top:6px;font-size:12px;line-height:1.4;color:#dbeafe}
 /* Doctor identity and split email controls */
 .doctor-name-row,.email-split{display:flex;align-items:center;gap:8px;width:100%}
 .doctor-prefix{flex:0 0 auto;background:#dcecff;color:#12366b;font-weight:900;padding:13px 14px;border-radius:10px;border:1px solid #b9d5f2}
@@ -272,6 +273,30 @@ body:has(#page4.active) .step .num { width:clamp(18px,2.6vh,22px); height:clamp(
 
 
 
+
+/* Custom HTML5 audio player for the recording review stage */
+#page4 .custom-audio-player{background:linear-gradient(145deg,#102b50,#173e68);border:1px solid #42658e;border-radius:16px;padding:15px 16px;margin:8px 0 12px;color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+#page4 .custom-audio-player[hidden]{display:none!important}
+#page4 .custom-player-heading{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+#page4 .player-art{width:48px;height:48px;border-radius:12px;background:#244f78;display:grid;place-items:center;font-size:27px;color:#fff;flex:0 0 auto}
+#page4 .player-track{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+#page4 .player-track strong{font-size:15px;color:#fff}
+#page4 .player-track small{font-size:11px;color:#c3d8ec}
+#page4 .player-ready{font-size:10px;font-weight:900;letter-spacing:.6px;color:#72e6a0;border:1px solid #347d60;border-radius:20px;padding:5px 8px}
+#page4 .player-main-controls{display:flex;align-items:center;gap:13px}
+#page4 .player-play{width:48px;height:48px;border:0;border-radius:50%;background:#27bd70;color:#fff;font-size:20px;font-weight:900;display:grid;place-items:center;flex:0 0 auto;box-shadow:0 3px 0 #12804a}
+#page4 .player-timeline{flex:1;min-width:0}
+#page4 #playerSeek{width:100%;accent-color:#35d17e;cursor:pointer}
+#page4 .player-time{display:flex;justify-content:space-between;color:#c5d8ed;font-size:11px;font-variant-numeric:tabular-nums;margin-top:2px}
+#page4 .player-extra-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:13px;padding-top:10px;border-top:1px solid #365b7e}
+#page4 .player-volume{display:flex;align-items:center;gap:7px;color:#fff}
+#page4 #playerVolume{width:90px;accent-color:#35d17e}
+#page4 .player-speed{display:flex;align-items:center;gap:7px;color:#d5e5f4;font-size:12px}
+#page4 #playerSpeed{background:#24496e;color:#fff;border:1px solid #52789e;border-radius:7px;padding:6px 8px;font-weight:800}
+#page4.has-preview #customAudioPlayer{display:block!important}
+#page4.has-preview #preview{display:none!important}
+@media(max-width:420px){#page4 .player-volume{display:none}#page4 .player-speed{margin-left:auto}}
+
 /* Final mobile studio visual polish: teal canvas, vivid controls, dark audio player */
 #page4{
   background:linear-gradient(150deg,#c8f1ed 0%,#a9e5df 52%,#d5f6f1 100%) !important;
@@ -415,7 +440,7 @@ input::placeholder,textarea::placeholder{color:#667b91!important}
 
 
 /* Full-screen searchable pre-approved topic library */
-.topic-library-open{width:100%;height:48px;border:1px solid #6b8db5;border-radius:10px;background:#17385f;color:#fff;font-size:16px;font-weight:800;text-align:left;padding:0 14px;cursor:pointer}
+.topic-library-open{width:100%;height:48px;border:1px solid #b91c2c;border-radius:10px;background:#d62839;color:#fff;font-size:16px;font-weight:800;text-align:left;padding:0 14px;cursor:pointer}
 .selected-topic-label{color:#d8e9ff;font-size:12px;margin-top:7px;min-height:16px}
 .topic-library-modal{position:fixed;inset:0;z-index:9999;background:#06152e;color:#fff;display:flex;flex-direction:column;padding:env(safe-area-inset-top,8px) 12px env(safe-area-inset-bottom,8px);text-align:left}
 .topic-library-modal[hidden]{display:none!important}
@@ -566,6 +591,33 @@ body.recording-view .step .num{width:clamp(20px,2.8vh,25px)!important;height:cla
 .profile-substep .page1-fields{gap:14px!important}
 .profile-substep .btn{width:100%;margin-top:16px}
 /* Post-stop review replaces the script; player remains visible above it */
+
+
+/* Clean pre-recording state: reveal recording indicators only after the doctor starts. */
+#page4:not(.recording-started) .doctor,
+#page4:not(.recording-started) .onair,
+#page4:not(.recording-started) #liveRecordingIndicator,
+#page4:not(.recording-started) .audio-meter,
+#page4:not(.recording-started) #recordingMic,
+#page4:not(.recording-started) #status,
+#page4:not(.recording-started) .timerLabel,
+#page4:not(.recording-started) #timer{display:none!important}
+#page4 .mic-help{font-size:15px;line-height:1.35;text-align:center;color:#fff;margin:8px auto 10px;max-width:520px;order:20}
+#page4 .recording-top{display:flex;flex-direction:column}
+#page4 .controls{order:21}
+#page4 .script-toolbar{display:flex;align-items:center;gap:6px;flex-wrap:nowrap}
+#page4 .font-tools{display:flex;align-items:center;gap:5px;flex-wrap:nowrap}
+#page4 #teleprompterBack{white-space:nowrap;background:#64748b;color:#fff;border:0;border-radius:8px;padding:7px 10px;font-weight:800}
+
+/* Recording UX: after STOP, remove all live recorder controls and show only review actions. */
+#page4.has-preview .recording-top{display:none!important}
+#page4.has-preview #preview{display:block!important;width:100%;height:42px;max-height:42px;margin:8px 0 12px}
+#page4.has-preview #recordingReviewPanel{display:block!important}
+#page4.has-preview #submitBtn{display:block!important;width:100%;min-height:48px;font-size:16px}
+#page4.has-preview #rerecordBtn{display:block!important;width:100%;min-height:46px;font-size:15px}
+#page4.has-preview #reviewNote{display:none!important}
+#page4.has-preview #backToPage3{display:none!important}
+
 #page4 #recordingReviewPanel{order:3;background:#102a4b;border:1px solid #416b96;border-radius:12px;padding:18px 16px;text-align:center;color:#eaf5ff;flex:1 1 auto;min-height:0;overflow:auto}
 #page4 #recordingReviewPanel[hidden]{display:none!important}
 #page4 .review-icon{width:42px;height:42px;border-radius:50%;background:#16a34a;color:#fff;font-size:27px;font-weight:900;display:grid;place-items:center;margin:0 auto 8px}
@@ -1096,18 +1148,88 @@ body.recording-view .step .num{width:clamp(20px,2.8vh,25px)!important;height:cla
   pointer-events:none!important;
 }
 
-#page4 #backToTalkSelectionTop{margin-left:6px;padding:7px 10px;border:1px solid #9fb3c8;border-radius:8px;background:#eef4fa;color:#244766;font-weight:700;cursor:pointer}
-#page4 #backToTalkSelectionTop:hover{background:#dceaf6}
 
-/* Visually separate the doctor's spoken talk from editorial references. */
-#scriptText .spoken-talk{white-space:pre-wrap}
-#scriptText .reference-separator{height:0;border-top:2px solid #9aafc2;margin:30px 0 22px;opacity:.9}
-#scriptText .reference-section{font-size:.88em;line-height:1.48;color:#536579;white-space:normal}
-#scriptText .reference-heading{font-size:.94em;font-weight:800;letter-spacing:.055em;color:#40566b;margin-bottom:7px}
-#scriptText .reference-note{font-size:.9em;font-style:italic;color:#748397;margin-bottom:12px}
-#scriptText .reference-content{white-space:pre-wrap}
+/* First UX refinement: two friendly welcome pages */
+.welcome-card{width:100%;max-width:680px;margin:auto;background:transparent;color:#fff;border:0;border-radius:0;padding:clamp(12px,2vh,22px);box-shadow:none;text-align:left}
+.welcome-kicker{font-size:16px;letter-spacing:1px;font-weight:800;color:#ffffff;text-align:center;margin-bottom:18px}
+.welcome-card h2{text-align:center;color:#fff;font-size:clamp(23px,3.4vh,30px);margin:0 0 16px}
+.welcome-card p{font-size:clamp(16px,2.25vh,18px);line-height:1.62;color:#f0f6ff;margin:14px 0}
+.record-steps{display:flex;justify-content:center;align-items:center;gap:clamp(5px,1.5vw,13px);flex-wrap:wrap;background:#102b50;border:1px solid #42658e;border-radius:12px;padding:16px 8px;margin:20px 0 10px;color:#ffffff;font-weight:900;font-size:clamp(15px,2.2vw,19px)}
+.record-steps b{color:#b8cce3}
+.welcome-tagline{text-align:center;color:#e53935;font-size:20px;font-weight:900;margin:14px 0 20px}
+.welcome-next{width:100%;margin-top:10px}
+.secondary-btn{width:100%;background:#64748b!important;margin-top:8px}
+.contribution-option{background:#102b50;border:1px solid #42658e;border-radius:13px;padding:13px 15px;margin:12px 0}
+.contribution-option h3{color:#ffffff;font-size:18px;margin:0 0 8px}
+.contribution-option p{margin:0;font-size:16px;line-height:1.58;color:#f0f6ff}
+.welcome-closing{text-align:center!important;font-weight:800;color:#fff!important;margin:16px 0 8px!important}
+#page0,#page6{overflow-y:auto;justify-content:center!important;padding:10px 4px}
+#browseTopicBtn{background:#d62839!important;color:#fff!important}
+@media(max-width:480px){.welcome-card{padding:16px 14px}.record-steps{gap:5px}.contribution-option{padding:11px 12px}}
+
+
+/* Welcome/invitation screens sit directly on the existing navy page; no white card or panel */
+body.welcome-screen .panel{background:transparent!important;color:#fff!important;box-shadow:none!important;padding:0!important}
+body.welcome-screen .progress{display:none!important}
+body.welcome-screen #page0,body.welcome-screen #page6{background:transparent!important}
+body.welcome-screen .welcome-card{max-width:680px}
+body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!important}
+\n
+
+
+/* v25: Keep the complete recording visual interface visible from initial page load. */
+#page4:not(.has-preview) #liveRecordingIndicator{display:flex!important}
+#page4:not(.has-preview) #audioLevelMeterLeft,
+#page4:not(.has-preview) #audioLevelMeterRight{display:flex!important;opacity:.42!important}
+#page4:not(.has-preview) .stereo-wave .meter-bar{height:12px!important;opacity:1!important}
+#page4:not(.has-preview) #recordingMic{display:block!important;visibility:visible!important;opacity:1!important;color:#ff5268!important}
+#page4:not(.recording-started):not(.has-preview) #status{display:block!important}
+#page4:not(.recording-started):not(.has-preview) .timerLabel,
+#page4:not(.recording-started):not(.has-preview) #timer{display:block!important}
 
 </style>
+
+<style id="own-talk-full-recording-layout">
+/* Own-talk option: show the complete recording studio immediately and use the available panel height. */
+#page4.active.mode-own:not(.has-preview){
+  display:flex!important; flex-direction:column!important; justify-content:stretch!important;
+}
+#page4.mode-own:not(.has-preview) .recording-top{
+  position:relative!important; display:grid!important; flex:1 1 auto!important; min-height:0!important; width:100%!important;
+  align-content:space-between!important; justify-content:stretch!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-areas:
+    "topic"
+    "live"
+    "waveleft"
+    "mic"
+    "waveright"
+    "status"
+    "label"
+    "timer"
+    "controls"!important;
+  gap:clamp(8px,2vh,18px)!important; padding:clamp(14px,3vh,28px)!important;
+}
+#page4.mode-own:not(.has-preview) .topic-heading{grid-area:topic!important;justify-self:stretch!important;width:100%!important;text-align:center!important;margin-inline:auto!important;font-size:clamp(20px,3vh,28px)!important}
+/* Approved-library script: keep only the Back button beside Reset. */
+#page4:not(.mode-own) #backOwnTalk{display:none!important}
+#page4.mode-own:not(.has-preview) .own-talk-back{position:absolute!important;top:clamp(10px,2vh,18px)!important;right:clamp(10px,2vw,18px)!important;z-index:5!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;background:#64748b!important;color:#fff!important;border:0!important;border-radius:9px!important;padding:10px 16px!important;font-size:14px!important;font-weight:800!important;cursor:pointer!important;white-space:nowrap!important}
+#page4.mode-own:not(.recording-started):not(.has-preview) #liveRecordingIndicator{display:flex!important}
+#page4.mode-own:not(.recording-started):not(.has-preview) #audioLevelMeterLeft,
+#page4.mode-own:not(.recording-started):not(.has-preview) #audioLevelMeterRight{display:flex!important}
+#page4.mode-own:not(.recording-started):not(.has-preview) #recordingMic{display:block!important}
+#page4.mode-own:not(.recording-started):not(.has-preview) #status{display:block!important}
+#page4.mode-own:not(.recording-started):not(.has-preview) .timerLabel,
+#page4.mode-own:not(.recording-started):not(.has-preview) #timer{display:block!important}
+#page4.mode-own:not(.has-preview) .recording-top .controls{grid-area:controls!important;justify-content:center!important}
+#page4.mode-own #backToPage3{display:none!important}
+@media(max-width:600px){
+ #page4.mode-own:not(.has-preview) .recording-top{gap:clamp(6px,1.4vh,12px)!important;padding:12px 9px!important}
+ #page4.mode-own:not(.has-preview) .own-talk-back{padding:8px 11px!important;font-size:12px!important;top:8px!important;right:8px!important}
+ #page4.mode-own:not(.has-preview) .topic-heading{font-size:clamp(17px,2.4vh,22px)!important}
+}
+</style>
+
 </head>
 <body>
 <div id="splashScreen" role="status" aria-label="Radio 4 Diabetes India Mobile Radio Studio">
@@ -1126,15 +1248,45 @@ body.recording-view .step .num{width:clamp(20px,2.8vh,25px)!important;height:cla
 <hr class="header-rule">
 
 <div class="panel">
-  <div class="progress" aria-label="Five step process">
-    <div class="step active" id="progress1"><span class="num">1</span><span>Doctor Details</span></div><div class="step-line"></div>
-    <div class="step" id="progress2"><span class="num">2</span><span>Consent</span></div><div class="step-line"></div>
-    <div class="step" id="progress3"><span class="num">3</span><span>Select Talk</span></div><div class="step-line"></div>
-    <div class="step" id="progress4"><span class="num">4</span><span>Recording</span></div><div class="step-line"></div>
-    <div class="step" id="progress5"><span class="num">5</span><span>Confirmation</span></div>
+  <div class="progress" aria-label="Eight step process">
+    <div class="step active" id="progress0"><span class="num">1</span><span>Welcome</span></div><div class="step-line"></div>
+    <div class="step" id="progress6"><span class="num">2</span><span>How to Contribute</span></div><div class="step-line"></div>
+    <div class="step" id="progress1"><span class="num">3</span><span>Doctor Details</span></div><div class="step-line"></div>
+    <div class="step" id="progress2"><span class="num">4</span><span>Consent</span></div><div class="step-line"></div>
+    <div class="step" id="progress3"><span class="num">5</span><span>Choose Talk</span></div><div class="step-line"></div>
+    <div class="step" id="progress4"><span class="num">6</span><span>Recording</span></div><div class="step-line"></div>
+    <div class="step" id="progress5"><span class="num">7</span><span>Done</span></div>
   </div>
 
-  <section class="page active" id="page1">
+  <section class="page active" id="page0">
+    <div class="welcome-card">
+      <div class="welcome-kicker">WELCOME, DEAR DOCTOR</div>
+      <p>Diabetes India welcomes you as a <strong>Medical Expert on Radio 4 Diabetes India</strong>, broadcasting live on Apple Music Radio Station across all 36 Indian States and Union Territories.<br><br>We invite you to share your medical knowledge through short health talks of <strong>up to 5 minutes</strong> for public health awareness, using your own mobile phone through our <strong>Mobile Radio Studio Teleprompter</strong> (<strong>no external microphone required</strong>).</p>
+      
+      <div class="record-steps"><span>RECORD</span><b>→</b><span>SPEAK</span><b>→</b><span>LISTEN</span><b>→</b><span>SUBMIT</span></div>
+      <div class="welcome-tagline">Go Live On Air !</div>
+      <button class="btn welcome-next" id="welcomeContinue">Continue →</button>
+    </div>
+  </section>
+
+  <section class="page" id="page6">
+    <div class="welcome-card welcome-card-second">
+      <p class="contribution-greeting">Dear Doctor,</p>
+      <div class="contribution-option">
+        <h3>Option 1 – Choose a Health Topic &amp; Script from Our Library</h3>
+        <p>Select a health topic and an approved script from our Library. Read the script using the on-screen Teleprompter on your mobile phone. Record your talk on our Live Recording Page, listen to it, approve and submit it to Radio 4 Diabetes India.</p>
+      </div>
+      <div class="contribution-option">
+        <h3>Option 2 – Choose Your Own Health Topic &amp; Script</h3>
+        <p>Choose your own health topic and prepare your own script. Record your talk on your mobile phone using our Live Recording Page, listen to it, approve and submit it to Radio 4 Diabetes India.</p>
+      </div>
+      <p class="welcome-closing">You can now start by filling in the required Doctor Details.</p>
+      <button class="btn welcome-next" id="welcomeToRegistration">Proceed to Doctor Details →</button>
+      <button class="btn secondary-btn" id="welcomeBack">← Back</button>
+    </div>
+  </section>
+
+  <section class="page" id="page1">
     <div class="info"><div class="info-icon">👨‍⚕️</div><div><h2>Doctor Details</h2><p>Please enter your professional details.</p></div></div>
     <div class="profile-substep" id="profileSubstep1">
       <div class="profile-step-caption">STEP 1 OF 2 · DOCTOR PROFILE</div>
@@ -1150,19 +1302,7 @@ body.recording-view .step .num{width:clamp(20px,2.8vh,25px)!important;height:cla
       <div class="page1-fields">
         <div class="field"><label for="registrationStatusField">Registration Status <span class="required">*</span></label><select id="registrationStatusField" required><option value="">Select status</option><option>Active</option><option>Not Active</option></select></div><div class="profile-message" id="inactiveStatusMessage" role="alert">Your registration status is currently marked Not Active. Kindly get your registration status updated to <strong>Active</strong> before proceeding with this recording initiative.</div>
         <div class="field"><label for="registrationNumber">SMC/NMR Registration Number <span class="required">*</span></label><input id="registrationNumber" required placeholder="Enter registration number"></div>
-        <div class="field"><label for="emailUser">Email Address (to receive Participation Certificate) <span class="required">*</span></label><div class="email-split"><input id="emailUser" type="text" required placeholder="name" autocomplete="off" aria-label="Email username"><span class="email-at">@</span><select id="emailDomainSelect" required aria-label="Choose email domain">
-        <option value="">Choose email domain</option>
-        <option value="gmail.com">gmail.com</option>
-        <option value="yahoo.com">yahoo.com</option>
-        <option value="yahoo.co.in">yahoo.co.in</option>
-        <option value="outlook.com">outlook.com</option>
-        <option value="hotmail.com">hotmail.com</option>
-        <option value="live.com">live.com</option>
-        <option value="rediffmail.com">rediffmail.com</option>
-        <option value="zoho.com">zoho.com</option>
-        <option value="icloud.com">icloud.com</option>
-        <option value="other">Other – Clinic / Hospital / Custom domain</option>
-      </select></div><input id="emailDomainCustom" type="text" placeholder="Enter your domain, e.g. abcclinic.in" autocomplete="off" aria-label="Custom email domain" hidden style="margin-top:8px"><input id="emailAddress" type="hidden"><small style="display:block;margin-top:6px;color:#c8dcf7">Select your email provider, or choose Other for a clinic, hospital or custom email address.</small>
+        <div class="field"><label for="whatsappNumberField">Mobile WhatsApp Number <span class="required">*</span></label><div class="doctor-name-row"><span class="doctor-prefix">+91</span><input id="whatsappNumberField" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" minlength="10" required placeholder="Enter 10-digit mobile number" autocomplete="tel-national"></div><small class="field-hint">To receive your Live Radio Page Link.</small></div>
       </div>
       <button class="btn" id="toPage2">Continue to Consent →</button>
       <button class="btn" id="backProfileSubstep1" style="background:#64748b">← Back</button>
@@ -1177,10 +1317,10 @@ body.recording-view .step .num{width:clamp(20px,2.8vh,25px)!important;height:cla
   </section>
 
   <section class="page" id="page3">
-    <div class="info"><div class="info-icon">🎙️</div><div><h2>Select Your Talk</h2><p>Choose a pre-approved health talk or record your own topic.</p></div></div>
+    <div class="info"><div class="info-icon">🎙️</div><div><h2>Select Your Option</h2><p>Select one of the two ways to share your health talk.</p></div></div>
     <div class="choice-grid" id="talkChoiceGrid">
-      <label class="choice-card" id="approvedChoiceCard"><input type="radio" name="talkType" value="approved"><span><strong>Pre-Approved Health Talks <span class="teleprompter-tag">· TELEPROMPTER</span></strong><small>Select a prepared English script from the approved library.</small></span></label>
-      <label class="choice-card" id="ownChoiceCard"><input type="radio" name="talkType" value="own"><span><strong>My Own Health Talk</strong><small>Choose your topic and speak in English or a regional language.</small></span></label>
+      <label class="choice-card" id="approvedChoiceCard"><input type="radio" name="talkType" value="approved"><span><strong>Option 1 – Choose a Health Topic &amp; Script from Our Library</strong><small>Choose a topic and an approved English script from our Library.</small></span></label>
+      <label class="choice-card" id="ownChoiceCard"><input type="radio" name="talkType" value="own"><span><strong>Option 2 – Choose Your Own Health Topic &amp; Script</strong><small>Choose your own topic and prepare your own script.</small></span></label>
     </div>
     <div id="approvedFields" class="talk-fields" hidden>
       <label for="approvedTopic">Pre-Approved Health Talk Library</label>
@@ -1233,13 +1373,16 @@ body.recording-view .step .num{width:clamp(20px,2.8vh,25px)!important;height:cla
       </select>
       <input id="talkLanguageOther" type="text" maxlength="60" placeholder="Type your language (e.g. French, German, or another language)" hidden style="margin-top:8px">
     </div>
-    <button type="button" class="btn" id="changeTalkChoice" style="background:#284768" hidden>Change talk type</button>
+    <button type="button" class="btn" id="changeTalkChoice" style="background:#284768" hidden>Change Your Option</button>
     <div class="nav-actions" id="talkNavActions" hidden><button class="btn" id="toPage4" disabled>Continue to Recording →</button><button class="btn" id="backToPage2" style="background:#64748b">← Back</button></div>
   </section>
+
+
 
   <section class="page" id="page4">
     <div class="recording-top">
       <div class="topic-heading" id="topicHeading">Your Health Talk</div>
+      <button type="button" id="backOwnTalk" class="own-talk-back">← Back</button>
       <div class="doctor" id="doctorName">Doctor</div>
       <div class="onair">🔴 LIVE RADIO STUDIO RECORDING</div>
       <div id="liveRecordingIndicator" class="live-indicator" aria-live="polite"><span class="live-dot"></span><span id="liveRecordingText">MICROPHONE READY</span></div>
@@ -1248,16 +1391,38 @@ body.recording-view .step .num{width:clamp(20px,2.8vh,25px)!important;height:cla
       <div class="timerLabel">TIME REMAINING</div><div id="timer" class="timer">05:00</div>
       <div class="controls"><button class="control" id="recordBtn">🎙 RECORD</button><button class="control" id="pauseBtn" disabled>Ⅱ PAUSE</button><button class="control" id="stopBtn" disabled>⏹ STOP</button></div>
     </div>
-    <div id="scriptPanel" class="script-panel" hidden><div class="script-toolbar"><div class="script-title">YOUR APPROVED SCRIPT</div><div class="font-tools"><button type="button" id="fontMinus" aria-label="Decrease script font size">A−</button><span id="fontSizeLabel">22 px</span><button type="button" id="fontPlus" aria-label="Increase script font size">A+</button><button type="button" id="fontReset">Reset</button><button type="button" id="backToTalkSelectionTop" aria-label="Back to talk selection">← BACK</button></div></div><div class="script-scroll-tools"><button type="button" id="pauseScriptScroll">Ⅱ PAUSE SCROLL</button><button type="button" id="resumeScriptScroll" hidden>▶ RESUME SCROLL</button></div><div id="scriptText" class="script-text"></div></div>
-    <audio id="preview" controls style="display:none"></audio>
+    <div id="scriptPanel" class="script-panel" hidden><div class="script-toolbar"><div class="script-title">YOUR APPROVED SCRIPT</div><div class="font-tools"><button type="button" id="fontMinus" aria-label="Decrease script font size">A−</button><span id="fontSizeLabel">22 px</span><button type="button" id="fontPlus" aria-label="Increase script font size">A+</button><button type="button" id="fontReset">Reset</button><button type="button" id="teleprompterBack">← Back</button></div></div><div class="script-scroll-tools"><button type="button" id="pauseScriptScroll">Ⅱ PAUSE SCROLL</button><button type="button" id="resumeScriptScroll" hidden>▶ RESUME SCROLL</button></div><div id="scriptText" class="script-text"></div></div>
+    <audio id="preview" preload="metadata" style="display:none"></audio>
+    <div id="customAudioPlayer" class="custom-audio-player" hidden>
+      <div class="custom-player-heading">
+        <div class="player-art"><span>♫</span></div>
+        <div class="player-track"><strong>Your Recorded Health Talk</strong><small>Radio 4 Diabetes India</small></div>
+        <span class="player-ready">READY</span>
+      </div>
+      <div class="player-main-controls">
+        <button type="button" id="playerPlay" class="player-play" aria-label="Play recording">▶</button>
+        <div class="player-timeline">
+          <input id="playerSeek" type="range" min="0" max="1000" value="0" aria-label="Audio position">
+          <div class="player-time"><span id="playerCurrent">00:00</span><span id="playerDuration">00:00</span></div>
+        </div>
+      </div>
+      <div class="player-extra-controls">
+        <label class="player-volume"><span>🔊</span><input id="playerVolume" type="range" min="0" max="1" step="0.05" value="1" aria-label="Volume"></label>
+        <label class="player-speed">Playback speed
+          <select id="playerSpeed" aria-label="Playback speed">
+            <option value="1">1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option>
+          </select>
+        </label>
+      </div>
+    </div>
     <div id="recordingReviewPanel" class="recording-review-panel" hidden>
       <div class="review-icon">✓</div>
       <h2>Recording Complete</h2>
-      <p><strong>Please listen to and review your recording before submitting it for review for Live Broadcast.</strong></p>
+      <p><strong>Listen to your recording before submitting.</strong></p>
       <p>Check that your voice is clear, the talk is complete and there are no interruptions. You may record again if you are not satisfied.</p>
-      <button type="button" class="control review-rerecord" id="rerecordBtn">↻ RE-RECORD</button>
+      <button type="button" class="control review-rerecord" id="rerecordBtn">↻ RECORD AGAIN</button>
     </div>
-    <div class="controls"><button class="control" id="submitBtn" disabled>✓ SUBMIT FOR REVIEW</button></div>
+    <div class="controls"><button class="control" id="submitBtn" disabled>✓ APPROVE &amp; SUBMIT</button></div>
     <div class="note" id="reviewNote">Listen to your recording before submitting it for review.</div>
     <button class="btn" id="backToPage3" style="background:#64748b">← Back to Talk Selection</button>
   </section>
@@ -1267,7 +1432,7 @@ body.recording-view .step .num{width:clamp(20px,2.8vh,25px)!important;height:cla
     <div class="success-subtitle">RECORDING SUBMITTED SUCCESSFULLY</div>
     <div class="live-soon-headline">WILL GO LIVE ON AIR SOON!</div>
     <div class="success-message"><span>Your recording has been submitted to</span><strong class="submitted-brand">Radio 4 Diabetes India</strong></div>
-    <div class="email-card"><div class="email-icon" aria-hidden="true">✉</div><div class="email-heading">Look out for an email from Radio 4</div><div class="email-message">Your <strong>Participation Certificate</strong> and <strong>OnDemand Radio Link</strong> will be sent to:</div><div class="email-address" id="confirmationEmail"></div></div>
+    <div class="email-card"><div class="email-icon" aria-hidden="true">📱</div><div class="email-heading">Your On-Demand Radio Link</div><div class="email-message">Your On-Demand Radio Link will be sent to this WhatsApp number:</div><div class="email-address" id="confirmationWhatsApp"></div></div>
     <a class="btn listen-radio-btn" id="listenRadio4" href="https://diabetesindia.radio4.in/" target="_blank" rel="noopener noreferrer">Listen to Radio 4 Diabetes India</a>
     <div class="listen-radio-caption"><span>Apple Music Radio Station</span></div>
   </section>
@@ -1285,13 +1450,12 @@ body.recording-view .step .num{width:clamp(20px,2.8vh,25px)!important;height:cla
   <div class="topic-library-footer"><span id="topicLibraryHint">Select a topic to continue</span><button type="button" id="confirmTopicSelection" disabled>Use This Topic →</button></div>
 </div>
 <script>
-function closeSplash(){const splash=document.getElementById('splashScreen');const studio=document.getElementById('studioContainer');if(!splash||splash.dataset.closed==='yes')return;splash.dataset.closed='yes';splash.style.setProperty('display','none','important');splash.style.setProperty('visibility','hidden','important');splash.style.setProperty('pointer-events','none','important');studio.style.setProperty('display','flex','important');studio.style.setProperty('visibility','visible','important');if(typeof showPage==='function')showPage(1);if(window.__splashTimer)clearTimeout(window.__splashTimer)}
+function closeSplash(){const splash=document.getElementById('splashScreen');const studio=document.getElementById('studioContainer');if(!splash||splash.dataset.closed==='yes')return;splash.dataset.closed='yes';splash.style.setProperty('display','none','important');splash.style.setProperty('visibility','hidden','important');splash.style.setProperty('pointer-events','none','important');studio.style.setProperty('display','flex','important');studio.style.setProperty('visibility','visible','important');if(typeof showPage==='function')showPage(0);if(window.__splashTimer)clearTimeout(window.__splashTimer)}
 window.__splashTimer=setTimeout(closeSplash,3000);
 const params=new URLSearchParams(location.search);const doctorId=(params.get('id')||'').toUpperCase();
 const doctorNameField=document.getElementById('doctorNameField');const qualificationField=document.getElementById('qualificationField');
-const emailUser=document.getElementById('emailUser'),emailDomainSelect=document.getElementById('emailDomainSelect'),emailDomainCustom=document.getElementById('emailDomainCustom'),emailAddress=document.getElementById('emailAddress');
-function getEmailAddress(){const user=emailUser.value.trim();const selected=emailDomainSelect.value;const domain=selected==='other'?emailDomainCustom.value.trim().replace(/^@+/, ''):selected;return user&&domain?user+'@'+domain:'';}
-emailDomainSelect.addEventListener('change',()=>{const custom=emailDomainSelect.value==='other';emailDomainCustom.hidden=!custom;emailDomainCustom.required=custom;if(custom)emailDomainCustom.focus();});
+const whatsappNumberField=document.getElementById('whatsappNumberField');
+function getWhatsAppNumber(){return '+91'+whatsappNumberField.value.trim();}
 function getDoctorDisplayName(){const name=doctorNameField.value.trim().replace(/^dr\.?\s*/i,'');return name?'Dr. '+name:'';}
 
 const topicInput=document.getElementById('topicName');let consentAcceptedAt=null;
@@ -1481,10 +1645,13 @@ document.getElementById('openTopicLibrary').onclick=()=>{pendingTopicValue=topic
 document.getElementById('closeTopicLibrary').onclick=()=>{topicModal.hidden=true;};
 topicSearch.addEventListener('input',renderTopicLibrary);
 document.getElementById('confirmTopicSelection').onclick=()=>{if(!pendingTopicValue)return;topicSelect.value=pendingTopicValue;document.getElementById('selectedTopicLabel').textContent='Selected: '+topicSelect.options[topicSelect.selectedIndex].text;document.getElementById('openTopicLibrary').textContent='Change Selected Topic ▾';updateTalkContinue();topicModal.hidden=true;};
-function showPage(n){document.body.classList.toggle('recording-view',n===4);for(let i=1;i<=5;i++){const page=document.getElementById('page'+i);page.classList.toggle('active',i===n);const p=document.getElementById('progress'+i);p.classList.toggle('active',i===n);p.classList.toggle('done',i<n);p.querySelector('.num').textContent=i<n?'✓':String(i)}}
+function showPage(n){document.body.classList.toggle('recording-view',n===4);document.body.classList.toggle('welcome-screen',n===0||n===6);const order=[0,6,1,2,3,4,5];order.forEach((id,index)=>{const page=document.getElementById('page'+id);if(page)page.classList.toggle('active',id===n);const p=document.getElementById('progress'+id);if(p){p.classList.toggle('active',id===n);p.classList.toggle('done',index<order.indexOf(n));p.querySelector('.num').textContent=index<order.indexOf(n)?'✓':String(index+1)}})}
+document.getElementById('welcomeContinue').onclick=()=>showPage(6);
+document.getElementById('welcomeToRegistration').onclick=()=>showPage(1);
+document.getElementById('welcomeBack').onclick=()=>showPage(0);
 document.getElementById('toProfileSubstep2').onclick=()=>{for(const id of ['doctorNameField','qualificationField','doctorState']){const el=document.getElementById(id);if(!el.value.trim()){el.focus();return}}document.getElementById('profileSubstep1').hidden=true;document.getElementById('profileSubstep2').hidden=false;};
 document.getElementById('backProfileSubstep1').onclick=()=>{document.getElementById('profileSubstep2').hidden=true;document.getElementById('profileSubstep1').hidden=false;};
-document.getElementById('toPage2').onclick=()=>{const statusField=document.getElementById('registrationStatusField');const inactiveMessage=document.getElementById('inactiveStatusMessage');if(statusField.value==='Not Active'){inactiveMessage.classList.add('show');statusField.focus();return}else{inactiveMessage.classList.remove('show')}for(const id of ['emailUser','emailDomainSelect','registrationStatusField','registrationNumber']){const el=document.getElementById(id);if(!el.value.trim()){el.focus();return}}if(emailDomainSelect.value==='other'&&!emailDomainCustom.value.trim()){emailDomainCustom.focus();return}const email=getEmailAddress();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){(emailDomainSelect.value==='other'?emailDomainCustom:emailDomainSelect).focus();return}emailAddress.value=email;document.getElementById('doctorName').textContent=getDoctorDisplayName();showPage(2)};
+document.getElementById('toPage2').onclick=()=>{const statusField=document.getElementById('registrationStatusField');const inactiveMessage=document.getElementById('inactiveStatusMessage');if(statusField.value==='Not Active'){inactiveMessage.classList.add('show');statusField.focus();return}else{inactiveMessage.classList.remove('show')}for(const id of ['whatsappNumberField','registrationStatusField','registrationNumber']){const el=document.getElementById(id);if(!el.value.trim()){el.focus();return}}const mobile=whatsappNumberField.value.trim();if(!/^[6-9][0-9]{9}$/.test(mobile)){whatsappNumberField.setCustomValidity('Please enter a valid 10-digit Indian mobile number.');whatsappNumberField.reportValidity();whatsappNumberField.focus();return}else{whatsappNumberField.setCustomValidity('')}document.getElementById('doctorName').textContent=getDoctorDisplayName();showPage(2)};
 document.getElementById('registrationStatusField').addEventListener('change',()=>{const m=document.getElementById('inactiveStatusMessage');if(document.getElementById('registrationStatusField').value==='Not Active')m.classList.add('show');else m.classList.remove('show')});
 document.getElementById('backToPage1').onclick=()=>{showPage(1);document.getElementById('profileSubstep2').hidden=true;document.getElementById('profileSubstep1').hidden=false};
 document.getElementById('toPage3').onclick=()=>{consentAcceptedAt=new Date().toISOString();showPage(3)};
@@ -1498,30 +1665,36 @@ topicInput.addEventListener('input',updateTalkContinue);
 const talkLanguageSelect=document.getElementById('talkLanguage'),talkLanguageOther=document.getElementById('talkLanguageOther');
 talkLanguageSelect.addEventListener('change',()=>{const custom=talkLanguageSelect.value==='Other';talkLanguageOther.hidden=!custom;talkLanguageOther.required=custom;if(custom)talkLanguageOther.focus();else talkLanguageOther.value='';updateTalkContinue()});
 talkLanguageOther.addEventListener('input',updateTalkContinue);
-changeChoice.addEventListener('click',resetTalkChoice);
-
-function renderTeleprompterScript(fullText){
- const target=document.getElementById('scriptText');
- const marker='REFERENCES & FURTHER READING';
- const text=String(fullText||'');
- const index=text.indexOf(marker);
- const escapeHtml=value=>String(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
- if(index<0){target.textContent=text;return;}
- const talk=text.slice(0,index).trim();
- const references=text.slice(index).trim();
- target.innerHTML=
-   '<div class="spoken-talk">'+escapeHtml(talk)+'</div>'+
-   '<div class="reference-separator" role="separator" aria-label="End of spoken talk and beginning of references"></div>'+
-   '<div class="reference-section"><div class="reference-heading">REFERENCES &amp; FURTHER READING</div>'+
-   '<div class="reference-note">(For editorial review — not part of the spoken talk)</div>'+
-   '<div class="reference-content">'+escapeHtml(references.slice(marker.length).trim())+'</div></div>';
-}
-
-document.getElementById('toPage4').onclick=()=>{if(!talkType)return;const panel=document.getElementById('scriptPanel');if(talkType==='approved'){const key=document.getElementById('approvedTopic').value;if(!key||!DEMO_SCRIPTS[key])return;selectedTopic=DEMO_SCRIPTS[key].title;selectedScript=buildRadio4Opening(DEMO_SCRIPTS[key].text,selectedTopic);selectedLanguage='English';renderTeleprompterScript(selectedScript);document.querySelector('#scriptPanel .script-title').textContent='RADIO TELEPROMPTER';panel.hidden=false;}else{selectedTopic=topicInput.value.trim();if(!selectedTopic){topicInput.focus();return}const chosenLanguage=talkLanguageSelect.value;selectedLanguage=chosenLanguage==='Other'?talkLanguageOther.value.trim():chosenLanguage;if(!selectedLanguage){talkLanguageOther.focus();return}selectedScript='';panel.hidden=true;}document.getElementById('topicHeading').textContent=selectedTopic;document.getElementById('doctorName').textContent=getDoctorDisplayName();document.getElementById('page4').classList.toggle('mode-approved',talkType==='approved');document.getElementById('page4').classList.toggle('mode-own',talkType==='own');panel.scrollTop=0;document.getElementById('page4').classList.remove('has-preview');document.getElementById('preview').style.display='none';document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';showPage(4)};
-document.getElementById('backToPage3').onclick=()=>{if(recorder&&recorder.state==='recording')return;showPage(3)};
-document.getElementById('backToTalkSelectionTop').onclick=()=>document.getElementById('backToPage3').click();
+changeChoice.addEventListener('click',()=>{resetRecordingState();resetTalkChoice()});
+document.getElementById('toPage4').onclick=()=>{if(!talkType)return;const panel=document.getElementById('scriptPanel');if(talkType==='approved'){const key=document.getElementById('approvedTopic').value;if(!key||!DEMO_SCRIPTS[key])return;selectedTopic=DEMO_SCRIPTS[key].title;selectedScript=buildRadio4Opening(DEMO_SCRIPTS[key].text,selectedTopic);selectedLanguage='English';document.getElementById('scriptText').textContent=selectedScript;document.querySelector('#scriptPanel .script-title').textContent='RADIO TELEPROMPTER';panel.hidden=false;}else{selectedTopic=topicInput.value.trim();if(!selectedTopic){topicInput.focus();return}const chosenLanguage=talkLanguageSelect.value;selectedLanguage=chosenLanguage==='Other'?talkLanguageOther.value.trim():chosenLanguage;if(!selectedLanguage){talkLanguageOther.focus();return}selectedScript='';panel.hidden=true;}document.getElementById('topicHeading').textContent=selectedTopic;document.getElementById('doctorName').textContent=getDoctorDisplayName();document.getElementById('page4').classList.toggle('mode-approved',talkType==='approved');document.getElementById('page4').classList.toggle('mode-own',talkType==='own');panel.scrollTop=0;document.getElementById('page4').classList.remove('has-preview');document.getElementById('preview').style.display='none';document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';showPage(4)};
+document.getElementById('backToPage3').onclick=()=>{resetRecordingState();showPage(3)};
+document.getElementById('backOwnTalk').onclick=()=>{resetRecordingState();showPage(3)};
 const recordBtn=document.getElementById('recordBtn'),pauseBtn=document.getElementById('pauseBtn'),stopBtn=document.getElementById('stopBtn'),submitBtn=document.getElementById('submitBtn'),preview=document.getElementById('preview'),status=document.getElementById('status'),timer=document.getElementById('timer');
 let recorder=null,chunks=[],recordedBlob=null,timerInterval=null,scriptScrollInterval=null,meterInterval=null,seconds=300,recordingStream=null,paused=false,scriptScrollPaused=false,scriptScrollSpeed=8,scriptScrollStartsAt=0,audioContext=null,analyser=null,micSource=null,recordingSession=0;
+function resetRecordingState(){
+  // Invalidate any pending recorder.onstop callback before stopping the old recorder.
+  recordingSession++;
+  clearInterval(timerInterval);timerInterval=null;
+  clearInterval(scriptScrollInterval);scriptScrollInterval=null;
+  stopMeter();
+  if(recorder&&recorder.state!=='inactive'){try{recorder.stop()}catch(e){}}
+  if(recordingStream){recordingStream.getTracks().forEach(track=>track.stop());recordingStream=null;}
+  if(audioContext&&audioContext.state!=='closed'){try{audioContext.close()}catch(e){}}
+  audioContext=null;analyser=null;micSource=null;recorder=null;
+  if(preview){preview.pause();if(preview.src&&preview.src.startsWith('blob:'))URL.revokeObjectURL(preview.src);preview.removeAttribute('src');preview.load();preview.style.display='none';}
+  const player=document.getElementById('customAudioPlayer');if(player)player.hidden=true;
+  const page=document.getElementById('page4');page.classList.remove('has-preview','recording-started');
+  document.getElementById('recordingReviewPanel').hidden=true;
+  document.getElementById('scriptPanel').hidden=talkType!=='approved';
+  const script=document.getElementById('scriptText');if(script)script.scrollTop=0;
+  setScriptScrollPaused(false);
+  chunks=[];recordedBlob=null;seconds=300;paused=false;setTimer();
+  recordBtn.disabled=false;pauseBtn.disabled=true;stopBtn.disabled=true;pauseBtn.textContent='Ⅱ PAUSE';
+  submitBtn.disabled=true;status.textContent='Microphone ready. Click RECORD to begin.';
+  setLiveState('','MICROPHONE READY');
+  playerPlay.textContent='▶';playerSeek.value='0';playerCurrent.textContent='00:00';playerDuration.textContent='00:00';playerSpeed.value='1';playerVolume.value='1';preview.volume=1;preview.playbackRate=1;
+}
+
 const liveIndicator=document.getElementById('liveRecordingIndicator'),liveText=document.getElementById('liveRecordingText'),micIcon=document.getElementById('recordingMic'),meters=[document.getElementById('audioLevelMeterLeft'),document.getElementById('audioLevelMeterRight')];
 function setLiveState(state,label){liveIndicator.className='live-indicator '+state;liveText.textContent=label;micIcon.classList.toggle('active',state==='recording');meters.forEach(m=>m.classList.toggle('active',state==='recording'))}
 function setTimer(){timer.textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0')}
@@ -1532,13 +1705,35 @@ const scrollPauseBtn=document.getElementById('pauseScriptScroll'),scrollResumeBt
 function setScriptScrollPaused(value){scriptScrollPaused=value;if(scrollPauseBtn)scrollPauseBtn.hidden=value;if(scrollResumeBtn)scrollResumeBtn.hidden=!value}
 scrollPauseBtn?.addEventListener('click',()=>setScriptScrollPaused(true));scrollResumeBtn?.addEventListener('click',()=>setScriptScrollPaused(false));
 const scriptTextForTouch=document.getElementById('scriptText');scriptTextForTouch?.addEventListener('pointerdown',()=>{if(recorder&&recorder.state==='recording')setScriptScrollPaused(true)});
-recordBtn.onclick=async()=>{try{const session=++recordingSession;recordingStream=await navigator.mediaDevices.getUserMedia({audio:true});const thisStream=recordingStream;chunks=[];recordedBlob=null;preview.style.display='none';preview.removeAttribute('src');preview.load();document.getElementById('page4').classList.remove('has-preview');document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';const scriptAtStart=document.getElementById('scriptText');if(talkType==='approved'&&scriptAtStart){scriptAtStart.scrollTop=0;}setScriptScrollPaused(false);submitBtn.disabled=true;recorder=new MediaRecorder(thisStream);const thisRecorder=recorder;recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{thisStream.getTracks().forEach(t=>t.stop());if(session!==recordingSession)return;if(audioContext&&audioContext.state!=='closed')audioContext.close();audioContext=null;analyser=null;recordedBlob=new Blob(chunks,{type:thisRecorder.mimeType||'audio/webm'});preview.src=URL.createObjectURL(recordedBlob);preview.style.display='block';document.getElementById('page4').classList.add('has-preview');document.getElementById('scriptPanel').hidden=true;document.getElementById('recordingReviewPanel').hidden=false;submitBtn.disabled=false;status.textContent='Recording stopped. Please review your audio before submitting.';setLiveState('complete','RECORDING COMPLETE')};recorder.start();scriptScrollStartsAt=Date.now()+4000;seconds=300;setTimer();recordBtn.disabled=true;pauseBtn.disabled=false;pauseBtn.textContent='Ⅱ PAUSE';stopBtn.disabled=false;status.textContent='Your microphone is active. Please speak clearly.';setLiveState('recording','RECORDING IN PROGRESS');startMeter();timerInterval=setInterval(()=>{if(!paused){seconds--;setTimer();if(seconds<=0)stopRecording()}},1000);/* 1px per 125ms = 8px/sec; integer steps avoid sub-pixel rounding stalls. */scriptScrollInterval=setInterval(()=>{const script=document.getElementById('scriptText');if(Date.now()>=scriptScrollStartsAt&&!paused&&!scriptScrollPaused&&!document.getElementById('scriptPanel').hidden&&script&&script.scrollHeight>script.clientHeight+2){script.scrollTop=Math.min(script.scrollTop+1,script.scrollHeight-script.clientHeight)}},125)}catch(e){setLiveState('','MICROPHONE NOT STARTED');status.textContent='Microphone access is required. Please allow microphone permission and try again.'}};
+recordBtn.onclick=async()=>{try{const session=++recordingSession;recordingStream=await navigator.mediaDevices.getUserMedia({audio:true});const thisStream=recordingStream;chunks=[];recordedBlob=null;preview.style.display='none';preview.removeAttribute('src');preview.load();document.getElementById('page4').classList.remove('has-preview');document.getElementById('page4').classList.remove('recording-started');document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';const scriptAtStart=document.getElementById('scriptText');if(talkType==='approved'&&scriptAtStart){scriptAtStart.scrollTop=0;}setScriptScrollPaused(false);submitBtn.disabled=true;recorder=new MediaRecorder(thisStream);const thisRecorder=recorder;recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{thisStream.getTracks().forEach(t=>t.stop());if(session!==recordingSession)return;if(audioContext&&audioContext.state!=='closed')audioContext.close();audioContext=null;analyser=null;recordedBlob=new Blob(chunks,{type:thisRecorder.mimeType||'audio/webm'});preview.src=URL.createObjectURL(recordedBlob);preview.style.display='none';document.getElementById('customAudioPlayer').hidden=false;document.getElementById('page4').classList.add('has-preview');document.getElementById('scriptPanel').hidden=true;document.getElementById('recordingReviewPanel').hidden=false;submitBtn.disabled=false;status.textContent='Recording stopped. Please review your audio before submitting.';setLiveState('complete','RECORDING COMPLETE')};recorder.start();document.getElementById('page4').classList.add('recording-started');scriptScrollStartsAt=Date.now()+4000;seconds=300;setTimer();recordBtn.disabled=true;pauseBtn.disabled=false;pauseBtn.textContent='Ⅱ PAUSE';stopBtn.disabled=false;status.textContent='Your microphone is active. Please speak clearly.';setLiveState('recording','RECORDING IN PROGRESS');startMeter();timerInterval=setInterval(()=>{if(!paused){seconds--;setTimer();if(seconds<=0)stopRecording()}},1000);/* 1px per 125ms = 8px/sec; integer steps avoid sub-pixel rounding stalls. */scriptScrollInterval=setInterval(()=>{const script=document.getElementById('scriptText');if(Date.now()>=scriptScrollStartsAt&&!paused&&!scriptScrollPaused&&!document.getElementById('scriptPanel').hidden&&script&&script.scrollHeight>script.clientHeight+2){script.scrollTop=Math.min(script.scrollTop+1,script.scrollHeight-script.clientHeight)}},125)}catch(e){setLiveState('','MICROPHONE NOT STARTED');status.textContent='Microphone access is required. Please allow microphone permission and try again.'}};
 pauseBtn.onclick=()=>{if(!recorder)return;if(recorder.state==='recording'){recorder.pause();paused=true;pauseBtn.textContent='▶ RESUME';status.textContent='Recording is paused. Your talk is not being recorded right now.';setLiveState('paused','RECORDING PAUSED')}else if(recorder.state==='paused'){recorder.resume();paused=false;pauseBtn.textContent='Ⅱ PAUSE';status.textContent='Recording resumed. Please continue speaking.';setLiveState('recording','RECORDING IN PROGRESS')}};
 stopBtn.onclick=stopRecording;
-document.getElementById('rerecordBtn').onclick=()=>{recordingSession++;if(recorder&&recorder.state!=='inactive'){try{recorder.stop()}catch(e){}}clearInterval(timerInterval);clearInterval(scriptScrollInterval);stopMeter();if(recordingStream)recordingStream.getTracks().forEach(t=>t.stop());if(preview.src){URL.revokeObjectURL(preview.src);preview.removeAttribute('src');preview.load()}preview.style.display='none';document.getElementById('page4').classList.remove('has-preview');document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';setScriptScrollPaused(false);recordedBlob=null;chunks=[];seconds=300;setTimer();submitBtn.disabled=true;recordBtn.disabled=false;pauseBtn.disabled=true;stopBtn.disabled=true;pauseBtn.textContent='Ⅱ PAUSE';status.textContent='Ready to record again. Click RECORD to begin.';setLiveState('','MICROPHONE READY')};
+document.getElementById('rerecordBtn').onclick=()=>{recordingSession++;if(recorder&&recorder.state!=='inactive'){try{recorder.stop()}catch(e){}}clearInterval(timerInterval);clearInterval(scriptScrollInterval);stopMeter();if(recordingStream)recordingStream.getTracks().forEach(t=>t.stop());if(preview.src){URL.revokeObjectURL(preview.src);preview.removeAttribute('src');preview.load()}preview.pause();preview.currentTime=0;preview.style.display='none';document.getElementById('customAudioPlayer').hidden=true;document.getElementById('page4').classList.remove('has-preview');document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';setScriptScrollPaused(false);recordedBlob=null;chunks=[];seconds=300;setTimer();submitBtn.disabled=true;recordBtn.disabled=false;pauseBtn.disabled=true;stopBtn.disabled=true;pauseBtn.textContent='Ⅱ PAUSE';status.textContent='Ready to record again. Click RECORD to begin.';setLiveState('','MICROPHONE READY')};
+
+// Custom HTML5 audio player controls
+const customPlayer=document.getElementById('customAudioPlayer');
+const playerPlay=document.getElementById('playerPlay');
+const playerSeek=document.getElementById('playerSeek');
+const playerCurrent=document.getElementById('playerCurrent');
+const playerDuration=document.getElementById('playerDuration');
+const playerVolume=document.getElementById('playerVolume');
+const playerSpeed=document.getElementById('playerSpeed');
+function formatPlayerTime(value){if(!Number.isFinite(value))return '00:00';const n=Math.floor(value);return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')}
+function syncPlayer(){if(!preview.duration||!Number.isFinite(preview.duration))return;playerSeek.value=String(Math.round((preview.currentTime/preview.duration)*1000));playerCurrent.textContent=formatPlayerTime(preview.currentTime);playerDuration.textContent=formatPlayerTime(preview.duration)}
+playerPlay.onclick=()=>{if(preview.paused){preview.play().catch(()=>{});}else{preview.pause();}};
+preview.addEventListener('play',()=>{playerPlay.textContent='Ⅱ';playerPlay.setAttribute('aria-label','Pause recording')});
+preview.addEventListener('pause',()=>{playerPlay.textContent='▶';playerPlay.setAttribute('aria-label','Play recording')});
+preview.addEventListener('loadedmetadata',syncPlayer);
+preview.addEventListener('timeupdate',syncPlayer);
+preview.addEventListener('ended',()=>{playerPlay.textContent='▶';playerPlay.setAttribute('aria-label','Play recording')});
+playerSeek.oninput=()=>{if(preview.duration)preview.currentTime=(Number(playerSeek.value)/1000)*preview.duration};
+playerVolume.oninput=()=>{preview.volume=Number(playerVolume.value)};
+playerSpeed.onchange=()=>{preview.playbackRate=Number(playerSpeed.value)};
+document.getElementById('teleprompterBack').onclick=()=>{document.getElementById('backToPage3').click()};
+
 const UPLOAD_URL='https://script.google.com/macros/s/AKfycbw7a45LcBMQghWuLMkwncq8X4_n6tIpycQrYW7vV_ZElErLEApAr5nxr3m4nUb1tUkx/exec';
 function safeFilePart(s){return String(s||'').normalize('NFKD').replace(/[^A-Za-z0-9 -]+/g,'').replace(/\s+/g,' ').trim().slice(0,80)||'Health Talk'}
-submitBtn.onclick=async()=>{if(!recordedBlob)return;submitBtn.disabled=true;status.textContent='Uploading your recording...';try{const reader=new FileReader();reader.onloadend=async()=>{try{const base64=reader.result.split(',')[1];const stamp=new Date().toISOString().replace(/[:.]/g,'-');const docName=getDoctorDisplayName();const topic=selectedTopic||topicInput.value.trim();const payload={doctorId:doctorId,doctorName:docName,qualification:qualificationField.value.trim(),registrationStatus:document.getElementById('registrationStatusField').value,registrationNumber:document.getElementById('registrationNumber').value.trim(),state:document.getElementById('doctorState').value,emailAddress:getEmailAddress(),topicName:topic,talkType:talkType,talkLanguage:selectedLanguage,consentAccepted:true,consentAcceptedAt:consentAcceptedAt,consentText:CONSENT_TEXT,fileName:(doctorId||'DOCTOR')+'_'+safeFilePart(topic).replace(/\s+/g,'_')+'_'+stamp+'.webm',mimeType:recordedBlob.type||'audio/webm',audio:base64};await fetch(UPLOAD_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});document.getElementById('confirmationEmail').textContent=getEmailAddress();showPage(5)}catch(err){status.textContent='Upload could not be completed. Please try again.';submitBtn.disabled=false}};reader.readAsDataURL(recordedBlob)}catch(err){status.textContent='Upload could not be completed. Please try again.';submitBtn.disabled=false}};
+submitBtn.onclick=async()=>{if(!recordedBlob)return;submitBtn.disabled=true;status.textContent='Uploading your recording...';try{const reader=new FileReader();reader.onloadend=async()=>{try{const base64=reader.result.split(',')[1];const stamp=new Date().toISOString().replace(/[:.]/g,'-');const docName=getDoctorDisplayName();const topic=selectedTopic||topicInput.value.trim();const payload={doctorId:doctorId,doctorName:docName,qualification:qualificationField.value.trim(),registrationStatus:document.getElementById('registrationStatusField').value,registrationNumber:document.getElementById('registrationNumber').value.trim(),state:document.getElementById('doctorState').value,mobileWhatsAppNumber:getWhatsAppNumber(),topicName:topic,talkType:talkType,talkLanguage:selectedLanguage,consentAccepted:true,consentAcceptedAt:consentAcceptedAt,consentText:CONSENT_TEXT,fileName:(doctorId||'DOCTOR')+'_'+safeFilePart(topic).replace(/\s+/g,'_')+'_'+stamp+'.webm',mimeType:recordedBlob.type||'audio/webm',audio:base64};await fetch(UPLOAD_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});document.getElementById('confirmationWhatsApp').textContent=getWhatsAppNumber();showPage(5)}catch(err){status.textContent='Upload could not be completed. Please try again.';submitBtn.disabled=false}};reader.readAsDataURL(recordedBlob)}catch(err){status.textContent='Upload could not be completed. Please try again.';submitBtn.disabled=false}};
 let scriptFontSize=22;const scriptTextEl=document.getElementById('scriptText');function applyScriptFont(){if(scriptTextEl)scriptTextEl.style.fontSize=scriptFontSize+'px';const label=document.getElementById('fontSizeLabel');if(label)label.textContent=scriptFontSize+' px'}
 document.getElementById('fontMinus')?.addEventListener('click',()=>{scriptFontSize=Math.max(18,scriptFontSize-2);applyScriptFont()});
 document.getElementById('fontPlus')?.addEventListener('click',()=>{scriptFontSize=Math.min(32,scriptFontSize+2);applyScriptFont()});
@@ -1561,5 +1756,486 @@ setTimer();
  window.MediaRecorder=Recorder;
 })();
 </script>
+
+<style id="v27-final-button-size-override">
+/* Final override: loaded after all earlier style blocks. */
+#page4 .recording-top .controls{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  flex-wrap:nowrap!important;
+}
+#page4 .recording-top .controls button.control{
+  box-sizing:border-box!important;
+  width:112px!important;
+  min-width:112px!important;
+  max-width:112px!important;
+  height:46px!important;
+  min-height:46px!important;
+  max-height:46px!important;
+  padding:10px 8px!important;
+  font-size:14px!important;
+  line-height:1.1!important;
+  border-radius:10px!important;
+}
+#page4.has-preview #recordingReviewPanel .review-rerecord,
+#page4.has-preview .controls:has(#submitBtn) #submitBtn{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:220px!important;
+  min-width:220px!important;
+  max-width:220px!important;
+  height:46px!important;
+  min-height:46px!important;
+  max-height:46px!important;
+  padding:10px 12px!important;
+  margin:8px auto!important;
+  font-size:14px!important;
+  line-height:1.1!important;
+  border-radius:10px!important;
+}
+#page4.has-preview #recordingReviewPanel .review-rerecord{
+  display:flex!important;
+}
+#page4.has-preview .controls:has(#submitBtn){
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+}
+@media(max-width:600px){
+  #page4 .recording-top .controls{gap:6px!important}
+  #page4 .recording-top .controls button.control{
+    width: min(31%,112px)!important;
+    min-width:0!important;
+    max-width:112px!important;
+    flex:1 1 0!important;
+    height:46px!important;
+    min-height:46px!important;
+    max-height:46px!important;
+    padding:9px 5px!important;
+    font-size:13px!important;
+  }
+  #page4.has-preview #recordingReviewPanel .review-rerecord,
+  #page4.has-preview .controls:has(#submitBtn) #submitBtn{
+    width:min(100%,220px)!important;
+    min-width:0!important;
+    max-width:220px!important;
+    height:46px!important;
+    min-height:46px!important;
+    max-height:46px!important;
+  }
+}
+</style>
+
+
+<style id="v28-final-identical-action-button-sizing">
+/* Every primary recording/review action uses the same physical button size. */
+#page4 .recording-top .controls button.control,
+#page4.has-preview #recordingReviewPanel .review-rerecord,
+#page4.has-preview .controls:has(#submitBtn) #submitBtn{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 112px!important;
+  width:112px!important;
+  min-width:112px!important;
+  max-width:112px!important;
+  height:46px!important;
+  min-height:46px!important;
+  max-height:46px!important;
+  padding:5px 6px!important;
+  margin:6px 3px!important;
+  font-size:11px!important;
+  line-height:1.05!important;
+  font-weight:900!important;
+  text-align:center!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  border-radius:10px!important;
+}
+#page4 .recording-top .controls{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  flex-wrap:nowrap!important;
+}
+#page4.has-preview #recordingReviewPanel .review-rerecord{
+  display:inline-flex!important;
+}
+#page4.has-preview .controls:has(#submitBtn){
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex-wrap:wrap!important;
+}
+@media(max-width:600px){
+  #page4 .recording-top .controls button.control,
+  #page4.has-preview #recordingReviewPanel .review-rerecord,
+  #page4.has-preview .controls:has(#submitBtn) #submitBtn{
+    flex:0 0 112px!important;
+    width:112px!important;
+    min-width:112px!important;
+    max-width:112px!important;
+    height:46px!important;
+    min-height:46px!important;
+    max-height:46px!important;
+    font-size:10.5px!important;
+  }
+}
+</style>
+
+
+<style id="v29-unified-recording-player">
+/* Both talk options share one identical recording-player layout. */
+#page4:not(.has-preview) .recording-top{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:space-between!important;
+  width:100%!important;
+  min-height:0!important;
+  flex:0 0 auto!important;
+  gap:clamp(6px,1.5vh,12px)!important;
+  padding:clamp(14px,2.5vh,24px)!important;
+  box-sizing:border-box!important;
+}
+#page4:not(.has-preview) .topic-heading{
+  display:block!important;
+  width:100%!important;
+  text-align:center!important;
+  align-self:stretch!important;
+  margin:0 0 2px!important;
+  padding:0 100px 0 8px!important;
+  box-sizing:border-box!important;
+}
+#page4:not(.has-preview) #backOwnTalk{
+  display:inline-flex!important;
+  position:absolute!important;
+  top:clamp(10px,2vh,16px)!important;
+  right:clamp(10px,2vw,16px)!important;
+  z-index:10!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:40px!important;
+  padding:8px 14px!important;
+  background:#64748b!important;
+  color:#fff!important;
+  border:0!important;
+  border-radius:9px!important;
+  font-size:14px!important;
+  font-weight:800!important;
+  cursor:pointer!important;
+  white-space:nowrap!important;
+}
+/* Back is in the same top-right position for both options, not duplicated in the teleprompter toolbar. */
+#page4 #teleprompterBack{display:none!important}
+/* Same player controls, microphone and horizontal stereo wave layout in both modes. */
+#page4:not(.has-preview) .recording-top .controls{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  flex-wrap:nowrap!important;
+}
+#page4.mode-own:not(.has-preview) .script-panel{display:none!important}
+#page4.mode-approved:not(.has-preview) .script-panel{
+  display:flex!important;
+  flex:1 1 0!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:hidden!important;
+}
+@media(max-width:600px){
+  #page4:not(.has-preview) .recording-top{padding:12px 9px!important}
+  #page4:not(.has-preview) .topic-heading{font-size:clamp(17px,2.4vh,22px)!important}
+  #page4:not(.has-preview) #backOwnTalk{top:8px!important;right:8px!important;padding:8px 11px!important;font-size:12px!important}
+}
+</style>
+
+
+<style id="v30-final-unified-player-fix">
+/* FINAL: identical recording-player structure for Library Talk and Own Talk.
+   This block intentionally uses stronger selectors than all earlier mode-specific rules. */
+#page4.mode-own:not(.has-preview) .recording-top,
+#page4.mode-approved:not(.has-preview) .recording-top{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)!important;
+  grid-template-areas:
+    "topic topic topic"
+    "live live live"
+    "waveleft mic waveright"
+    "status status status"
+    "label label label"
+    "timer timer timer"
+    "controls controls controls"!important;
+  align-items:center!important;
+  justify-items:center!important;
+  align-content:space-between!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  min-height:0!important;
+  gap:clamp(4px,1vh,8px)!important;
+  padding:10px 12px!important;
+  box-sizing:border-box!important;
+}
+#page4.mode-own:not(.has-preview) .topic-heading,
+#page4.mode-approved:not(.has-preview) .topic-heading{
+  grid-area:topic!important;
+  display:block!important;
+  width:100%!important;
+  text-align:center!important;
+  justify-self:stretch!important;
+  margin:0!important;
+  padding:0 105px!important;
+  box-sizing:border-box!important;
+}
+#page4.mode-own:not(.has-preview) #backOwnTalk,
+#page4.mode-approved:not(.has-preview) #backOwnTalk{
+  display:inline-flex!important;
+  position:absolute!important;
+  top:10px!important;
+  right:12px!important;
+  z-index:20!important;
+  grid-area:unset!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:40px!important;
+  padding:8px 13px!important;
+  background:#64748b!important;
+  color:#fff!important;
+  border:0!important;
+  border-radius:9px!important;
+  font-size:14px!important;
+  font-weight:800!important;
+  cursor:pointer!important;
+  white-space:nowrap!important;
+}
+#page4.mode-own:not(.has-preview) .doctor,
+#page4.mode-approved:not(.has-preview) .doctor{grid-area:unset!important}
+#page4.mode-own:not(.has-preview) .onair,
+#page4.mode-approved:not(.has-preview) .onair{grid-area:live!important}
+#page4.mode-own:not(.has-preview) #liveRecordingIndicator,
+#page4.mode-approved:not(.has-preview) #liveRecordingIndicator{
+  grid-area:live!important;
+  display:flex!important;
+}
+#page4.mode-own:not(.has-preview) #audioLevelMeterLeft,
+#page4.mode-approved:not(.has-preview) #audioLevelMeterLeft{
+  grid-area:waveleft!important;
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+}
+#page4.mode-own:not(.has-preview) #recordingMic,
+#page4.mode-approved:not(.has-preview) #recordingMic{
+  grid-area:mic!important;
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#page4.mode-own:not(.has-preview) #audioLevelMeterRight,
+#page4.mode-approved:not(.has-preview) #audioLevelMeterRight{
+  grid-area:waveright!important;
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+}
+#page4.mode-own:not(.has-preview) #status,
+#page4.mode-approved:not(.has-preview) #status{
+  grid-area:status!important;
+  display:block!important;
+}
+#page4.mode-own:not(.has-preview) .timerLabel,
+#page4.mode-approved:not(.has-preview) .timerLabel{grid-area:label!important;display:block!important}
+#page4.mode-own:not(.has-preview) #timer,
+#page4.mode-approved:not(.has-preview) #timer{grid-area:timer!important;display:block!important}
+#page4.mode-own:not(.has-preview) .recording-top .controls,
+#page4.mode-approved:not(.has-preview) .recording-top .controls{
+  grid-area:controls!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  width:100%!important;
+}
+#page4.mode-own:not(.has-preview) .script-panel{display:none!important}
+#page4.mode-approved:not(.has-preview) .script-panel{
+  display:flex!important;
+  flex:1 1 0!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:hidden!important;
+}
+/* One Back button in the same top-right position for both talk options. */
+#page4.mode-own:not(.has-preview) #teleprompterBack,
+#page4.mode-approved:not(.has-preview) #teleprompterBack{display:none!important}
+@media(max-width:600px){
+  #page4.mode-own:not(.has-preview) .recording-top,
+  #page4.mode-approved:not(.has-preview) .recording-top{padding:9px 8px!important;gap:5px!important}
+  #page4.mode-own:not(.has-preview) #backOwnTalk,
+  #page4.mode-approved:not(.has-preview) #backOwnTalk{top:8px!important;right:8px!important;min-height:36px!important;padding:7px 10px!important;font-size:12px!important}
+  #page4.mode-own:not(.has-preview) .topic-heading,
+  #page4.mode-approved:not(.has-preview) .topic-heading{padding:0 88px!important;font-size:clamp(17px,2.4vh,22px)!important}
+}
+</style>
+
+
+<style id="v31-final-grid-and-back-fix">
+/* Final shared layout: distinct rows prevent the LIVE banner and ready status overlapping. */
+#page4.mode-own:not(.has-preview) .recording-top,
+#page4.mode-approved:not(.has-preview) .recording-top{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)!important;
+  grid-template-areas:
+    "topic topic topic"
+    "onair onair onair"
+    "live live live"
+    "waveleft mic waveright"
+    "status status status"
+    "label label label"
+    "timer timer timer"
+    "controls controls controls"!important;
+  align-items:center!important;
+  justify-items:center!important;
+  align-content:space-between!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  min-height:0!important;
+  gap:clamp(4px,1vh,8px)!important;
+  padding:10px 12px!important;
+  box-sizing:border-box!important;
+}
+#page4.mode-own:not(.has-preview) .topic-heading,
+#page4.mode-approved:not(.has-preview) .topic-heading{
+  grid-area:topic!important;
+  display:block!important;
+  width:100%!important;
+  text-align:center!important;
+  justify-self:stretch!important;
+  margin:0!important;
+  padding:0 105px!important;
+  box-sizing:border-box!important;
+}
+#page4.mode-own:not(.has-preview) .onair,
+#page4.mode-approved:not(.has-preview) .onair{
+  grid-area:onair!important;
+  display:inline-block!important;
+  justify-self:center!important;
+  margin:0 auto!important;
+}
+#page4.mode-own:not(.has-preview) #liveRecordingIndicator,
+#page4.mode-approved:not(.has-preview) #liveRecordingIndicator{
+  grid-area:live!important;
+  display:flex!important;
+  justify-self:center!important;
+}
+#page4.mode-own:not(.has-preview) #audioLevelMeterLeft,
+#page4.mode-approved:not(.has-preview) #audioLevelMeterLeft{
+  grid-area:waveleft!important;
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+}
+#page4.mode-own:not(.has-preview) #recordingMic,
+#page4.mode-approved:not(.has-preview) #recordingMic{
+  grid-area:mic!important;
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#page4.mode-own:not(.has-preview) #audioLevelMeterRight,
+#page4.mode-approved:not(.has-preview) #audioLevelMeterRight{
+  grid-area:waveright!important;
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+}
+#page4.mode-own:not(.has-preview) #status,
+#page4.mode-approved:not(.has-preview) #status{
+  grid-area:status!important;
+  display:block!important;
+}
+#page4.mode-own:not(.has-preview) .timerLabel,
+#page4.mode-approved:not(.has-preview) .timerLabel{
+  grid-area:label!important;
+  display:block!important;
+}
+#page4.mode-own:not(.has-preview) #timer,
+#page4.mode-approved:not(.has-preview) #timer{
+  grid-area:timer!important;
+  display:block!important;
+}
+#page4.mode-own:not(.has-preview) .recording-top .controls,
+#page4.mode-approved:not(.has-preview) .recording-top .controls{
+  grid-area:controls!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  width:100%!important;
+}
+#page4.mode-own:not(.has-preview) #backOwnTalk,
+#page4.mode-approved:not(.has-preview) #backOwnTalk{
+  display:inline-flex!important;
+  position:absolute!important;
+  top:10px!important;
+  right:12px!important;
+  z-index:30!important;
+  grid-area:unset!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:40px!important;
+  padding:8px 13px!important;
+  background:#64748b!important;
+  color:#fff!important;
+  border:0!important;
+  border-radius:9px!important;
+  font-size:14px!important;
+  font-weight:800!important;
+  cursor:pointer!important;
+  white-space:nowrap!important;
+}
+#page4.mode-own:not(.has-preview) .script-panel{display:none!important}
+#page4.mode-approved:not(.has-preview) .script-panel{
+  display:flex!important;
+  flex:1 1 0!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:hidden!important;
+}
+#page4.mode-own:not(.has-preview) #teleprompterBack,
+#page4.mode-approved:not(.has-preview) #teleprompterBack{display:none!important}
+@media(max-width:600px){
+  #page4.mode-own:not(.has-preview) .recording-top,
+  #page4.mode-approved:not(.has-preview) .recording-top{
+    padding:9px 8px!important;
+    gap:5px!important;
+  }
+  #page4.mode-own:not(.has-preview) #backOwnTalk,
+  #page4.mode-approved:not(.has-preview) #backOwnTalk{
+    top:8px!important;
+    right:8px!important;
+    min-height:36px!important;
+    padding:7px 10px!important;
+    font-size:12px!important;
+  }
+  #page4.mode-own:not(.has-preview) .topic-heading,
+  #page4.mode-approved:not(.has-preview) .topic-heading{
+    padding:0 88px!important;
+    font-size:clamp(17px,2.4vh,22px)!important;
+  }
+}
+</style>
+
 </body>
 </html>
