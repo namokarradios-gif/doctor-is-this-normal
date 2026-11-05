@@ -678,6 +678,68 @@ body.recording-view .step .num{width:clamp(20px,2.8vh,25px)!important;height:cla
   #page4.has-preview #recordingReviewPanel p{font-size:10px!important;line-height:1.2!important}
 }
 
+
+/* Mobile fix: allow the whole review screen to grow/scroll instead of clipping Re-record. */
+@media(max-width:600px){
+  html,body{
+    height:auto!important;
+    min-height:100%!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+  }
+  body.recording-view{
+    height:auto!important;
+    min-height:100dvh!important;
+    padding:4px 5px 12px!important;
+    overflow-y:auto!important;
+  }
+  body.recording-view .container{
+    height:auto!important;
+    min-height:100dvh!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  body.recording-view .panel{
+    height:auto!important;
+    min-height:calc(100dvh - 8px)!important;
+    max-height:none!important;
+    flex:0 0 auto!important;
+    overflow:visible!important;
+  }
+  #page4.active,
+  #page4.has-preview{
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  #page4.has-preview .recording-top{
+    flex:0 0 auto!important;
+    padding:2px 4px!important;
+  }
+  #page4.has-preview #recordingReviewPanel{
+    display:block!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    flex:0 0 auto!important;
+    overflow:visible!important;
+    padding:8px 9px!important;
+  }
+  #page4.has-preview #recordingReviewPanel .review-rerecord{
+    display:inline-block!important;
+    position:static!important;
+    visibility:visible!important;
+    margin:7px auto 2px!important;
+  }
+  #page4.has-preview .controls:has(#submitBtn){
+    display:flex!important;
+    position:static!important;
+    flex:0 0 auto!important;
+    margin:3px 0!important;
+  }
+}
+
 </style>
 </head>
 <body>
