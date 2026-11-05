@@ -740,6 +740,132 @@ body.recording-view .step .num{width:clamp(20px,2.8vh,25px)!important;height:cla
   }
 }
 
+
+/* Full-screen mobile recording studio: spacious script area with RECORD controls always in view. */
+@media(max-width:600px){
+  html,body{
+    width:100%!important;
+    height:100%!important;
+    min-height:100%!important;
+    overflow:hidden!important;
+  }
+  body.recording-view{
+    height:100dvh!important;
+    min-height:100dvh!important;
+    padding:5px 6px!important;
+    overflow:hidden!important;
+  }
+  body.recording-view .container{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:100%!important;
+    overflow:hidden!important;
+  }
+  body.recording-view .panel{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:100%!important;
+    flex:1 1 auto!important;
+    padding:6px!important;
+    overflow:hidden!important;
+  }
+  body.recording-view .progress{
+    flex:0 0 auto!important;
+    margin:0 0 6px!important;
+  }
+  #page4.active:not(.has-preview){
+    display:flex!important;
+    flex:1 1 0!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:hidden!important;
+    gap:7px!important;
+    padding:7px!important;
+  }
+  #page4:not(.has-preview) .recording-top{
+    flex:0 0 auto!important;
+    padding:8px 7px!important;
+    gap:4px!important;
+  }
+  #page4:not(.has-preview) .topic-heading{
+    font-size:clamp(17px,2.5vh,22px)!important;
+  }
+  #page4:not(.has-preview) #liveRecordingIndicator{
+    min-height:22px!important;
+    font-size:11px!important;
+  }
+  #page4:not(.has-preview) #audioLevelMeterLeft,
+  #page4:not(.has-preview) #audioLevelMeterRight{
+    height:clamp(36px,5vh,54px)!important;
+    min-height:clamp(36px,5vh,54px)!important;
+  }
+  #page4:not(.has-preview) #recordingMic{
+    font-size:32px!important;
+  }
+  #page4:not(.has-preview) .timer{
+    font-size:clamp(23px,3.5vh,30px)!important;
+  }
+  #page4:not(.has-preview) .recording-top .controls{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    justify-content:center!important;
+    gap:7px!important;
+    width:100%!important;
+    margin:3px 0!important;
+  }
+  #page4:not(.has-preview) .recording-top button.control{
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-width:0!important;
+    min-height:42px!important;
+    flex:1 1 0!important;
+    max-width:145px!important;
+    padding:8px 5px!important;
+    font-size:clamp(12px,1.8vh,15px)!important;
+  }
+  #page4.mode-approved:not(.has-preview) .script-panel{
+    display:flex!important;
+    flex:1 1 0!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:hidden!important;
+    padding:10px 11px!important;
+  }
+  #page4.mode-approved:not(.has-preview) .script-text{
+    font-size:clamp(19px,2.6vh,23px)!important;
+    line-height:1.5!important;
+  }
+  #page4.mode-own:not(.has-preview) .recording-top{
+    flex:1 1 auto!important;
+    justify-content:center!important;
+  }
+  /* After recording, retain the readable review layout and allow scrolling if needed. */
+  body.recording-view:has(#page4.has-preview),
+  body.recording-view:has(#page4.has-preview) .container{
+    height:auto!important;
+    min-height:100dvh!important;
+    max-height:none!important;
+    overflow-y:auto!important;
+  }
+  body.recording-view:has(#page4.has-preview) .panel{
+    height:auto!important;
+    min-height:100dvh!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  #page4.has-preview{
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -815,7 +941,38 @@ body.recording-view .step .num{width:clamp(20px,2.8vh,25px)!important;height:cla
       <label for="topicName">Your Talk Topic <span class="required">*</span></label>
       <input id="topicName" maxlength="120" placeholder="Enter your talk topic">
       <label for="talkLanguage" style="margin-top:10px">Language</label>
-      <select id="talkLanguage"><option>English</option><option>Hindi</option><option>Marathi</option><option>Gujarati</option><option>Bengali</option><option>Tamil</option><option>Telugu</option><option>Kannada</option><option>Malayalam</option><option>Punjabi</option><option>Other regional language</option></select>
+      <select id="talkLanguage">
+        <option value="English">English</option>
+        <option value="Hindi">Hindi</option>
+        <option value="Marathi">Marathi</option>
+        <option value="Gujarati">Gujarati</option>
+        <option value="Bengali">Bengali</option>
+        <option value="Tamil">Tamil</option>
+        <option value="Telugu">Telugu</option>
+        <option value="Kannada">Kannada</option>
+        <option value="Malayalam">Malayalam</option>
+        <option value="Punjabi">Punjabi</option>
+        <option value="Odia">Odia</option>
+        <option value="Assamese">Assamese</option>
+        <option value="Urdu">Urdu</option>
+        <option value="Sanskrit">Sanskrit</option>
+        <option value="Kashmiri">Kashmiri</option>
+        <option value="Konkani">Konkani</option>
+        <option value="Manipuri (Meitei)">Manipuri (Meitei)</option>
+        <option value="Nepali">Nepali</option>
+        <option value="Sindhi">Sindhi</option>
+        <option value="Maithili">Maithili</option>
+        <option value="Dogri">Dogri</option>
+        <option value="Bodo">Bodo</option>
+        <option value="Santali">Santali</option>
+        <option value="Bhojpuri">Bhojpuri</option>
+        <option value="Rajasthani">Rajasthani</option>
+        <option value="French">French</option>
+        <option value="Spanish">Spanish</option>
+        <option value="Arabic">Arabic</option>
+        <option value="Other">Other – Type your language</option>
+      </select>
+      <input id="talkLanguageOther" type="text" maxlength="60" placeholder="Type your language (e.g. French, German, or another language)" hidden style="margin-top:8px">
     </div>
     <button type="button" class="btn" id="changeTalkChoice" style="background:#284768" hidden>Change talk type</button>
     <div class="nav-actions" id="talkNavActions" hidden><button class="btn" id="toPage4" disabled>Continue to Recording →</button><button class="btn" id="backToPage2" style="background:#64748b">← Back</button></div>
@@ -911,13 +1068,16 @@ document.getElementById('backToPage1').onclick=()=>{showPage(1);document.getElem
 document.getElementById('toPage3').onclick=()=>{consentAcceptedAt=new Date().toISOString();showPage(3)};
 document.getElementById('backToPage2').onclick=()=>showPage(2);
 const choiceGrid=document.getElementById('talkChoiceGrid'),approvedCard=document.getElementById('approvedChoiceCard'),ownCard=document.getElementById('ownChoiceCard'),talkNav=document.getElementById('talkNavActions'),changeChoice=document.getElementById('changeTalkChoice'),continueTalk=document.getElementById('toPage4');
-function updateTalkContinue(){if(talkType==='approved'){continueTalk.disabled=!document.getElementById('approvedTopic').value}else if(talkType==='own'){continueTalk.disabled=!topicInput.value.trim()}else{continueTalk.disabled=true}}
-function resetTalkChoice(){talkType='';selectedTopic='';choiceGrid.classList.remove('single-choice');approvedCard.hidden=false;ownCard.hidden=false;document.querySelectorAll('input[name="talkType"]').forEach(x=>x.checked=false);document.getElementById('approvedFields').hidden=true;document.getElementById('ownFields').hidden=true;document.getElementById('approvedTopic').value='';document.getElementById('selectedTopicLabel').textContent='No topic selected';document.getElementById('openTopicLibrary').textContent='Browse Topics ▾';topicInput.value='';talkNav.hidden=true;changeChoice.hidden=true;continueTalk.disabled=true}
+function updateTalkContinue(){if(talkType==='approved'){continueTalk.disabled=!document.getElementById('approvedTopic').value}else if(talkType==='own'){const lang=document.getElementById('talkLanguage').value;const other=document.getElementById('talkLanguageOther').value.trim();continueTalk.disabled=!topicInput.value.trim()||!lang||(lang==='Other'&&!other)}else{continueTalk.disabled=true}}
+function resetTalkChoice(){talkType='';selectedTopic='';choiceGrid.classList.remove('single-choice');approvedCard.hidden=false;ownCard.hidden=false;document.querySelectorAll('input[name="talkType"]').forEach(x=>x.checked=false);document.getElementById('approvedFields').hidden=true;document.getElementById('ownFields').hidden=true;document.getElementById('approvedTopic').value='';document.getElementById('talkLanguage').value='English';document.getElementById('talkLanguageOther').value='';document.getElementById('talkLanguageOther').hidden=true;document.getElementById('selectedTopicLabel').textContent='No topic selected';document.getElementById('openTopicLibrary').textContent='Browse Topics ▾';topicInput.value='';talkNav.hidden=true;changeChoice.hidden=true;continueTalk.disabled=true}
 document.querySelectorAll('input[name="talkType"]').forEach(r=>r.addEventListener('change',()=>{talkType=r.value;choiceGrid.classList.add('single-choice');approvedCard.hidden=talkType!=='approved';ownCard.hidden=talkType!=='own';document.getElementById('approvedFields').hidden=talkType!=='approved';document.getElementById('ownFields').hidden=talkType!=='own';talkNav.hidden=false;changeChoice.hidden=false;updateTalkContinue()}));
 document.getElementById('approvedTopic').addEventListener('change',updateTalkContinue);
 topicInput.addEventListener('input',updateTalkContinue);
+const talkLanguageSelect=document.getElementById('talkLanguage'),talkLanguageOther=document.getElementById('talkLanguageOther');
+talkLanguageSelect.addEventListener('change',()=>{const custom=talkLanguageSelect.value==='Other';talkLanguageOther.hidden=!custom;talkLanguageOther.required=custom;if(custom)talkLanguageOther.focus();else talkLanguageOther.value='';updateTalkContinue()});
+talkLanguageOther.addEventListener('input',updateTalkContinue);
 changeChoice.addEventListener('click',resetTalkChoice);
-document.getElementById('toPage4').onclick=()=>{if(!talkType)return;const panel=document.getElementById('scriptPanel');if(talkType==='approved'){const key=document.getElementById('approvedTopic').value;if(!key||!DEMO_SCRIPTS[key])return;selectedScript=DEMO_SCRIPTS[key].text;selectedTopic=DEMO_SCRIPTS[key].title;selectedLanguage='English';document.getElementById('scriptText').textContent=selectedScript;document.querySelector('#scriptPanel .script-title').textContent='RADIO TELEPROMPTER';panel.hidden=false;}else{selectedTopic=topicInput.value.trim();if(!selectedTopic){topicInput.focus();return}selectedLanguage=document.getElementById('talkLanguage').value;selectedScript='';panel.hidden=true;}document.getElementById('topicHeading').textContent=selectedTopic;document.getElementById('doctorName').textContent=getDoctorDisplayName();document.getElementById('page4').classList.toggle('mode-approved',talkType==='approved');document.getElementById('page4').classList.toggle('mode-own',talkType==='own');panel.scrollTop=0;document.getElementById('page4').classList.remove('has-preview');document.getElementById('preview').style.display='none';document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';showPage(4)};
+document.getElementById('toPage4').onclick=()=>{if(!talkType)return;const panel=document.getElementById('scriptPanel');if(talkType==='approved'){const key=document.getElementById('approvedTopic').value;if(!key||!DEMO_SCRIPTS[key])return;selectedScript=DEMO_SCRIPTS[key].text;selectedTopic=DEMO_SCRIPTS[key].title;selectedLanguage='English';document.getElementById('scriptText').textContent=selectedScript;document.querySelector('#scriptPanel .script-title').textContent='RADIO TELEPROMPTER';panel.hidden=false;}else{selectedTopic=topicInput.value.trim();if(!selectedTopic){topicInput.focus();return}const chosenLanguage=talkLanguageSelect.value;selectedLanguage=chosenLanguage==='Other'?talkLanguageOther.value.trim():chosenLanguage;if(!selectedLanguage){talkLanguageOther.focus();return}selectedScript='';panel.hidden=true;}document.getElementById('topicHeading').textContent=selectedTopic;document.getElementById('doctorName').textContent=getDoctorDisplayName();document.getElementById('page4').classList.toggle('mode-approved',talkType==='approved');document.getElementById('page4').classList.toggle('mode-own',talkType==='own');panel.scrollTop=0;document.getElementById('page4').classList.remove('has-preview');document.getElementById('preview').style.display='none';document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';showPage(4)};
 document.getElementById('backToPage3').onclick=()=>{if(recorder&&recorder.state==='recording')return;showPage(3)};
 const recordBtn=document.getElementById('recordBtn'),pauseBtn=document.getElementById('pauseBtn'),stopBtn=document.getElementById('stopBtn'),submitBtn=document.getElementById('submitBtn'),preview=document.getElementById('preview'),status=document.getElementById('status'),timer=document.getElementById('timer');
 let recorder=null,chunks=[],recordedBlob=null,timerInterval=null,scriptScrollInterval=null,meterInterval=null,seconds=300,recordingStream=null,paused=false,scriptScrollPaused=false,scriptScrollSpeed=8,scriptScrollStartsAt=0,audioContext=null,analyser=null,micSource=null,recordingSession=0;
