@@ -2823,93 +2823,139 @@ button.btn,
 
 
 <style id="readable-topic-doctor-layout">
-/* Keep the recording-page topic and doctor readable without changing the logo. */
+/* Topic is limited to two readable lines; doctor name stays on one line.
+   The recording logo rules are intentionally untouched. */
+#page4 #topicHeading{
+  white-space:normal!important;
+  overflow-wrap:break-word!important;
+  word-break:normal!important;
+  text-overflow:clip!important;
+  display:block!important;
+  left:12px!important;
+  right:12px!important;
+  width:auto!important;
+  max-width:none!important;
+  line-height:1.08!important;
+  max-height:2.16em!important;
+  overflow:hidden!important;
+}
+#page4 #doctorName{
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  left:12px!important;
+  right:12px!important;
+  width:auto!important;
+  max-width:none!important;
+}
+</style>
+<script id="fit-readable-topic-doctor-text">
+(function(){
+  function fitTopic(){
+    var el=document.getElementById('topicHeading');
+    if(!el) return;
+
+    /* Measure the natural text height before applying a two-line limit. */
+    el.style.setProperty('display','block','important');
+    el.style.setProperty('-webkit-line-clamp','unset','important');
+    el.style.setProperty('line-clamp','unset','important');
+    el.style.setProperty('max-height','none','important');
+    el.style.setProperty('height','auto','important');
+    el.style.setProperty('overflow','visible','important');
+    el.style.setProperty('white-space','normal','important');
+
+    var size=parseFloat(window.getComputedStyle(el).fontSize)||20;
+    var min=window.matchMedia && window.matchMedia('(max-width:600px)').matches ? 11.5 : 15;
+    var lineHeight=size*1.08;
+
+    while(size>min){
+      el.style.setProperty('font-size',size+'px','important');
+      el.style.setProperty('line-height','1.08','important');
+      lineHeight=size*1.08;
+      if(el.scrollHeight<=lineHeight*2+3) break;
+      size-=0.5;
+    }
+
+    el.style.setProperty('font-size',Math.max(min,size)+'px','important');
+    el.style.setProperty('line-height','1.08','important');
+    el.style.setProperty('display','-webkit-box','important');
+    el.style.setProperty('-webkit-box-orient','vertical','important');
+    el.style.setProperty('-webkit-line-clamp','2','important');
+    el.style.setProperty('line-clamp','2','important');
+    el.style.setProperty('max-height',(Math.max(min,size)*1.08*2)+'px','important');
+    el.style.setProperty('height','auto','important');
+    el.style.setProperty('overflow','hidden','important');
+  }
+
+  function fitDoctor(){
+    var el=document.getElementById('doctorName');
+    if(!el)return;
+    var mobile=window.matchMedia && window.matchMedia('(max-width:600px)').matches;
+    var size=parseFloat(window.getComputedStyle(el).fontSize)||18;
+    var min=mobile?14:16;
+    var available=Math.max(80,el.parentElement.clientWidth-28);
+    var canvas=document.createElement('canvas');
+    var ctx=canvas.getContext('2d');
+    if(!ctx)return;
+    var css=window.getComputedStyle(el);
+    var content=(el.textContent||'').trim();
+    while(size>min){
+      ctx.font=(css.fontWeight||'700')+' '+size+'px '+(css.fontFamily||'Arial');
+      if(ctx.measureText(content).width<=available)break;
+      size-=0.5;
+    }
+    el.style.setProperty('font-size',Math.max(min,size)+'px','important');
+  }
+
+  var queued=false;
+  function schedule(){
+    if(queued)return;
+    queued=true;
+    requestAnimationFrame(function(){queued=false;fitTopic();fitDoctor();});
+  }
+  function attach(){
+    ['topicHeading','doctorName'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el)new MutationObserver(schedule).observe(el,{childList:true,subtree:true,characterData:true});
+    });
+    if(window.ResizeObserver){
+      var ro=new ResizeObserver(schedule);
+      ['topicHeading','doctorName'].forEach(function(id){
+        var el=document.getElementById(id);
+        if(el&&el.parentElement)ro.observe(el.parentElement);
+      });
+    }
+    window.addEventListener('resize',schedule);
+    document.addEventListener('click',schedule,true);
+    schedule();setTimeout(schedule,150);setTimeout(schedule,700);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',attach);
+  else attach();
+})();
+</script>
+
+
+<style id="mobile-topic-hard-two-line-limit">
+/* Responsive topic layout: auto-fit to a maximum of two lines on all screens. */
 #page4.mode-own:not(.has-preview) #topicHeading,
 #page4.mode-approved:not(.has-preview) #topicHeading{
   white-space:normal!important;
-  overflow:visible!important;
+  overflow:hidden!important;
   text-overflow:clip!important;
   overflow-wrap:break-word!important;
   word-break:normal!important;
-  display:block!important;
-  max-width:calc(100% - 24px)!important;
-  width:auto!important;
-  left:12px!important;
-  right:12px!important;
-  line-height:1.12!important;
+  line-height:1.08!important;
+  box-sizing:border-box!important;
 }
 #page4.mode-own:not(.has-preview) #doctorName,
 #page4.mode-approved:not(.has-preview) #doctorName{
   white-space:nowrap!important;
   overflow:visible!important;
   text-overflow:clip!important;
-  overflow-wrap:normal!important;
-  word-break:normal!important;
-  max-width:calc(100% - 24px)!important;
-  width:auto!important;
-  left:12px!important;
-  right:12px!important;
 }
 </style>
-<script id="fit-readable-topic-doctor-text">
-(function(){
-  function measure(el, size, weight, family){
-    var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
-    if(!ctx) return Infinity;
-    ctx.font = weight + ' ' + size + 'px ' + family;
-    return ctx.measureText((el.textContent || '').trim()).width;
-  }
-
-  function fitText(){
-    var topic = document.getElementById('topicHeading');
-    var doctor = document.getElementById('doctorName');
-    [topic, doctor].forEach(function(el){
-      if(!el || !el.parentElement) return;
-      var parentWidth = el.parentElement.clientWidth || el.clientWidth;
-      var available = Math.max(80, parentWidth - 28);
-      var css = window.getComputedStyle(el);
-      var weight = css.fontWeight || '800';
-      var family = css.fontFamily || 'Arial';
-      var base = parseFloat(css.fontSize) || 20;
-      var min = el === topic ? 17 : 14;
-      var size = base;
-      while(size > min && measure(el, size, weight, family) > available){
-        size -= 0.5;
-      }
-      el.style.setProperty('font-size', Math.max(min, size) + 'px', 'important');
-    });
-  }
-
-  var queued = false;
-  function schedule(){
-    if(queued) return;
-    queued = true;
-    requestAnimationFrame(function(){
-      queued = false;
-      fitText();
-    });
-  }
-  function attach(){
-    var topic = document.getElementById('topicHeading');
-    var doctor = document.getElementById('doctorName');
-    if(topic) new MutationObserver(schedule).observe(topic,{childList:true,subtree:true,characterData:true});
-    if(doctor) new MutationObserver(schedule).observe(doctor,{childList:true,subtree:true,characterData:true});
-    if(window.ResizeObserver){
-      var ro = new ResizeObserver(schedule);
-      if(topic && topic.parentElement) ro.observe(topic.parentElement);
-      if(doctor && doctor.parentElement) ro.observe(doctor.parentElement);
-    }
-    window.addEventListener('resize',schedule);
-    document.addEventListener('click',schedule,true);
-    schedule();
-    setTimeout(schedule,150);
-    setTimeout(schedule,700);
-  }
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded',attach);
-  else attach();
-})();
-</script>
 
 </body>
 </html>
