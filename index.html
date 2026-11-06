@@ -1406,8 +1406,7 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
   <section class="page active" id="page0">
     <div class="welcome-card">
       <p><strong>Dear Doctor,</strong></p>
-      <p>Contribute to <strong>Radio 4 Diabetes India</strong>, a National Diabetes Education &amp; Awareness Initiative, broadcasting live on Apple Music Radio Station across 36 Indian States &amp; UTs.</p>
-      <p>Share your knowledge with citizens through our Mobile Radio Studio.</p>
+      <p>Contribute to <strong>Radio 4 Diabetes India</strong>, a National Diabetes Education &amp; Awareness Initiative, broadcasting live on Apple Music Radio Station across India.</p>
       <div class="welcome-tagline">Go Live On Air!</div>
       <p>You can participate in either of two ways:</p>
       <ol>
@@ -3374,7 +3373,7 @@ button.btn,
   panes.forEach((p,i)=>p.hidden=i!==index);
   count.textContent='FIELD '+(index+1)+' OF 6';
   back.hidden=index===0;
-  next.textContent=index===5?'Continue to Consent →':'Next →';
+  next.textContent='Next →';
   const f=fields[index]; if(f){setTimeout(()=>{if(!panes[index].hidden)f.focus({preventScroll:true})},40)}
  }
  function valid(){
@@ -3401,5 +3400,89 @@ button.btn,
 })();
 </script>
 
+
+<style id="requested-mobile-and-visibility-refinements">
+/* WhatsApp helper: clear, readable text on the dark-blue Doctor Details page. */
+#page1 .wizard-field .field-hint-inline{
+  display:block!important;
+  margin:7px 0 0 5px!important;
+  color:#fff!important;
+  opacity:1!important;
+  font-size:14px!important;
+  font-weight:600!important;
+  line-height:1.35!important;
+}
+
+/* Compact the existing-upload page on phones only; leave desktop untouched. */
+@media(max-width:649px){
+  #page8{
+    justify-content:flex-start!important;
+    overflow-y:auto!important;
+    overscroll-behavior:contain;
+    padding:2px 1px 8px!important;
+    gap:0!important;
+  }
+  #page8 > .info{
+    padding:6px 8px!important;
+    margin:0 0 5px!important;
+    gap:7px!important;
+  }
+  #page8 > .info h2{font-size:16px!important;line-height:1.12!important}
+  #page8 > .info p{font-size:11px!important;line-height:1.25!important}
+  #page8 .upload-existing-fields{
+    padding:9px 10px!important;
+    margin:3px 0 6px!important;
+    border-radius:10px!important;
+  }
+  #page8 .upload-existing-fields label{
+    font-size:13px!important;
+    margin:4px 0 3px!important;
+  }
+  #page8 .upload-existing-fields input:not([type=file]),
+  #page8 .upload-existing-fields select{
+    height:40px!important;
+    padding:7px 10px!important;
+    margin-bottom:5px!important;
+    font-size:16px!important;
+  }
+  #page8 .upload-existing-fields input[type=file]{
+    min-height:40px!important;
+    margin:2px 0 4px!important;
+    font-size:12px!important;
+  }
+  #page8 .upload-file-hint{font-size:11px!important;line-height:1.25!important;margin:0 0 3px!important}
+  #page8 .nav-actions{gap:5px!important;margin-top:2px!important;padding-bottom:2px}
+  #page8 .nav-actions .btn{min-height:42px!important;padding:9px 12px!important;margin:0!important}
+}
+</style>
+
 </body>
 </html>
+
+<style id="mobile-upload-window-height-fix">
+/* On phones, make the outer white studio window compact on the existing-talk upload page.
+   The upload panel itself scrolls only if a very short viewport requires it. */
+@media(max-width:649px){
+  #studioContainer:has(#page8.active){
+    justify-content:center!important;
+  }
+  #studioContainer:has(#page8.active) .panel{
+    flex:0 1 auto!important;
+    height:auto!important;
+    max-height:calc(100dvh - 150px)!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    padding:7px 9px!important;
+  }
+  #studioContainer:has(#page8.active) .progress{
+    margin-bottom:4px!important;
+  }
+  #studioContainer:has(#page8.active) #page8{
+    flex:0 1 auto!important;
+    min-height:0!important;
+    max-height:100%!important;
+    overflow-y:auto!important;
+    justify-content:flex-start!important;
+  }
+}
+</style>
