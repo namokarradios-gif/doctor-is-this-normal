@@ -1254,7 +1254,7 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
 #page7 .contribution-choice{width:100%;min-height:118px;border:1px solid #b8cbe0;border-radius:14px;background:#fff;color:#17365d;padding:16px;text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:7px;cursor:pointer;box-shadow:0 2px 8px rgba(16,46,99,.07)}
 #page7 .contribution-choice:active{transform:scale(.99)}
 #page7 .choice-icon{font-size:27px;line-height:1.1}
-#page7 .contribution-choice strong{font-size:16px;font-weight:800}
+#page7 .contribution-choice strong{font-size:16px;font-weight:800;color:#dc2626}
 #page7 .contribution-choice span:last-child{font-size:13px;line-height:1.4;color:#526782}
 #page8 .upload-existing-fields{display:block!important;background:#102b50;border:1px solid #42658e;border-radius:12px;padding:16px;margin:8px 0 12px}
 #page8 .upload-existing-fields label{display:block;color:#eaf3ff;font-size:14px;margin-bottom:5px}
@@ -1275,6 +1275,14 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
 #page0 .welcome-card > ol { margin-top: 0; }
 #page0 .welcome-card > ol > li + li { margin-top: 8px; }
 </style>
+
+<style id="force-red-invitation-choice-titles">
+  #page0 .welcome-card ol li strong,
+  #page7 .contribution-choice strong {
+    color: #ff3b30 !important;
+  }
+</style>
+
 </head>
 <body>
 <div id="splashScreen" role="status" aria-label="Radio 4 Diabetes India Mobile Radio Studio">
@@ -1338,12 +1346,6 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
   </section>
 
   <section class="page" id="page1">
-  <div class="doctor-fields-tracker" id="doctorFieldsTracker" aria-label="Six doctor details to complete">
-    <div class="tracker-heading">Doctor Details — 6 fields to complete</div>
-    <div class="tracker-items">
-      <span class="tracker-item" data-field="0">1 Name</span><span class="tracker-item" data-field="1">2 Qualification</span><span class="tracker-item" data-field="2">3 State</span><span class="tracker-item" data-field="3">4 Reg Status</span><span class="tracker-item" data-field="4">5 Reg Number</span><span class="tracker-item" data-field="5">6 Mobile</span>
-    </div>
-  </div>
     <div class="info"><div class="info-icon">👨‍⚕️</div><div><h2>Doctor Details</h2><p>Please enter your six professional details, one at a time.</p></div></div>
     <div class="field-wizard" id="doctorFieldWizard">
       <div class="wizard-count" id="wizardCount">FIELD 1 OF 6</div>
@@ -3262,7 +3264,6 @@ button.btn,
  ];
  const labels=['Name','Qualification','State','Reg Status','Reg Number','Mobile'];
  const panes=[...page.querySelectorAll('.wizard-field[data-wizard]')];
- const tracker=[...document.querySelectorAll('.tracker-item')];
  const count=document.getElementById('wizardCount');
  const next=document.getElementById('doctorWizardNext');
  const back=document.getElementById('doctorWizardBack');
@@ -3270,7 +3271,6 @@ button.btn,
  let index=0;
  function paint(){
   panes.forEach((p,i)=>p.hidden=i!==index);
-  tracker.forEach((t,i)=>{t.classList.toggle('current',i===index);t.classList.toggle('completed',i<index);t.textContent=(i<index?'✓ ':String(i+1)+' ')+labels[i]});
   count.textContent='FIELD '+(index+1)+' OF 6';
   back.hidden=index===0;
   next.textContent=index===5?'Continue to Consent →':'Next →';
