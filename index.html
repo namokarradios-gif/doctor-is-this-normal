@@ -1191,6 +1191,20 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
 .field-hint-inline{display:inline;font-size:10px;font-weight:400;color:#65758a;margin-left:5px;white-space:normal}
 #page1 .profile-substep .page1-fields{margin-top:0}
 
+
+/* Confirmation page: center the listening button label vertically and horizontally. */
+#page5 a#listenRadio4.listen-radio-btn{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  min-height:40px!important;
+  line-height:1.2!important;
+  padding:8px 14px!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+
 </style>
 
 <style id="own-talk-full-recording-layout">
@@ -1383,7 +1397,7 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
     <div id="customAudioPlayer" class="custom-audio-player" hidden>
       <div class="custom-player-heading">
         <div class="player-art"><span>♫</span></div>
-        <div class="player-track"><strong>Your Recorded Health Talk</strong><small>Radio 4 Diabetes India</small></div>
+        <div class="player-track"><strong>Listen to your Recorded Health Talk before Submitting</strong><small>Radio 4 Diabetes India</small></div>
         <span class="player-ready">READY</span>
       </div>
       <div class="player-main-controls">
@@ -2783,6 +2797,54 @@ button.btn,
     min-height:58px!important;
     max-height:58px!important;
     font-size:16px!important;
+  }
+}
+</style>
+
+
+<style id="whatsapp-hint-visibility-fix">
+/* Make the helper text beside the WhatsApp label match the label typography. */
+#page1 .field label .field-hint-inline{
+  font-family:inherit!important;
+  font-size:inherit!important;
+  font-weight:inherit!important;
+  color:#ffffff!important;
+  opacity:1!important;
+  margin-left:5px!important;
+}
+</style>
+
+
+<style id="simplified-review-audio-controls">
+#page4 #customAudioPlayer .player-extra-controls{
+  display:none!important;
+}
+</style>
+
+
+<style id="single-line-topic-doctor-mobile">
+/* Keep the talk topic and doctor's name on one line on narrow phone screens. */
+@media (max-width:600px){
+  #page4 .topic-heading{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    overflow-wrap:normal!important;
+    font-size:clamp(13px,3.8vw,19px)!important;
+    line-height:1.2!important;
+  }
+  #page4 .doctor{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    font-size:clamp(14px,3.8vw,18px)!important;
+    line-height:1.2!important;
   }
 }
 </style>
