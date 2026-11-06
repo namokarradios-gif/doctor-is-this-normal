@@ -1248,6 +1248,23 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
 }
 </style>
 
+
+<style id="post-consent-choice-and-existing-upload">
+#page7 .contribution-choice-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:18px 0}
+#page7 .contribution-choice{width:100%;min-height:118px;border:1px solid #b8cbe0;border-radius:14px;background:#fff;color:#17365d;padding:16px;text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:7px;cursor:pointer;box-shadow:0 2px 8px rgba(16,46,99,.07)}
+#page7 .contribution-choice:active{transform:scale(.99)}
+#page7 .choice-icon{font-size:27px;line-height:1.1}
+#page7 .contribution-choice strong{font-size:16px;font-weight:800}
+#page7 .contribution-choice span:last-child{font-size:13px;line-height:1.4;color:#526782}
+#page8 .upload-existing-fields{display:block!important;background:#102b50;border:1px solid #42658e;border-radius:12px;padding:16px;margin:8px 0 12px}
+#page8 .upload-existing-fields label{display:block;color:#eaf3ff;font-size:14px;margin-bottom:5px}
+#page8 .upload-existing-fields input:not([type=file]),#page8 .upload-existing-fields select{width:100%;height:46px;border-radius:9px;padding:9px 12px;font-size:16px;margin-bottom:8px;box-sizing:border-box}
+#page8 .upload-existing-fields input[type=file]{width:100%;color:#fff;font-size:13px;margin:5px 0 8px}
+#page8 .upload-file-hint{font-size:12px;color:#d8e6f7;line-height:1.4}
+#page8 .nav-actions{display:flex;flex-direction:column;gap:7px}
+@media(min-width:650px){#page7 .contribution-choice-grid{grid-template-columns:1fr 1fr}}
+</style>
+
 </head>
 <body>
 <div id="splashScreen" role="status" aria-label="Radio 4 Diabetes India Mobile Radio Studio">
@@ -1279,9 +1296,17 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
 
   <section class="page active" id="page0">
     <div class="welcome-card">
-      
-      <p>Diabetes India invites doctors to contribute as <strong>Medical Experts on Radio 4 Diabetes India</strong>, broadcasting live on Apple Music Radio Station across all 36 Indian States and Union Territories.<br><br>Doctors can share their medical knowledge through short health talks of <strong>up to 5 minutes</strong> for public health awareness, using their own mobile phones through the <strong>Mobile Radio Studio</strong> (no external microphone required).</p>
-      <div class="welcome-tagline">Go Live On Air !</div>
+      <p><strong>Dear Doctor,</strong></p>
+      <p>Contribute to <strong>Radio 4 Diabetes India – National Diabetes Education &amp; Awareness Initiative.</strong></p>
+      <p>Share your knowledge with citizens through our Mobile Radio Studio.</p>
+      <div class="welcome-tagline">Go Live On Air!</div>
+      <p>You can participate in either of two ways:</p>
+      <ol>
+        <li><strong>Record a New Health Talk</strong> – Record a fresh health talk of up to 5 minutes using our Mobile Radio Studio.</li>
+        <li><strong>Upload an Existing Talk</strong> – Already have a diabetes-related educational talk? Simply upload your existing audio recording. It can be longer than 5 minutes.</li>
+      </ol>
+      <p>Your contribution can help make reliable diabetes education accessible across India.</p>
+      <p><strong>Radio 4 Diabetes India</strong></p>
       <button class="btn welcome-next" id="welcomeContinue">Continue →</button>
     </div>
   </section>
@@ -1379,6 +1404,45 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
 
 
 
+
+  <section class="page" id="page7">
+    <div class="info"><div class="info-icon">🎙️</div><div><h2>How Would You Like to Contribute?</h2><p>Choose how you would like to submit your health talk to Radio 4 Diabetes India.</p></div></div>
+    <div class="welcome-tagline">Go Live On Air !</div>
+    <div class="contribution-choice-grid">
+      <button type="button" class="contribution-choice" id="chooseNewRecording">
+        <span class="choice-icon">🎤</span>
+        <strong>Record a New Health Talk</strong>
+        <span>Use the Mobile Radio Studio to record your talk now. Maximum duration: 5 minutes.</span>
+      </button>
+      <button type="button" class="contribution-choice" id="chooseExistingUpload">
+        <span class="choice-icon">⬆️</span>
+        <strong>Upload an Existing Health Talk</strong>
+        <span>Submit an audio recording you have already recorded. It can exceed 5 minutes.</span>
+      </button>
+    </div>
+    <button class="btn" id="choiceBackToConsent" type="button" style="background:#64748b">← Back</button>
+  </section>
+
+  <section class="page" id="page8">
+    <div class="info"><div class="info-icon">⬆️</div><div><h2>Upload an Existing Health Talk</h2><p>Enter the topic and select your audio recording.</p></div></div>
+    <div class="simple-topic-fields upload-existing-fields">
+      <label for="existingTopicName">Your Health Topic <span class="required">*</span></label>
+      <input id="existingTopicName" type="text" maxlength="120" placeholder="Enter your health topic">
+      <label for="existingTalkLanguage" style="margin-top:10px">Language <span class="required">*</span></label>
+      <select id="existingTalkLanguage">
+        <option value="English">English</option><option value="Hindi">Hindi</option><option value="Marathi">Marathi</option><option value="Gujarati">Gujarati</option><option value="Bengali">Bengali</option><option value="Tamil">Tamil</option><option value="Telugu">Telugu</option><option value="Kannada">Kannada</option><option value="Malayalam">Malayalam</option><option value="Punjabi">Punjabi</option><option value="Odia">Odia</option><option value="Assamese">Assamese</option><option value="Urdu">Urdu</option><option value="Sanskrit">Sanskrit</option><option value="Kashmiri">Kashmiri</option><option value="Konkani">Konkani</option><option value="Manipuri (Meitei)">Manipuri (Meitei)</option><option value="Nepali">Nepali</option><option value="Sindhi">Sindhi</option><option value="Maithili">Maithili</option><option value="Dogri">Dogri</option><option value="Bodo">Bodo</option><option value="Santali">Santali</option><option value="Bhojpuri">Bhojpuri</option><option value="Rajasthani">Rajasthani</option><option value="French">French</option><option value="Spanish">Spanish</option><option value="Arabic">Arabic</option>
+      </select>
+      <label for="existingAudioFile" style="margin-top:10px">Select Audio Recording <span class="required">*</span></label>
+      <input id="existingAudioFile" type="file" accept="audio/*,.mp3,.wav,.m4a,.webm,.aac,.ogg">
+      <div class="upload-file-hint">Choose an existing audio file from your phone or computer.</div>
+      <div id="existingUploadStatus" class="status" role="status" aria-live="polite"></div>
+    </div>
+    <div class="nav-actions">
+      <button class="btn" id="submitExistingAudio" type="button" disabled>Submit Health Talk →</button>
+      <button class="btn" id="uploadBackToChoice" type="button" style="background:#64748b">← Back</button>
+    </div>
+  </section>
+
   <section class="page" id="page4">
     <div class="recording-top">
       <div class="topic-heading" id="topicHeading">Your Health Talk</div>
@@ -1433,7 +1497,7 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
     <div class="success-subtitle">RECORDING SUBMITTED SUCCESSFULLY</div>
     <div class="live-soon-headline">WILL GO LIVE ON AIR SOON!</div>
     <div class="success-message"><span>Your recording has been submitted to</span><strong class="submitted-brand">Radio 4 Diabetes India</strong></div>
-    <div class="email-card"><div class="email-icon" aria-hidden="true">📱</div><div class="email-heading">Your On-Demand Radio Link</div><div class="email-message">Your On-Demand Radio Link will be sent to this WhatsApp number:</div><div class="email-address" id="confirmationWhatsApp"></div></div>
+    <div class="email-card"><div class="email-icon" aria-hidden="true">📱</div><div class="email-message">Your On-Demand Radio Link will be sent to this WhatsApp number:</div><div class="email-address" id="confirmationWhatsApp"></div></div>
     <a class="btn listen-radio-btn" id="listenRadio4" href="https://diabetesindia.radio4.in/" target="_blank" rel="noopener noreferrer">Listen to Radio 4 Diabetes India</a>
     <div class="listen-radio-caption"><span>Apple Music Radio Station</span></div>
   </section>
@@ -1629,7 +1693,7 @@ Object.values(DEMO_SCRIPTS).forEach(script=>{
  }
 });
 // Topic Library removed: the doctor now enters their own topic and language directly.
-function showPage(n){document.body.classList.toggle('recording-view',n===4);document.body.classList.toggle('welcome-screen',n===0||n===6);const order=[0,1,2,3,4,5];order.forEach((id,index)=>{const page=document.getElementById('page'+id);if(page)page.classList.toggle('active',id===n);const p=document.getElementById('progress'+id);if(p){p.classList.toggle('active',id===n);p.classList.toggle('done',index<order.indexOf(n));p.querySelector('.num').textContent=index<order.indexOf(n)?'✓':String(index+1)}})}
+function showPage(n){document.body.classList.toggle('recording-view',n===4);document.body.classList.toggle('welcome-screen',n===0||n===6);const order=[0,1,2,7,3,8,4,5];order.forEach((id,index)=>{const page=document.getElementById('page'+id);if(page)page.classList.toggle('active',id===n);const p=document.getElementById('progress'+id);if(p){p.classList.toggle('active',id===n);p.classList.toggle('done',index<order.indexOf(n));p.querySelector('.num').textContent=index<order.indexOf(n)?'✓':String(index+1)}})}
 document.getElementById('welcomeContinue').onclick=()=>showPage(1);
 document.getElementById('welcomeToRegistration').onclick=()=>showPage(1);
 document.getElementById('welcomeBack').onclick=()=>showPage(0);
@@ -1638,13 +1702,13 @@ document.getElementById('backProfileSubstep1').onclick=()=>{document.getElementB
 document.getElementById('toPage2').onclick=()=>{const statusField=document.getElementById('registrationStatusField');const inactiveMessage=document.getElementById('inactiveStatusMessage');if(statusField.value==='Not Active'){inactiveMessage.classList.add('show');statusField.focus();return}else{inactiveMessage.classList.remove('show')}for(const id of ['whatsappNumberField','registrationStatusField','registrationNumber']){const el=document.getElementById(id);if(!el.value.trim()){el.focus();return}}const mobile=whatsappNumberField.value.trim();if(!/^[6-9][0-9]{9}$/.test(mobile)){whatsappNumberField.setCustomValidity('Please enter a valid 10-digit Indian mobile number.');whatsappNumberField.reportValidity();whatsappNumberField.focus();return}else{whatsappNumberField.setCustomValidity('')}document.getElementById('doctorName').textContent=getDoctorDisplayName();showPage(2)};
 document.getElementById('registrationStatusField').addEventListener('change',()=>{const m=document.getElementById('inactiveStatusMessage');if(document.getElementById('registrationStatusField').value==='Not Active')m.classList.add('show');else m.classList.remove('show')});
 document.getElementById('backToPage1').onclick=()=>{showPage(1);document.getElementById('profileSubstep2').hidden=true;document.getElementById('profileSubstep1').hidden=false};
-document.getElementById('toPage3').onclick=()=>{consentAcceptedAt=new Date().toISOString();resetRecordingState();talkType='own';selectedTopic='';selectedLanguage='English';topicInput.value='';talkLanguageSelect.value='English';talkLanguageOther.value='';talkLanguageOther.hidden=true;document.getElementById('toPage4').disabled=true;showPage(3)};
+document.getElementById('toPage3').onclick=()=>{consentAcceptedAt=new Date().toISOString();resetRecordingState();showPage(7)};
 const talkLanguageSelect=document.getElementById('talkLanguage'),talkLanguageOther=document.getElementById('talkLanguageOther');
 function updateTalkContinue(){const topic=topicInput.value.trim();const lang=talkLanguageSelect.value;const other=talkLanguageOther.value.trim();document.getElementById('toPage4').disabled=!topic||!lang||(lang==='Other'&&!other)}
 topicInput.addEventListener('input',updateTalkContinue);
 talkLanguageSelect.addEventListener('change',()=>{const custom=talkLanguageSelect.value==='Other';talkLanguageOther.hidden=!custom;talkLanguageOther.required=custom;if(custom)talkLanguageOther.focus();else talkLanguageOther.value='';updateTalkContinue()});
 talkLanguageOther.addEventListener('input',updateTalkContinue);
-document.getElementById('backToPage2').onclick=()=>showPage(2);
+document.getElementById('backToPage2').onclick=()=>showPage(7);
 document.getElementById('toPage4').onclick=()=>{selectedTopic=topicInput.value.trim();if(!selectedTopic){topicInput.focus();return}const chosenLanguage=talkLanguageSelect.value;selectedLanguage=chosenLanguage==='Other'?talkLanguageOther.value.trim():chosenLanguage;if(!selectedLanguage){talkLanguageOther.focus();return}talkType='own';selectedScript='';document.getElementById('topicHeading').textContent=selectedTopic;document.getElementById('doctorName').textContent=getDoctorDisplayName();document.getElementById('page4').classList.add('mode-own');document.getElementById('page4').classList.remove('mode-approved');document.getElementById('scriptPanel').hidden=true;document.getElementById('page4').classList.remove('has-preview');document.getElementById('preview').style.display='none';document.getElementById('recordingReviewPanel').hidden=true;showPage(4)};
 document.getElementById('backToPage3').onclick=()=>{resetRecordingState();showPage(3)};
 document.getElementById('backOwnTalk').onclick=()=>{resetRecordingState();showPage(3)};
@@ -2956,6 +3020,86 @@ button.btn,
   text-overflow:clip!important;
 }
 </style>
+
+
+<script id="existing-audio-upload-flow">
+(function(){
+ const byId=id=>document.getElementById(id);
+ const topic=byId('existingTopicName'), language=byId('existingTalkLanguage');
+ const fileInput=byId('existingAudioFile'), submit=byId('submitExistingAudio');
+ const status=byId('existingUploadStatus');
+ function validate(){submit.disabled=!(topic.value.trim()&&language.value&&fileInput.files&&fileInput.files[0]);}
+ topic.addEventListener('input',validate);
+ language.addEventListener('change',validate);
+ fileInput.addEventListener('change',validate);
+
+ byId('chooseNewRecording').addEventListener('click',()=>{
+   resetRecordingState();
+   talkType='own';selectedTopic='';selectedLanguage='English';
+   topicInput.value='';talkLanguageSelect.value='English';
+   talkLanguageOther.value='';talkLanguageOther.hidden=true;
+   byId('toPage4').disabled=true;
+   showPage(3);
+ });
+ byId('chooseExistingUpload').addEventListener('click',()=>{
+   topic.value='';language.value='English';fileInput.value='';
+   status.textContent='';submit.disabled=true;
+   showPage(8);
+ });
+ byId('choiceBackToConsent').addEventListener('click',()=>showPage(2));
+ byId('uploadBackToChoice').addEventListener('click',()=>showPage(7));
+
+ submit.addEventListener('click',async()=>{
+   const file=fileInput.files&&fileInput.files[0];
+   const topicName=topic.value.trim();
+   if(!file||!topicName||!language.value)return;
+   if(!file.type.startsWith('audio/')){
+     status.textContent='Please select an audio file.';
+     return;
+   }
+   submit.disabled=true;
+   status.textContent='Preparing your audio recording for upload...';
+   try{
+     const base64=await new Promise((resolve,reject)=>{
+       const reader=new FileReader();
+       reader.onload=()=>resolve(String(reader.result).split(',')[1]||'');
+       reader.onerror=()=>reject(new Error('Could not read the selected audio file.'));
+       reader.readAsDataURL(file);
+     });
+     if(!base64)throw new Error('The selected audio file could not be read.');
+     const stamp=new Date().toISOString().replace(/[:.]/g,'-');
+     const extension=(file.name.match(/\.([a-z0-9]{2,6})$/i)||[])[1]||'audio';
+     const docName=getDoctorDisplayName();
+     const safeTopic=safeFilePart(topicName).replace(/\s+/g,'_');
+     const payload={
+       doctorId:doctorId,
+       doctorName:docName,
+       qualification:qualificationField.value.trim(),
+       registrationStatus:byId('registrationStatusField').value,
+       registrationNumber:byId('registrationNumber').value.trim(),
+       state:byId('doctorState').value,
+       mobileWhatsAppNumber:getWhatsAppNumber(),
+       topicName:topicName,
+       talkType:'existing-upload',
+       talkLanguage:language.value,
+       consentAccepted:true,
+       consentAcceptedAt:consentAcceptedAt,
+       consentText:CONSENT_TEXT,
+       fileName:(doctorId||'DOCTOR')+'_'+safeTopic+'_'+stamp+'.'+extension,
+       mimeType:file.type||'application/octet-stream',
+       audio:base64
+     };
+     status.textContent='Sending your health talk to Google Drive...';
+     await fetch(UPLOAD_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+     byId('confirmationWhatsApp').textContent=getWhatsAppNumber();
+     showPage(5);
+   }catch(err){
+     status.textContent='Upload could not be completed. '+(err&&err.message?err.message:'Please try again.');
+     submit.disabled=false;
+   }
+ });
+})();
+</script>
 
 </body>
 </html>
