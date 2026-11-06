@@ -1338,28 +1338,27 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
   </section>
 
   <section class="page" id="page1">
-    <div class="info"><div class="info-icon">👨‍⚕️</div><div><h2>Doctor Details</h2><p>Please enter your professional details.</p></div></div>
-    <div class="profile-substep" id="profileSubstep1">
-      
-      <div class="page1-fields">
-        <div class="field"><label for="doctorNameField">Name of Registered Medical Practitioner <span class="required">*</span></label><div class="doctor-name-row"><span class="doctor-prefix">Dr.</span><input id="doctorNameField" required placeholder="Enter full name" autocomplete="name"></div></div>
-        <div class="field"><label for="qualificationField">Qualification <span class="required">*</span></label><input id="qualificationField" required placeholder="e.g. MBBS, MD"></div>
-        <div class="field"><label for="doctorState">Your State/UT <span class="required">*</span></label><select id="doctorState" required><option value="">Select your State/UT</option><option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chhattisgarh</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option><option>Andaman and Nicobar Islands</option><option>Chandigarh</option><option>Dadra and Nagar Haveli and Daman and Diu</option><option>Delhi</option><option>Jammu and Kashmir</option><option>Ladakh</option><option>Lakshadweep</option><option>Puducherry</option></select></div>
-      </div>
-      <button class="btn" id="toProfileSubstep2">Continue →</button>
+  <div class="doctor-fields-tracker" id="doctorFieldsTracker" aria-label="Six doctor details to complete">
+    <div class="tracker-heading">Doctor Details — 6 fields to complete</div>
+    <div class="tracker-items">
+      <span class="tracker-item" data-field="0">1 Name</span><span class="tracker-item" data-field="1">2 Qualification</span><span class="tracker-item" data-field="2">3 State</span><span class="tracker-item" data-field="3">4 Reg Status</span><span class="tracker-item" data-field="4">5 Reg Number</span><span class="tracker-item" data-field="5">6 Mobile</span>
     </div>
-    <div class="profile-substep" id="profileSubstep2" hidden>
-      
-      <div class="page1-fields">
-        <div class="field"><label for="registrationStatusField">Registration Status <span class="required">*</span></label><select id="registrationStatusField" required><option value="">Select status</option><option>Active</option><option>Not Active</option></select></div><div class="profile-message" id="inactiveStatusMessage" role="alert">Your registration status is currently marked Not Active. Kindly get your registration status updated to <strong>Active</strong> before proceeding with this recording initiative.</div>
-        <div class="field"><label for="registrationNumber">SMC/NMR Registration Number <span class="required">*</span></label><input id="registrationNumber" required placeholder="Enter registration number"></div>
-        <div class="field"><label for="whatsappNumberField">Mobile WhatsApp Number <span class="required">*</span> <small class="field-hint-inline">To receive Live Radio Page Link from Editor.</small></label><div class="doctor-name-row"><span class="doctor-prefix">+91</span><input id="whatsappNumberField" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" minlength="10" required placeholder="Enter 10-digit mobile number" autocomplete="tel-national"></div></div>
-      </div>
-      <button class="btn" id="toPage2">Continue to Consent →</button>
-      <button class="btn" id="backProfileSubstep1" style="background:#64748b">← Back</button>
+  </div>
+    <div class="info"><div class="info-icon">👨‍⚕️</div><div><h2>Doctor Details</h2><p>Please enter your six professional details, one at a time.</p></div></div>
+    <div class="field-wizard" id="doctorFieldWizard">
+      <div class="wizard-count" id="wizardCount">FIELD 1 OF 6</div>
+      <div class="wizard-field" data-wizard="0"><label for="doctorNameField">Name of Registered Medical Practitioner <span class="required">*</span></label><div class="doctor-name-row"><span class="doctor-prefix">Dr.</span><input id="doctorNameField" required placeholder="Enter full name" autocomplete="name"></div></div>
+      <div class="wizard-field" data-wizard="1" hidden><label for="qualificationField">Qualification <span class="required">*</span></label><input id="qualificationField" required placeholder="e.g. MBBS, MD"></div>
+      <div class="wizard-field" data-wizard="2" hidden><label for="doctorState">Your State/UT <span class="required">*</span></label><select id="doctorState" required><option value="">Select your State/UT</option><option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chhattisgarh</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option><option>Andaman and Nicobar Islands</option><option>Chandigarh</option><option>Dadra and Nagar Haveli and Daman and Diu</option><option>Delhi</option><option>Jammu and Kashmir</option><option>Ladakh</option><option>Lakshadweep</option><option>Puducherry</option></select></div>
+      <div class="wizard-field" data-wizard="3" hidden><label for="registrationStatusField">Registration Status <span class="required">*</span></label><select id="registrationStatusField" required><option value="">Select status</option><option>Active</option><option>Not Active</option></select><div class="profile-message" id="inactiveStatusMessage" role="alert">Your registration status is currently marked Not Active. Kindly get your registration status updated to <strong>Active</strong> before proceeding with this recording initiative.</div></div>
+      <div class="wizard-field" data-wizard="4" hidden><label for="registrationNumber">SMC/NMR Registration Number <span class="required">*</span></label><input id="registrationNumber" required placeholder="Enter registration number"></div>
+      <div class="wizard-field" data-wizard="5" hidden><label for="whatsappNumberField">Mobile WhatsApp Number <span class="required">*</span></label><div class="doctor-name-row"><span class="doctor-prefix">+91</span><input id="whatsappNumberField" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" minlength="10" required placeholder="Enter 10-digit mobile number" autocomplete="tel-national"></div><small class="field-hint-inline">To receive Live Radio Page Link from Editor.</small></div>
+      <div class="wizard-nav"><button type="button" class="btn secondary-btn" id="doctorWizardBack" hidden>← Back</button><button type="button" class="btn" id="doctorWizardNext">Next →</button></div>
+      <div class="wizard-note">Use Next to continue. You can go back and correct any detail.</div>
     </div>
+    <!-- Retained legacy controls for compatibility with the existing page scripts. -->
+    <div hidden aria-hidden="true"><button id="toProfileSubstep2" type="button"></button><button id="backProfileSubstep1" type="button"></button><button id="toPage2" type="button"></button><div id="profileSubstep1"></div><div id="profileSubstep2"></div></div>
   </section>
-
   <section class="page" id="page2">
     <div class="info"><div class="info-icon">📄</div><div><h2>Professional Contribution &amp; Consent</h2><p>Please read and accept to continue.</p></div></div>
     <div class="consent-text">I confirm that this is my independent professional contribution towards diabetes education and public health awareness.<br><br>I voluntarily consent to Radio 4 Diabetes India recording, processing, storing, publishing and broadcasting my talk for educational purposes.<br><br>I confirm that my contribution respects patient confidentiality and professional ethics.</div>
@@ -1419,9 +1418,9 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
     <div class="welcome-tagline">Go Live On Air !</div>
     <div class="contribution-choice-grid">
       <button type="button" class="contribution-choice" id="chooseNewRecording">
-        <span class="choice-icon">🎤</span>
+        <span class="choice-icon">📱</span>
         <strong>Record a New Health Talk</strong>
-        <span>Use the Mobile Radio Studio to record your talk now. Maximum duration: 5 minutes.</span>
+        <span>Record directly using your phone. No external microphone required. Maximum duration: 5 minutes.</span>
       </button>
       <button type="button" class="contribution-choice" id="chooseExistingUpload">
         <span class="choice-icon">⬆️</span>
@@ -1433,17 +1432,17 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
   </section>
 
   <section class="page" id="page8">
-    <div class="info"><div class="info-icon">⬆️</div><div><h2>Upload an Existing Health Talk</h2><p>Enter the topic and select your audio recording.</p></div></div>
+    <div class="info"><div class="info-icon">⬆️</div><div><h2>Upload an Existing Health Talk</h2><p>Select your audio recording first, then enter the topic and language.</p></div></div>
     <div class="simple-topic-fields upload-existing-fields">
+      <label for="existingAudioFile" style="margin-top:10px">Select Audio Recording <span class="required">*</span></label>
+      <input id="existingAudioFile" type="file" accept="audio/*,.mp3,.wav,.m4a,.webm,.aac,.ogg">
+      <div class="upload-file-hint">Choose an existing audio file from your phone or computer.</div>
       <label for="existingTopicName">Your Health Topic <span class="required">*</span></label>
       <input id="existingTopicName" type="text" maxlength="120" placeholder="Enter your health topic">
       <label for="existingTalkLanguage" style="margin-top:10px">Language <span class="required">*</span></label>
       <select id="existingTalkLanguage">
         <option value="English">English</option><option value="Hindi">Hindi</option><option value="Marathi">Marathi</option><option value="Gujarati">Gujarati</option><option value="Bengali">Bengali</option><option value="Tamil">Tamil</option><option value="Telugu">Telugu</option><option value="Kannada">Kannada</option><option value="Malayalam">Malayalam</option><option value="Punjabi">Punjabi</option><option value="Odia">Odia</option><option value="Assamese">Assamese</option><option value="Urdu">Urdu</option><option value="Sanskrit">Sanskrit</option><option value="Kashmiri">Kashmiri</option><option value="Konkani">Konkani</option><option value="Manipuri (Meitei)">Manipuri (Meitei)</option><option value="Nepali">Nepali</option><option value="Sindhi">Sindhi</option><option value="Maithili">Maithili</option><option value="Dogri">Dogri</option><option value="Bodo">Bodo</option><option value="Santali">Santali</option><option value="Bhojpuri">Bhojpuri</option><option value="Rajasthani">Rajasthani</option><option value="French">French</option><option value="Spanish">Spanish</option><option value="Arabic">Arabic</option>
       </select>
-      <label for="existingAudioFile" style="margin-top:10px">Select Audio Recording <span class="required">*</span></label>
-      <input id="existingAudioFile" type="file" accept="audio/*,.mp3,.wav,.m4a,.webm,.aac,.ogg">
-      <div class="upload-file-hint">Choose an existing audio file from your phone or computer.</div>
       <div id="existingUploadStatus" class="status" role="status" aria-live="polite"></div>
     </div>
     <div class="nav-actions">
@@ -3223,6 +3222,83 @@ button.btn,
   }
 }
 </style>
+
+
+<style id="six-field-wizard-style">
+/* Six-field doctor entry: preserves the source navy background and original splash layout. */
+.doctor-fields-tracker{flex:0 0 auto;margin:0 0 7px;padding:8px 9px;border:1px solid #31577f;border-radius:10px;background:#102a4b;color:#fff}
+.tracker-heading{font-size:clamp(10px,1.5vh,12px);font-weight:900;color:#dcecff;margin-bottom:6px;text-align:center}
+.tracker-items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+.tracker-item{display:block;text-align:center;padding:5px 2px;border:1px solid #31577f;border-radius:7px;background:#0b2140;color:#c6d9ef;font-size:clamp(9px,1.4vh,11px);font-weight:700;white-space:nowrap}
+.tracker-item.current{background:#1765a8;border-color:#62b9ff;color:#fff}
+.tracker-item.completed{background:#124a39;border-color:#26996c;color:#caffdf}
+#page1{justify-content:flex-start!important;overflow-y:auto;padding:8px 3px}
+#page1 .info{margin-bottom:clamp(12px,2.2vh,20px)}
+.field-wizard{width:100%;max-width:540px;margin:0 auto;display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0}
+.wizard-count{text-align:center;color:#9ed3ff;font-size:12px;font-weight:900;letter-spacing:.1em;margin-bottom:clamp(14px,3vh,24px)}
+.wizard-field{width:100%;margin:0 auto}
+.wizard-field[hidden]{display:none!important}
+.wizard-field>label{display:block;color:#e4f1ff!important;font-size:clamp(16px,2.3vh,20px)!important;line-height:1.3;margin-bottom:12px!important;text-align:left}
+.wizard-field input,.wizard-field select{height:clamp(54px,8vh,68px)!important;font-size:clamp(18px,2.6vh,22px)!important;padding:12px 14px!important;border-radius:11px!important}
+.wizard-field .doctor-prefix{font-size:18px;padding:16px 14px}
+.wizard-nav{display:flex;gap:10px;justify-content:center;margin-top:clamp(18px,3vh,26px)}
+.wizard-nav .btn{margin:0;min-height:48px;max-width:260px;flex:1}
+.wizard-nav .secondary-btn{background:#49627f!important;box-shadow:0 3px 0 #263d59!important}
+.wizard-note{text-align:center;color:#b9cde5;font-size:11px;margin-top:12px}
+#page1 .profile-message.show{display:block;margin-top:10px}
+@media(max-width:420px){.tracker-items{gap:4px}.tracker-item{font-size:9px;padding:5px 1px}.wizard-field>label{font-size:16px!important}.wizard-field input,.wizard-field select{font-size:18px!important}}
+</style>
+<script id="six-field-wizard-controller">
+(function(){
+ const page=document.getElementById('page1');
+ if(!page)return;
+ const fields=[
+  document.getElementById('doctorNameField'),
+  document.getElementById('qualificationField'),
+  document.getElementById('doctorState'),
+  document.getElementById('registrationStatusField'),
+  document.getElementById('registrationNumber'),
+  document.getElementById('whatsappNumberField')
+ ];
+ const labels=['Name','Qualification','State','Reg Status','Reg Number','Mobile'];
+ const panes=[...page.querySelectorAll('.wizard-field[data-wizard]')];
+ const tracker=[...document.querySelectorAll('.tracker-item')];
+ const count=document.getElementById('wizardCount');
+ const next=document.getElementById('doctorWizardNext');
+ const back=document.getElementById('doctorWizardBack');
+ const inactive=document.getElementById('inactiveStatusMessage');
+ let index=0;
+ function paint(){
+  panes.forEach((p,i)=>p.hidden=i!==index);
+  tracker.forEach((t,i)=>{t.classList.toggle('current',i===index);t.classList.toggle('completed',i<index);t.textContent=(i<index?'✓ ':String(i+1)+' ')+labels[i]});
+  count.textContent='FIELD '+(index+1)+' OF 6';
+  back.hidden=index===0;
+  next.textContent=index===5?'Continue to Consent →':'Next →';
+  const f=fields[index]; if(f){setTimeout(()=>{if(!panes[index].hidden)f.focus({preventScroll:true})},40)}
+ }
+ function valid(){
+  const f=fields[index];
+  if(!f.value.trim()){f.focus();if(f.reportValidity)f.reportValidity();return false}
+  if(index===3&&f.value==='Not Active'){inactive.classList.add('show');f.focus();return false}
+  if(index===5){if(!/^[6-9][0-9]{9}$/.test(f.value.trim())){f.setCustomValidity('Please enter a valid 10-digit Indian mobile number.');f.reportValidity();f.focus();return false}f.setCustomValidity('')}
+  return true;
+ }
+ next.addEventListener('click',()=>{
+  if(!valid())return;
+  if(index<5){index++;paint();return}
+  const display=document.getElementById('doctorName');
+  if(display&&typeof getDoctorDisplayName==='function')display.textContent=getDoctorDisplayName();
+  if(typeof showPage==='function')showPage(2);
+ });
+ back.addEventListener('click',()=>{if(index>0){index--;paint()}});
+ fields[3].addEventListener('change',()=>{if(fields[3].value!=='Not Active')inactive.classList.remove('show')});
+ const consentBack=document.getElementById('backToPage1');
+ if(consentBack)consentBack.onclick=()=>{if(typeof showPage==='function')showPage(1);index=5;paint()};
+ // Enter never advances the wizard; native select navigation remains available.
+ fields.forEach(f=>f.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault()}}));
+ paint();
+})();
+</script>
 
 </body>
 </html>
