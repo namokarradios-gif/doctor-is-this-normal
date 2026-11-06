@@ -2822,75 +2822,89 @@ button.btn,
 </style>
 
 
-<style id="single-line-topic-doctor-mobile">
-#page4 .topic-heading,
-#page4 .doctor{
+<style id="readable-topic-doctor-layout">
+/* Keep the recording-page topic and doctor readable without changing the logo. */
+#page4.mode-own:not(.has-preview) #topicHeading,
+#page4.mode-approved:not(.has-preview) #topicHeading{
+  white-space:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  overflow-wrap:break-word!important;
+  word-break:normal!important;
   display:block!important;
-  width:100%!important;
-  max-width:100%!important;
+  max-width:calc(100% - 24px)!important;
+  width:auto!important;
+  left:12px!important;
+  right:12px!important;
+  line-height:1.12!important;
+}
+#page4.mode-own:not(.has-preview) #doctorName,
+#page4.mode-approved:not(.has-preview) #doctorName{
   white-space:nowrap!important;
   overflow:visible!important;
   text-overflow:clip!important;
   overflow-wrap:normal!important;
-  box-sizing:border-box!important;
-  line-height:1.2!important;
+  word-break:normal!important;
+  max-width:calc(100% - 24px)!important;
+  width:auto!important;
+  left:12px!important;
+  right:12px!important;
 }
 </style>
-<script id="fit-full-topic-doctor-text">
+<script id="fit-readable-topic-doctor-text">
 (function(){
-  function fitOneLine(el, minimum){
-    if(!el) return;
-    el.style.whiteSpace = 'nowrap';
-    el.style.overflow = 'visible';
-    el.style.textOverflow = 'clip';
-    el.style.maxWidth = '100%';
-    el.style.width = '100%';
-    var parentWidth = el.parentElement ? el.parentElement.clientWidth : 0;
-    var available = Math.max(40, Math.min(el.clientWidth || parentWidth, parentWidth || el.clientWidth) - 4);
-    if(!available) return;
-    var style = window.getComputedStyle(el);
-    var weight = style.fontWeight || '800';
-    var family = style.fontFamily || 'Arial';
-    var size = parseFloat(style.fontSize) || 18;
+  function measure(el, size, weight, family){
     var canvas = document.createElement('canvas');
     var ctx = canvas.getContext('2d');
-    if(!ctx) return;
-    var text = el.textContent || '';
+    if(!ctx) return Infinity;
     ctx.font = weight + ' ' + size + 'px ' + family;
-    while(size > minimum){
-      ctx.font = weight + ' ' + size + 'px ' + family;
-      if(ctx.measureText(text).width <= available) break;
-      size -= 0.5;
-    }
-    el.style.setProperty('font-size', size + 'px', 'important');
+    return ctx.measureText((el.textContent || '').trim()).width;
   }
-  function fitAll(){
+
+  function fitText(){
     var topic = document.getElementById('topicHeading');
     var doctor = document.getElementById('doctorName');
-    fitOneLine(topic, 9);
-    fitOneLine(doctor, 9);
+    [topic, doctor].forEach(function(el){
+      if(!el || !el.parentElement) return;
+      var parentWidth = el.parentElement.clientWidth || el.clientWidth;
+      var available = Math.max(80, parentWidth - 28);
+      var css = window.getComputedStyle(el);
+      var weight = css.fontWeight || '800';
+      var family = css.fontFamily || 'Arial';
+      var base = parseFloat(css.fontSize) || 20;
+      var min = el === topic ? 17 : 14;
+      var size = base;
+      while(size > min && measure(el, size, weight, family) > available){
+        size -= 0.5;
+      }
+      el.style.setProperty('font-size', Math.max(min, size) + 'px', 'important');
+    });
   }
-  var scheduled = false;
-  function scheduleFit(){
-    if(scheduled) return;
-    scheduled = true;
-    requestAnimationFrame(function(){ scheduled = false; fitAll(); });
+
+  var queued = false;
+  function schedule(){
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(function(){
+      queued = false;
+      fitText();
+    });
   }
   function attach(){
     var topic = document.getElementById('topicHeading');
     var doctor = document.getElementById('doctorName');
-    if(topic) new MutationObserver(scheduleFit).observe(topic,{childList:true,subtree:true,characterData:true});
-    if(doctor) new MutationObserver(scheduleFit).observe(doctor,{childList:true,subtree:true,characterData:true});
+    if(topic) new MutationObserver(schedule).observe(topic,{childList:true,subtree:true,characterData:true});
+    if(doctor) new MutationObserver(schedule).observe(doctor,{childList:true,subtree:true,characterData:true});
     if(window.ResizeObserver){
-      var ro = new ResizeObserver(scheduleFit);
-      if(topic) ro.observe(topic.parentElement || topic);
-      if(doctor) ro.observe(doctor.parentElement || doctor);
+      var ro = new ResizeObserver(schedule);
+      if(topic && topic.parentElement) ro.observe(topic.parentElement);
+      if(doctor && doctor.parentElement) ro.observe(doctor.parentElement);
     }
-    window.addEventListener('resize',scheduleFit);
-    document.addEventListener('click',scheduleFit,true);
-    scheduleFit();
-    setTimeout(scheduleFit,150);
-    setTimeout(scheduleFit,700);
+    window.addEventListener('resize',schedule);
+    document.addEventListener('click',schedule,true);
+    schedule();
+    setTimeout(schedule,150);
+    setTimeout(schedule,700);
   }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded',attach);
   else attach();
