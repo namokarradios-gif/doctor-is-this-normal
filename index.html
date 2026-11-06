@@ -1447,7 +1447,7 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
       <div id="existingUploadStatus" class="status" role="status" aria-live="polite"></div>
     </div>
     <div class="nav-actions">
-      <button class="btn" id="submitExistingAudio" type="button" disabled>Submit Health Talk →</button>
+      <button class="btn" id="submitExistingAudio" type="button" disabled>Preview Health Talk →</button>
       <button class="btn" id="uploadBackToChoice" type="button" style="background:#64748b">← Back</button>
     </div>
   </section>
@@ -1757,7 +1757,7 @@ const scrollPauseBtn=document.getElementById('pauseScriptScroll'),scrollResumeBt
 function setScriptScrollPaused(value){scriptScrollPaused=value;if(scrollPauseBtn)scrollPauseBtn.hidden=value;if(scrollResumeBtn)scrollResumeBtn.hidden=!value}
 scrollPauseBtn?.addEventListener('click',()=>setScriptScrollPaused(true));scrollResumeBtn?.addEventListener('click',()=>setScriptScrollPaused(false));
 const scriptTextForTouch=document.getElementById('scriptText');scriptTextForTouch?.addEventListener('pointerdown',()=>{if(recorder&&recorder.state==='recording')setScriptScrollPaused(true)});
-recordBtn.onclick=async()=>{try{const session=++recordingSession;recordingStream=await navigator.mediaDevices.getUserMedia({audio:true});const thisStream=recordingStream;chunks=[];recordedBlob=null;preview.style.display='none';preview.removeAttribute('src');preview.load();document.getElementById('page4').classList.remove('has-preview');document.getElementById('page4').classList.remove('recording-started');document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';const scriptAtStart=document.getElementById('scriptText');if(talkType==='approved'&&scriptAtStart){scriptAtStart.scrollTop=0;}setScriptScrollPaused(false);submitBtn.disabled=true;recorder=new MediaRecorder(thisStream);const thisRecorder=recorder;recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{thisStream.getTracks().forEach(t=>t.stop());if(session!==recordingSession)return;if(audioContext&&audioContext.state!=='closed')audioContext.close();audioContext=null;analyser=null;recordedBlob=new Blob(chunks,{type:thisRecorder.mimeType||'audio/webm'});preview.src=URL.createObjectURL(recordedBlob);preview.style.display='none';document.getElementById('customAudioPlayer').hidden=false;document.getElementById('page4').classList.add('has-preview');document.getElementById('scriptPanel').hidden=true;document.getElementById('recordingReviewPanel').hidden=false;submitBtn.disabled=false;status.textContent='Recording stopped. Please review your audio before submitting.';setLiveState('complete','RECORDING COMPLETE')};recorder.start();document.getElementById('page4').classList.add('recording-started');scriptScrollStartsAt=Date.now()+4000;seconds=300;setTimer();recordBtn.disabled=true;pauseBtn.disabled=false;pauseBtn.textContent='Ⅱ PAUSE';stopBtn.disabled=false;status.textContent='Your microphone is active. Please speak clearly.';setLiveState('recording','RECORDING IN PROGRESS');startMeter();timerInterval=setInterval(()=>{if(!paused){seconds--;setTimer();if(seconds<=0)stopRecording()}},1000);/* 1px per 125ms = 8px/sec; integer steps avoid sub-pixel rounding stalls. */scriptScrollInterval=setInterval(()=>{const script=document.getElementById('scriptText');if(Date.now()>=scriptScrollStartsAt&&!paused&&!scriptScrollPaused&&!document.getElementById('scriptPanel').hidden&&script&&script.scrollHeight>script.clientHeight+2){script.scrollTop=Math.min(script.scrollTop+1,script.scrollHeight-script.clientHeight)}},125)}catch(e){setLiveState('','MICROPHONE NOT STARTED');status.textContent='Microphone access is required. Please allow microphone permission and try again.'}};
+recordBtn.onclick=async()=>{try{document.getElementById('page4').classList.remove('existing-upload-review');document.getElementById('recordingReviewPanel').querySelector('h2').textContent='Recording Complete';const liveReviewParagraphs=document.querySelectorAll('#recordingReviewPanel p');if(liveReviewParagraphs[0])liveReviewParagraphs[0].innerHTML='<strong>Listen to your recording before submitting.</strong>';if(liveReviewParagraphs[1])liveReviewParagraphs[1].textContent='Check that your voice is clear, the talk is complete and there are no interruptions. You may record again if you are not satisfied.';document.getElementById('rerecordBtn').textContent='↻ RECORD AGAIN';const session=++recordingSession;recordingStream=await navigator.mediaDevices.getUserMedia({audio:true});const thisStream=recordingStream;chunks=[];recordedBlob=null;preview.style.display='none';preview.removeAttribute('src');preview.load();document.getElementById('page4').classList.remove('has-preview');document.getElementById('page4').classList.remove('recording-started');document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';const scriptAtStart=document.getElementById('scriptText');if(talkType==='approved'&&scriptAtStart){scriptAtStart.scrollTop=0;}setScriptScrollPaused(false);submitBtn.disabled=true;recorder=new MediaRecorder(thisStream);const thisRecorder=recorder;recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{thisStream.getTracks().forEach(t=>t.stop());if(session!==recordingSession)return;if(audioContext&&audioContext.state!=='closed')audioContext.close();audioContext=null;analyser=null;recordedBlob=new Blob(chunks,{type:thisRecorder.mimeType||'audio/webm'});preview.src=URL.createObjectURL(recordedBlob);preview.style.display='none';document.getElementById('customAudioPlayer').hidden=false;document.getElementById('page4').classList.add('has-preview');document.getElementById('scriptPanel').hidden=true;document.getElementById('recordingReviewPanel').hidden=false;submitBtn.disabled=false;status.textContent='Recording stopped. Please review your audio before submitting.';setLiveState('complete','RECORDING COMPLETE')};recorder.start();document.getElementById('page4').classList.add('recording-started');scriptScrollStartsAt=Date.now()+4000;seconds=300;setTimer();recordBtn.disabled=true;pauseBtn.disabled=false;pauseBtn.textContent='Ⅱ PAUSE';stopBtn.disabled=false;status.textContent='Your microphone is active. Please speak clearly.';setLiveState('recording','RECORDING IN PROGRESS');startMeter();timerInterval=setInterval(()=>{if(!paused){seconds--;setTimer();if(seconds<=0)stopRecording()}},1000);/* 1px per 125ms = 8px/sec; integer steps avoid sub-pixel rounding stalls. */scriptScrollInterval=setInterval(()=>{const script=document.getElementById('scriptText');if(Date.now()>=scriptScrollStartsAt&&!paused&&!scriptScrollPaused&&!document.getElementById('scriptPanel').hidden&&script&&script.scrollHeight>script.clientHeight+2){script.scrollTop=Math.min(script.scrollTop+1,script.scrollHeight-script.clientHeight)}},125)}catch(e){setLiveState('','MICROPHONE NOT STARTED');status.textContent='Microphone access is required. Please allow microphone permission and try again.'}};
 pauseBtn.onclick=()=>{if(!recorder)return;if(recorder.state==='recording'){recorder.pause();paused=true;pauseBtn.textContent='▶ RESUME';status.textContent='Recording is paused. Your talk is not being recorded right now.';setLiveState('paused','RECORDING PAUSED')}else if(recorder.state==='paused'){recorder.resume();paused=false;pauseBtn.textContent='Ⅱ PAUSE';status.textContent='Recording resumed. Please continue speaking.';setLiveState('recording','RECORDING IN PROGRESS')}};
 stopBtn.onclick=stopRecording;
 document.getElementById('rerecordBtn').onclick=()=>{recordingSession++;if(recorder&&recorder.state!=='inactive'){try{recorder.stop()}catch(e){}}clearInterval(timerInterval);clearInterval(scriptScrollInterval);stopMeter();if(recordingStream)recordingStream.getTracks().forEach(t=>t.stop());if(preview.src){URL.revokeObjectURL(preview.src);preview.removeAttribute('src');preview.load()}preview.pause();preview.currentTime=0;preview.style.display='none';document.getElementById('customAudioPlayer').hidden=true;document.getElementById('page4').classList.remove('has-preview');document.getElementById('recordingReviewPanel').hidden=true;document.getElementById('scriptPanel').hidden=talkType!=='approved';setScriptScrollPaused(false);recordedBlob=null;chunks=[];seconds=300;setTimer();submitBtn.disabled=true;recordBtn.disabled=false;pauseBtn.disabled=true;stopBtn.disabled=true;pauseBtn.textContent='Ⅱ PAUSE';status.textContent='Ready to record again. Click RECORD to begin.';setLiveState('','MICROPHONE READY')};
@@ -3049,6 +3049,12 @@ button.btn,
 
  byId('chooseNewRecording').addEventListener('click',()=>{
    resetRecordingState();
+   byId('page4').classList.remove('existing-upload-review');
+   byId('recordingReviewPanel').querySelector('h2').textContent='Recording Complete';
+   const liveReviewParagraphs=document.querySelectorAll('#recordingReviewPanel p');
+   if(liveReviewParagraphs[0])liveReviewParagraphs[0].innerHTML='<strong>Listen to your recording before submitting.</strong>';
+   if(liveReviewParagraphs[1])liveReviewParagraphs[1].textContent='Check that your voice is clear, the talk is complete and there are no interruptions. You may record again if you are not satisfied.';
+   byId('rerecordBtn').textContent='↻ RECORD AGAIN';
    talkType='own';selectedTopic='';selectedLanguage='English';
    topicInput.value='';talkLanguageSelect.value='English';
    talkLanguageOther.value='';talkLanguageOther.hidden=true;
@@ -3063,16 +3069,98 @@ button.btn,
  byId('choiceBackToConsent').addEventListener('click',()=>showPage(2));
  byId('uploadBackToChoice').addEventListener('click',()=>showPage(7));
 
- submit.addEventListener('click',async()=>{
+ submit.addEventListener('click',()=>{
    const file=fileInput.files&&fileInput.files[0];
    const topicName=topic.value.trim();
    if(!file||!topicName||!language.value)return;
-   if(!file.type.startsWith('audio/')){
-     status.textContent='Please select an audio file.';
+   if(!file.type.startsWith('audio/')){status.textContent='Please select an audio file.';return;}
+   // Use the same Check Your Recording page and audio player as a live recording.
+   window.__radio4ExistingUpload={file,topicName,language:language.value,objectUrl:URL.createObjectURL(file)};
+   const audio=document.getElementById('preview');
+   audio.pause();audio.src=window.__radio4ExistingUpload.objectUrl;audio.load();
+   document.getElementById('topicHeading').textContent=topicName;
+   document.getElementById('customAudioPlayer').hidden=false;
+   document.getElementById('recordingReviewPanel').hidden=false;
+   document.getElementById('recordingReviewPanel').querySelector('h2').textContent='Existing Talk Ready';
+   const reviewParagraphs=document.querySelectorAll('#recordingReviewPanel p');
+   if(reviewParagraphs[0])reviewParagraphs[0].innerHTML='<strong>Listen to your existing health talk before submitting.</strong>';
+   if(reviewParagraphs[1])reviewParagraphs[1].textContent='Check that the audio is clear, complete and the correct talk. You can go back and choose another file if needed.';
+   document.getElementById('rerecordBtn').textContent='↻ CHOOSE A DIFFERENT FILE';
+   document.getElementById('submitBtn').textContent='✓ APPROVE & SUBMIT';
+   document.getElementById('submitBtn').disabled=false;
+   document.getElementById('playerSeek').value='0';
+   document.getElementById('playerCurrent').textContent='00:00';
+   document.getElementById('playerDuration').textContent='00:00';
+   document.getElementById('page4').classList.add('has-preview');
+   document.getElementById('page4').classList.add('existing-upload-review');
+   showPage(4);
+ });
+})();
+</script>
+
+
+<style id="existing-upload-shared-review-style">
+#page4.existing-upload-review #rerecordBtn{
+  background:#64748b!important;
+  width:300px!important;
+  min-width:300px!important;
+  max-width:300px!important;
+  flex-basis:300px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  padding:0 12px!important;
+  font-size:16px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+#page4.existing-upload-review #recordingReviewPanel .review-icon{background:#1685c7}
+#page4.existing-upload-review #recordingReviewPanel h2{color:#fff}
+@media(max-width:600px){
+  #page4.existing-upload-review #rerecordBtn{
+    width:280px!important;
+    min-width:280px!important;
+    max-width:280px!important;
+    flex-basis:280px!important;
+    font-size:15px!important;
+  }
+}
+</style>
+<script id="existing-upload-shared-review-submit">
+(function(){
+ const byId=id=>document.getElementById(id);
+ const submit=byId('submitExistingAudio');
+ const reviewSubmit=byId('submitBtn');
+ const reviewBack=byId('rerecordBtn');
+ const audio=byId('preview');
+ if(!submit||!reviewSubmit||!reviewBack||!audio)return;
+ // Preserve the original live Record Again action; existing uploads return to file selection.
+ const liveRecordAgainHandler=reviewBack.onclick;
+ reviewBack.onclick=()=>{
+   const pending=window.__radio4ExistingUpload;
+   if(!pending){
+     byId('page4').classList.remove('existing-upload-review');
+     if(typeof liveRecordAgainHandler==='function')liveRecordAgainHandler();
      return;
    }
-   submit.disabled=true;
-   status.textContent='Preparing your audio recording for upload...';
+   audio.pause();
+   byId('page4').classList.remove('has-preview','existing-upload-review');
+   byId('customAudioPlayer').hidden=true;
+   byId('recordingReviewPanel').hidden=true;
+   if(pending.objectUrl)URL.revokeObjectURL(pending.objectUrl);
+   window.__radio4ExistingUpload=null;
+   byId('existingUploadStatus').textContent='Choose an audio file, then preview it before submitting.';
+   showPage(8);
+ };
+ // Intercept only the existing-upload submission. Live recording keeps its original handler.
+ reviewSubmit.addEventListener('click',async event=>{
+   const pending=window.__radio4ExistingUpload;
+   if(!pending)return;
+   event.preventDefault();event.stopImmediatePropagation();
+   const file=pending.file;
+   reviewSubmit.disabled=true;
+   byId('status').textContent='Uploading your existing health talk...';
    try{
      const base64=await new Promise((resolve,reject)=>{
        const reader=new FileReader();
@@ -3083,37 +3171,58 @@ button.btn,
      if(!base64)throw new Error('The selected audio file could not be read.');
      const stamp=new Date().toISOString().replace(/[:.]/g,'-');
      const extension=(file.name.match(/\.([a-z0-9]{2,6})$/i)||[])[1]||'audio';
-     const docName=getDoctorDisplayName();
-     const safeTopic=safeFilePart(topicName).replace(/\s+/g,'_');
+     const safeTopic=safeFilePart(pending.topicName).replace(/\s+/g,'_');
      const payload={
-       doctorId:doctorId,
-       doctorName:docName,
-       qualification:qualificationField.value.trim(),
+       doctorId:doctorId,doctorName:getDoctorDisplayName(),
+       qualification:byId('qualificationField').value.trim(),
        registrationStatus:byId('registrationStatusField').value,
        registrationNumber:byId('registrationNumber').value.trim(),
-       state:byId('doctorState').value,
-       mobileWhatsAppNumber:getWhatsAppNumber(),
-       topicName:topicName,
-       talkType:'existing-upload',
-       talkLanguage:language.value,
-       consentAccepted:true,
-       consentAcceptedAt:consentAcceptedAt,
-       consentText:CONSENT_TEXT,
+       state:byId('doctorState').value,mobileWhatsAppNumber:getWhatsAppNumber(),
+       topicName:pending.topicName,talkType:'existing-upload',talkLanguage:pending.language,
+       consentAccepted:true,consentAcceptedAt:consentAcceptedAt,consentText:CONSENT_TEXT,
        fileName:(doctorId||'DOCTOR')+'_'+safeTopic+'_'+stamp+'.'+extension,
-       mimeType:file.type||'application/octet-stream',
-       audio:base64
+       mimeType:file.type||'application/octet-stream',audio:base64
      };
-     status.textContent='Sending your health talk to Google Drive...';
      await fetch(UPLOAD_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
      byId('confirmationWhatsApp').textContent=getWhatsAppNumber();
+     if(pending.objectUrl)URL.revokeObjectURL(pending.objectUrl);
+     window.__radio4ExistingUpload=null;
      showPage(5);
    }catch(err){
-     status.textContent='Upload could not be completed. '+(err&&err.message?err.message:'Please try again.');
-     submit.disabled=false;
+     byId('status').textContent='Upload could not be completed. '+(err&&err.message?err.message:'Please try again.');
+     reviewSubmit.disabled=false;
    }
- });
+ },true);
 })();
 </script>
+
+
+<style id="v44-existing-upload-button-label-fit">
+/* Keep the complete “Choose a Different File” label inside its button. */
+#page4.has-preview.existing-upload-review #recordingReviewPanel button#rerecordBtn.control.review-rerecord{
+  box-sizing:border-box!important;
+  display:inline-flex!important;
+  flex:0 0 350px!important;
+  width:350px!important;
+  min-width:350px!important;
+  max-width:350px!important;
+  justify-content:center!important;
+  align-items:center!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+  padding:0 14px!important;
+}
+@media(max-width:600px){
+  #page4.has-preview.existing-upload-review #recordingReviewPanel button#rerecordBtn.control.review-rerecord{
+    flex-basis:310px!important;
+    width:310px!important;
+    min-width:310px!important;
+    max-width:calc(100% - 12px)!important;
+    font-size:15px!important;
+    padding:0 10px!important;
+  }
+}
+</style>
 
 </body>
 </html>
