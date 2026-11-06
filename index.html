@@ -2823,31 +2823,79 @@ button.btn,
 
 
 <style id="single-line-topic-doctor-mobile">
-/* Keep the talk topic and doctor's name on one line on narrow phone screens. */
-@media (max-width:600px){
-  #page4 .topic-heading{
-    display:block!important;
-    width:100%!important;
-    max-width:100%!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-    overflow-wrap:normal!important;
-    font-size:clamp(13px,3.8vw,19px)!important;
-    line-height:1.2!important;
-  }
-  #page4 .doctor{
-    display:block!important;
-    width:100%!important;
-    max-width:100%!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
-    font-size:clamp(14px,3.8vw,18px)!important;
-    line-height:1.2!important;
-  }
+#page4 .topic-heading,
+#page4 .doctor{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  overflow-wrap:normal!important;
+  box-sizing:border-box!important;
+  line-height:1.2!important;
 }
 </style>
+<script id="fit-full-topic-doctor-text">
+(function(){
+  function fitOneLine(el, minimum){
+    if(!el) return;
+    el.style.whiteSpace = 'nowrap';
+    el.style.overflow = 'visible';
+    el.style.textOverflow = 'clip';
+    el.style.maxWidth = '100%';
+    el.style.width = '100%';
+    var parentWidth = el.parentElement ? el.parentElement.clientWidth : 0;
+    var available = Math.max(40, Math.min(el.clientWidth || parentWidth, parentWidth || el.clientWidth) - 4);
+    if(!available) return;
+    var style = window.getComputedStyle(el);
+    var weight = style.fontWeight || '800';
+    var family = style.fontFamily || 'Arial';
+    var size = parseFloat(style.fontSize) || 18;
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    if(!ctx) return;
+    var text = el.textContent || '';
+    ctx.font = weight + ' ' + size + 'px ' + family;
+    while(size > minimum){
+      ctx.font = weight + ' ' + size + 'px ' + family;
+      if(ctx.measureText(text).width <= available) break;
+      size -= 0.5;
+    }
+    el.style.setProperty('font-size', size + 'px', 'important');
+  }
+  function fitAll(){
+    var topic = document.getElementById('topicHeading');
+    var doctor = document.getElementById('doctorName');
+    fitOneLine(topic, 9);
+    fitOneLine(doctor, 9);
+  }
+  var scheduled = false;
+  function scheduleFit(){
+    if(scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(function(){ scheduled = false; fitAll(); });
+  }
+  function attach(){
+    var topic = document.getElementById('topicHeading');
+    var doctor = document.getElementById('doctorName');
+    if(topic) new MutationObserver(scheduleFit).observe(topic,{childList:true,subtree:true,characterData:true});
+    if(doctor) new MutationObserver(scheduleFit).observe(doctor,{childList:true,subtree:true,characterData:true});
+    if(window.ResizeObserver){
+      var ro = new ResizeObserver(scheduleFit);
+      if(topic) ro.observe(topic.parentElement || topic);
+      if(doctor) ro.observe(doctor.parentElement || doctor);
+    }
+    window.addEventListener('resize',scheduleFit);
+    document.addEventListener('click',scheduleFit,true);
+    scheduleFit();
+    setTimeout(scheduleFit,150);
+    setTimeout(scheduleFit,700);
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded',attach);
+  else attach();
+})();
+</script>
 
 </body>
 </html>
