@@ -1408,7 +1408,7 @@ body.welcome-screen .welcome-card{margin:6px auto 0!important;padding-top:4px!im
       <p><strong>Dear Doctor,</strong></p>
       <p>Contribute to <strong>Radio 4 Diabetes India</strong>, a National Diabetes Education &amp; Awareness Initiative, broadcasting live on Apple Music Radio Station across India.</p>
       <div class="welcome-tagline">Go Live On Air!</div>
-      <p>You can participate in either of two ways:</p>
+      <p>You can Go On Air in either of two ways:</p>
       <ol>
         <li><strong>Record a New Health Talk</strong> – Record a fresh health talk of up to 5 minutes using our Mobile Radio Studio.</li>
         <li><strong>Upload an Existing Talk</strong> – Already have a diabetes-related educational talk? Simply upload your existing audio recording. It can be longer than 5 minutes.</li>
@@ -3456,8 +3456,28 @@ button.btn,
 }
 </style>
 
-</body>
-</html>
+
+
+<style id="mobile-upload-buttons-centered">
+/* Center the upload-page action buttons on phones; desktop alignment is unchanged. */
+@media(max-width:649px){
+  #page8 .nav-actions{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:100%!important;
+  }
+  #page8 .nav-actions .btn{
+    width:min(100%, 420px)!important;
+    max-width:420px!important;
+    align-self:center!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+}
+</style>
+
 
 <style id="mobile-upload-window-height-fix">
 /* On phones, make the outer white studio window compact on the existing-talk upload page.
@@ -3486,3 +3506,6 @@ button.btn,
   }
 }
 </style>
+
+</body>
+</html>
