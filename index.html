@@ -1518,6 +1518,14 @@ body.recording-view .whatsapp-help{display:none!important}
 
   <section class="page" id="page7">
     <div class="info"><div class="info-icon">🎙️</div><div><h2>How Would You Like to Contribute?</h2><p>Choose how you would like to submit your health talk to Radio 4 Diabetes India.</p></div></div>
+    <div class="talk-fields" id="audienceSelectionFields">
+      <label for="talkAudience">Your talk is for: <span class="required">*</span></label>
+      <select id="talkAudience" required>
+        <option value="">Select your audience</option>
+        <option value="Patients / Citizens">Patients / Citizens</option>
+        <option value="Doctors / Healthcare Professionals">Doctors / Healthcare Professionals</option>
+      </select>
+    </div>
     <div class="welcome-tagline">Go Live On Air !</div>
     <div class="contribution-choice-grid">
       <button type="button" class="contribution-choice" id="chooseNewRecording">
@@ -1895,7 +1903,7 @@ playerVolume.oninput=()=>{preview.volume=Number(playerVolume.value)};
 playerSpeed.onchange=()=>{preview.playbackRate=Number(playerSpeed.value)};
 const UPLOAD_URL='https://script.google.com/macros/s/AKfycbzSmje6_hMa6amkxMq4XW2zxSnLQJA6GVt8cNJcHjddJ7ReTGNXBQn406wJl7dRs1qLfw/exec';
 function safeFilePart(s){return String(s||'').normalize('NFKD').replace(/[^A-Za-z0-9 -]+/g,'').replace(/\s+/g,' ').trim().slice(0,80)||'Health Talk'}
-submitBtn.onclick=async()=>{if(!recordedBlob)return;submitBtn.disabled=true;status.textContent='Uploading your recording...';try{const reader=new FileReader();reader.onloadend=async()=>{try{const base64=reader.result.split(',')[1];const stamp=new Date().toISOString().replace(/[:.]/g,'-');const docName=getDoctorDisplayName();const topic=selectedTopic||topicInput.value.trim();const payload={doctorId:doctorId,doctorName:docName,qualification:qualificationField.value.trim(),registrationStatus:document.getElementById('registrationStatusField').value,registrationNumber:document.getElementById('registrationNumber').value.trim(),state:document.getElementById('doctorState').value,mobileWhatsAppNumber:getWhatsAppNumber(),topicName:topic,talkType:talkType,talkLanguage:selectedLanguage,consentAccepted:true,consentAcceptedAt:consentAcceptedAt,consentText:CONSENT_TEXT,fileName:(doctorId||'DOCTOR')+'_'+safeFilePart(topic).replace(/\s+/g,'_')+'_'+stamp+'.webm',mimeType:recordedBlob.type||'audio/webm',audio:base64};await fetch(UPLOAD_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});document.getElementById('confirmationWhatsApp').textContent=getWhatsAppNumber();showPage(5)}catch(err){status.textContent='Upload could not be completed. Please try again.';submitBtn.disabled=false}};reader.readAsDataURL(recordedBlob)}catch(err){status.textContent='Upload could not be completed. Please try again.';submitBtn.disabled=false}};
+submitBtn.onclick=async()=>{if(!recordedBlob)return;submitBtn.disabled=true;status.textContent='Uploading your recording...';try{const reader=new FileReader();reader.onloadend=async()=>{try{const base64=reader.result.split(',')[1];const stamp=new Date().toISOString().replace(/[:.]/g,'-');const docName=getDoctorDisplayName();const topic=selectedTopic||topicInput.value.trim();const payload={doctorId:doctorId,doctorName:docName,qualification:qualificationField.value.trim(),registrationStatus:document.getElementById('registrationStatusField').value,registrationNumber:document.getElementById('registrationNumber').value.trim(),state:document.getElementById('doctorState').value,mobileWhatsAppNumber:getWhatsAppNumber(),topicName:topic,talkType:talkType,talkLanguage:selectedLanguage,talkAudience:document.getElementById('talkAudience').value,centovaPlaylist:document.getElementById('talkAudience').value==='Doctors / Healthcare Professionals'?'Doctor to Doctor':'Standard Rotation',consentAccepted:true,consentAcceptedAt:consentAcceptedAt,consentText:CONSENT_TEXT,fileName:(doctorId||'DOCTOR')+'_'+safeFilePart(topic).replace(/\s+/g,'_')+'_'+stamp+'.webm',mimeType:recordedBlob.type||'audio/webm',audio:base64};await fetch(UPLOAD_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});document.getElementById('confirmationWhatsApp').textContent=getWhatsAppNumber();showPage(5)}catch(err){status.textContent='Upload could not be completed. Please try again.';submitBtn.disabled=false}};reader.readAsDataURL(recordedBlob)}catch(err){status.textContent='Upload could not be completed. Please try again.';submitBtn.disabled=false}};
 let scriptFontSize=22;const scriptTextEl=document.getElementById('scriptText');function applyScriptFont(){if(scriptTextEl)scriptTextEl.style.fontSize=scriptFontSize+'px';const label=document.getElementById('fontSizeLabel');if(label)label.textContent=scriptFontSize+' px'}
 document.getElementById('fontMinus')?.addEventListener('click',()=>{scriptFontSize=Math.max(18,scriptFontSize-2);applyScriptFont()});
 document.getElementById('fontPlus')?.addEventListener('click',()=>{scriptFontSize=Math.min(32,scriptFontSize+2);applyScriptFont()});
@@ -3160,6 +3168,7 @@ button.btn,
  fileInput.addEventListener('change',validate);
 
  byId('chooseNewRecording').addEventListener('click',()=>{
+   if(!byId('talkAudience').value){byId('talkAudience').focus();byId('talkAudience').reportValidity();return;}
    resetRecordingState();
    byId('page4').classList.remove('existing-upload-review');
    byId('recordingReviewPanel').querySelector('h2').textContent='Recording Complete';
@@ -3174,6 +3183,7 @@ button.btn,
    showPage(3);
  });
  byId('chooseExistingUpload').addEventListener('click',()=>{
+   if(!byId('talkAudience').value){byId('talkAudience').focus();byId('talkAudience').reportValidity();return;}
    topic.value='';language.value='English';fileInput.value='';
    status.textContent='';submit.disabled=true;
    showPage(8);
@@ -3291,6 +3301,7 @@ button.btn,
        registrationNumber:byId('registrationNumber').value.trim(),
        state:byId('doctorState').value,mobileWhatsAppNumber:getWhatsAppNumber(),
        topicName:pending.topicName,talkType:'existing-upload',talkLanguage:pending.language,
+       talkAudience:byId('talkAudience').value,centovaPlaylist:byId('talkAudience').value==='Doctors / Healthcare Professionals'?'Doctor to Doctor':'Standard Rotation',
        consentAccepted:true,consentAcceptedAt:consentAcceptedAt,consentText:CONSENT_TEXT,
        fileName:(doctorId||'DOCTOR')+'_'+safeTopic+'_'+stamp+'.'+extension,
        mimeType:file.type||'application/octet-stream',audio:base64
