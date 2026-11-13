@@ -2041,7 +2041,7 @@ const talkLanguageSelect=document.getElementById('talkLanguage'),talkLanguageOth
 document.getElementById('campaignContinue').onclick=()=>showPage(3);
 document.getElementById('choiceBackToConsent').onclick=()=>showPage(2);
 document.getElementById('backToPage2').onclick=()=>showPage(7);
-document.getElementById('toPage4').onclick=()=>{selectedTopic='World Diabetes Day Message to Indians';selectedLanguage='English';talkType='approved';selectedScript=WORLD_DIABETES_SCRIPT.replace('[DOCTOR_NAME]',getDoctorDisplayName());document.getElementById('topicHeading').textContent=selectedTopic;document.getElementById('doctorName').textContent=getDoctorDisplayName();document.getElementById('page4').classList.add('mode-approved');document.getElementById('page4').classList.remove('mode-own');document.getElementById('scriptPanel').innerHTML='<div class="script-reading"><h2>World Diabetes Day Message to Indians</h2><div id="scriptText" tabindex="0" aria-label="Suggested message script"><p class="script-duration-note">This talk is approximately 3 minutes.</p><p class="script-record-instruction">Press the RECORD button. When you see the red REC indicator blinking, start speaking.</p><div class="script-top-space" aria-hidden="true"></div>'+WORLD_DIABETES_SCRIPT_HTML+'</div><p class="script-own-note">You may read this suggested message or speak in your own words.</p></div>';document.getElementById('scriptPanel').hidden=false;const scriptOpening=document.querySelector('#scriptText p:not(.script-duration-note):not(.script-record-instruction)');if(scriptOpening)scriptOpening.textContent='Hello, listeners! Welcome to Diabetes India Radio. I am '+getDoctorDisplayName()+'.';document.getElementById('page4').classList.remove('has-preview');document.getElementById('preview').style.display='none';document.getElementById('recordingReviewPanel').hidden=true;showPage(4)};
+document.getElementById('toPage4').onclick=()=>{selectedTopic='World Diabetes Day Message to Indians';selectedLanguage='English';talkType='approved';selectedScript=WORLD_DIABETES_SCRIPT.replace('[DOCTOR_NAME]',getDoctorDisplayName());document.getElementById('topicHeading').textContent=selectedTopic;document.getElementById('doctorName').textContent=getDoctorDisplayName();document.getElementById('page4').classList.add('mode-approved');document.getElementById('page4').classList.remove('mode-own');document.getElementById('scriptPanel').innerHTML='<div class="script-reading"><h2>World Diabetes Day Message to Indians</h2><div id="scriptText" tabindex="0" aria-label="Suggested message script"><p class="script-duration-note">This talk is approximately 3 minutes.</p><p class="script-record-instruction">Press the RECORD button. When you see the red REC indicator blinking, start speaking.</p>'+WORLD_DIABETES_SCRIPT_HTML+'</div><p class="script-own-note">You may read this suggested message or speak in your own words.</p></div>';document.getElementById('scriptPanel').hidden=false;const scriptOpening=document.querySelector('#scriptText p:not(.script-duration-note):not(.script-record-instruction)');if(scriptOpening)scriptOpening.textContent='Hello, listeners! Welcome to Diabetes India Radio. I am '+getDoctorDisplayName()+'.';const scriptScrollBox=document.getElementById('scriptText');if(scriptScrollBox){const oldHint=document.querySelector('.script-scroll-hand-hint');if(oldHint)oldHint.remove();const handHint=document.createElement('div');handHint.className='script-scroll-hand-hint';handHint.setAttribute('aria-hidden','true');handHint.innerHTML='<span>☝︎</span><small>SCROLL</small>';const boxRect=scriptScrollBox.getBoundingClientRect();handHint.style.left=(boxRect.left+boxRect.width/2)+'px';handHint.style.top=(boxRect.top+boxRect.height/2)+'px';document.body.appendChild(handHint);setTimeout(()=>handHint.remove(),5000);}document.getElementById('page4').classList.remove('has-preview');document.getElementById('preview').style.display='none';document.getElementById('recordingReviewPanel').hidden=true;showPage(4)};
 document.getElementById('backToPage3').onclick=()=>{resetRecordingState();showPage(3)};
 document.getElementById('backOwnTalk').onclick=()=>{resetRecordingState();showPage(3)};
 const recordBtn=document.getElementById('recordBtn'),pauseBtn=document.getElementById('pauseBtn'),stopBtn=document.getElementById('stopBtn'),submitBtn=document.getElementById('submitBtn'),preview=document.getElementById('preview'),status=document.getElementById('status'),timer=document.getElementById('timer');
@@ -3839,6 +3839,49 @@ button.btn,
     font-size:13px!important;
     margin:3px 0 10px!important;
   }
+}
+</style>
+
+
+<style id="script-scroll-hand-hint">
+.script-scroll-hand-hint{
+  position:fixed!important;
+  z-index:999999!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  gap:2px!important;
+  width:110px!important;
+  height:auto!important;
+  transform:translate(-50%,-50%);
+  margin:0!important;
+  pointer-events:none!important;
+  color:rgba(255,255,255,.78)!important;
+  opacity:.82!important;
+  text-shadow:0 2px 7px rgba(0,0,0,.85),0 0 10px rgba(255,255,255,.18)!important;
+  animation:scriptHandSwipe 1s ease-in-out 5 both!important;
+}
+.script-scroll-hand-hint span{
+  display:block!important;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important;
+  font-size:76px!important;
+  line-height:1.05!important;
+  filter:drop-shadow(0 2px 5px rgba(0,0,0,.9))!important;
+}
+.script-scroll-hand-hint small{
+  display:block!important;
+  font:bold 10px/1 Arial,sans-serif!important;
+  letter-spacing:1.5px!important;
+  color:rgba(255,255,255,.78)!important;
+}
+@keyframes scriptHandSwipe{
+  0%{opacity:0;transform:translate(-50%,-50%) translateY(28px)}
+  18%{opacity:1}
+  72%{opacity:1}
+  100%{opacity:0;transform:translate(-50%,-50%) translateY(-28px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .script-scroll-hand-hint{animation:none!important;opacity:1!important}
 }
 </style>
 
